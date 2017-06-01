@@ -7,11 +7,15 @@
 		<title>COBOT</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="/favicon_72_72.ico">
+		<link rel="stylesheet" href="/css/main.css" />
+		
+		<link rel="shortcut icon" href="/favicon.png">
 		<link rel=”apple-touch-icon” href=”/favicon.ico” />
+		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
 		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/css/main.css" />
+		
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 	</head>
@@ -228,7 +232,7 @@
 
 				<!-- Copyright -->
 					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Cobot. All rights reserved.</li><li></a></li>
 					</ul>
 
 			</div>
