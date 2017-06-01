@@ -219,17 +219,13 @@
 				<version>1.7</version>
 				<configuration>
 					<showWeaveInfo>true</showWeaveInfo>
-					<source>${aspectj-compiler.version}</source>
-					<target>${aspectj-compiler.version}</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<verbose>true</verbose>
-					<complianceLevel>${aspectj-compiler.version}</complianceLevel>
+					<complianceLevel>1.8</complianceLevel>
 					<outxml>true</outxml>
 					<!-- new configuration is here -->
-					<configuration>
-						<complianceLevel>1.8</complianceLevel>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
+					
 				</configuration>
 				<executions>
 					<execution>
