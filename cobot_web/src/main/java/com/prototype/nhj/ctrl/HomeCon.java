@@ -2,7 +2,6 @@ package com.prototype.nhj.ctrl;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,47 +14,38 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.prototype.nhj.svc.HomeService;
-
-import dbio.DBIO_Cubrid_Test;
+import com.prototype.nhj.svc.HomeSvc;
 
 /**  
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class HomeCon {
 	 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeCon.class);
 	
-	@Resource(name="HomeService")
-	private HomeService homeService;
+	@Resource(name="HomeSvc")
+	private HomeSvc homeService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = {"/home"})
-	public String home(Locale locale, Model model, @RequestParam Map ioMap, ServletRequest req) {
-		logger.info("Welcome My AWS!!! The client locale is 222  {}.{}", locale, "test");
-		         
+	public String home(Model model, @RequestParam Map ioMap, ServletRequest req) {
+		
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
 		
 		String formattedDate = dateFormat.format(date);
 		
 		homeService.printTmp(model);
-		
-		System.out.println("paramMap : "+ioMap);
-		System.out.println("paramMap : "+ioMap.getClass());
-		
-		System.out.println("req : "+req.getClass());
-		
 		
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("ioMap", ioMap );
 		   
 		try {
 			
-			DBIO_Cubrid_Test.main(null);
+			//DBIO_Cubrid_Test.main(null);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
