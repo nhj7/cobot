@@ -43,14 +43,16 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
+			<version>1.8.6</version>
+			<scope>runtime</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
+
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
-			<version>1.6.10</version>
+			<version>1.8.6</version>
 		</dependency>
+
 
 		<!-- Logging -->
 		<dependency>
@@ -169,6 +171,13 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>3.4.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/aspectj-maven-plugin -->
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>aspectj-maven-plugin</artifactId>
+			<version>1.10</version>
+		</dependency> 
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -208,6 +217,22 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.10</version>
+				<configuration>
+					<showWeaveInfo>true</showWeaveInfo>
+					<source>${aspectj-compiler.version}</source>
+					<target>${aspectj-compiler.version}</target>
+					<verbose>true</verbose>
+					<complianceLevel>${aspectj-compiler.version}</complianceLevel>
+					<outxml>true</outxml>
+				</configuration>
+				<executions>
+					
+				</executions>
+			</plugin>
 
 
 
