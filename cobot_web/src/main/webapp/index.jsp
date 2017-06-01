@@ -4,9 +4,10 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>My Portfolio</title>
+		<title>COBOT</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
@@ -21,9 +22,9 @@
 
 					<!-- Logo -->
 						<div id="logo">
-							<span class="image avatar48"><img src="images/myPhoto.jpg" alt="" /></span>
-							<h1 id="title">Hyungju Na</h1>
-							<p>Java Developer</p>
+							<span class="image avatar48"><img src="" alt="" /></span>
+							<h1 id="title">Guest</h1>
+							<p>회원가입을 해주세요.</p>
 						</div>
 
 					<!-- Nav -->
@@ -42,10 +43,10 @@
 
 							-->
 							<ul>
-								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Profile</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Portfolio</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
-								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">준비중</span></a></li>
+								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">준비중</span></a></li>
+								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							</ul>
 						</nav>
 
@@ -75,31 +76,18 @@
 
 							<header>
 								<header>
-									<h2>Profile</h2>
+									<h2>시세조회</h2>
 								</header>
 								<h2 class="alt" style="text-align:left;font-size:16px">
-									<li >경력사항
-										<dd>- 아프로시스템 2010년 11월 ~ 재직중(<%=DateUtil.getCurDate("YYYY-MM") %>)</dd>
-										<dd>- 원캐싱 전산팀 2007년 10월 ~ 2010년 11월(3년 2개월)</dd>
-									</li>
-									<li >학력 1 : 남도대학 컴퓨터정보통신(2년제 졸업, 3.9/4.5)</li>
-									<li >학력 2 : 서울디지털대학교 소프트웨어(4년제 졸업, 3.5/4.5)</li>
-									<li >전문교육 : 삼성멀티캠퍼스 웹 전문가과정(2007년 3월 ~ 8월,5개월간)</li>
-									<li >주요스킬
-										<dd>- Framework : Spring, 전자정부, Anyframe</dd>
-										<dd>- UI : MiFlatform, JSP, HTML, CSS</dd>
-										<dd>- DB : Oracle, MS-SQL, MySQL, Tibero, Cubrid</dd>
-									</li>
-									<li >생년월일 : 1983년 8월 5일</li>
-									<li >혈액형 : A형</li>
-									<li >주소 : 서울시 노원구</li>
-									<li >취미/특기 : 영화감상 및 개인 프로그램 개발(Java, C++, C#)</li>
+									
+									<li >비트코인 $2,255</li>
+									<li >이더 $255</li>
 								</h2>
 								
 							</header>
 
 							<footer>
-								<a href="#portfolio" class="button scrolly">Go Portfolio</a>
+								<a href="#portfolio" class="button scrolly">Go 1</a>
 							</footer>
 
 						</div>
@@ -110,12 +98,11 @@
 						<div class="container">
 
 							<header>
-								<h2>Portfolio</h2>
+								<h2>1</h2>
 							</header>
 
 							<p style="text-align:left;font-size:16px">
-								&nbsp;&nbsp;그룹 내 OK저축은행 여신개발을 주업무로 담당하며 과거 그룹 내 계열사의 다양한 전산개발을 담당.
-								계열사는 OK저축은행, OK캐피탈, 러시앤캐시, 미즈사랑, 원캐싱, 아프로신용정보, 예스자산대부, 아프로시스템이 있음.
+								&nbsp;&nbsp;Bitcoin
 								
 							</p>
 
@@ -124,45 +111,31 @@
 								
 								<div class="4u 12u$(mobile)">
 									<article class="item">
-										<a class="image fit"><img src="images/cf_oc_1.jpg" alt="" /></a>
+										<a class="image fit"><img src="" alt="" /></a>
 										<header>
 											<h3>
-												<b>OK캐피탈 인수합병에 따른 데이터 마이그레이션 담당(2015년 10월~2016년 8월)</b>
+												<b>Bitcoin</b>
 											</h3>
 											<ul>
-												<li>OK캐피탈 채권 2만 5천건 → OK저축은행 매각 시 데이터 마이그레이션 담당('16년 2월)</li>
-												<li>OK캐피탈 PL채권 전체 → OK캐피탈 신규 대출시스템으로 데이터 마이그레이션 담당('16년 6월)</li>
+												<li>비트코인은 비싸다</li>
+												
 											</ul>
 										</header>
 									</article>
 									
 									<article class="item">
-										<a class="image fit"><img src="images/cf_ok_1.jpg" alt="" /></a>
+										<a class="image fit"><img src="" alt="" /></a>
 										<header>
 											<h3>
-												<b>OK저축은행 여신개발 주업무 담당(2014년 7월~2015년 9월)</b>
+												<b>Etherium</b>
 											</h3>
 											<ul>
-												<li>OK저축은행 여신시스템 개발운영</li>
-												<li>개발팀 내 선임급으로 업무분석/설계가 주 업무</li>
-												<li>대표개발상품  : 마이너스OK론, 햇살론, 오토론</li>
-												<li>총 여신규모 1,605억 → 약2조 증가</li>
-												<li>현재 저축은행 업계 2위</li>
+												<li>이더리움은 10분의 1 가격이다. </li>
+												
 											</ul>
 										</header>
 									</article>
-									<article class="item">
-										<a class="image fit"><img src="images/cf_rush_1.jpg" alt="" /><img src="images/cf_miz_1.jpg" alt="" /></a>
-										
-										<header>
-											<h3>그룹 내 계정계 개발 및 운영(2012년~2014년 7월)</h3>
-											<ul >
-												<li>주요개발 : 여신소액 신상품 개발, 포인트, 신규 대외 서비스 개발</li>
-												<li>러시앤캐시, 미즈사랑, 원캐싱, 아프로캐피탈, 예스자산대부, 아프로신용정보</li>
-												<li>총 여신규모 1,605억 → 11,007억으로 증가</li>
-											</ul>
-										</header>
-									</article>
+									
 								</div>
 								<div class="4u 12u$(mobile)">
 									<article class="item">

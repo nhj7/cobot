@@ -24,7 +24,7 @@
 	<resources mapping="/js/**" location="/js/" />
 	<resources mapping="/sass/**" location="/sass/" />
 	<resources mapping="/ico/**" location="/ico/" />
-	<resources mapping="/okcm/**" location="/okcm/" />
+	<resources mapping="/*.ico" location="/" />
 	
 	
 
