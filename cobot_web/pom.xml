@@ -228,6 +228,12 @@
 					<verbose>true</verbose>
 					<complianceLevel>${aspectj-compiler.version}</complianceLevel>
 					<outxml>true</outxml>
+					<!-- new configuration is here -->
+					<configuration>
+						<complianceLevel>1.6</complianceLevel>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
 				</configuration>
 				<executions>
 					<execution>
