@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
 		
-		<link rel="shortcut icon" href="/favicon.png">
+		<link rel="shortcut icon" href="/favicon_72_72.png">
 		<link rel=”apple-touch-icon” href=”/favicon.ico” />
 		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 		<link rel="icon" type="image/png" href="/favicon.png" />
