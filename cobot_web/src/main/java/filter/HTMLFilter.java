@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
 public class HTMLFilter implements Filter {
 
     /**
-     * Default constructor. 
+     * Default constructor.   
      */
     public HTMLFilter() {
         // TODO Auto-generated constructor stub

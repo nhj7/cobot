@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 @Service("HomeService")
 public class HomeService {
 	public void printTmp(Model model){
-		
+		  
 		System.out.println("printTmp " + model);
 		
-	}
+	} 
 }

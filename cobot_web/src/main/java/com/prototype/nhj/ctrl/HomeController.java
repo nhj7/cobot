@@ -24,7 +24,7 @@ import dbio.DBIO_Cubrid_Test;
  */
 @Controller
 public class HomeController {
-	
+	 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Resource(name="HomeService")
