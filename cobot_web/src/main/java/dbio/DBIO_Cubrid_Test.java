@@ -9,6 +9,7 @@ import java.sql.Statement;
 import org.aspectj.lang.Signature;
 
 import cubrid.jdbc.driver.CUBRIDStatement;
+import util.NetUtil;
 
 
 
@@ -30,7 +31,15 @@ public class DBIO_Cubrid_Test {
 	
 	
 	public static void main(String[] args) throws Throwable {
-		String url = "jdbc:log4jdbc:mariadb://220.230.118.187:33067/cobot";
+		
+		System.out.println(""+NetUtil.getLocalIp());
+		
+		String db_ip = "localhost";
+		if( NetUtil.getLocalIp().startsWith("172.30.1")){
+			db_ip = "220.230.118.187";
+		}
+		
+		String url = "jdbc:log4jdbc:mariadb://"+db_ip+":33067/cobot";
 		
 	 	Connection conn = DriverManager.getConnection(url, "cobot", "cobot1234");
 	 	Statement stmt = conn.createStatement();
