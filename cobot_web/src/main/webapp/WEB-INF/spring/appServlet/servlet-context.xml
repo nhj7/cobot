@@ -25,6 +25,7 @@
 	<resources mapping="/sass/**" location="/sass/" />
 	<resources mapping="/ico/**" location="/ico/" />
 	<resources mapping="/*.ico" location="/" />
+	<resources mapping="/*.png" location="/" />
 	
 	
 
