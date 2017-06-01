@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.prototype.nhj.svc.HomeService;
 
+import dbio.DBIO_Cubrid_Test;
+
 /**  
  * Handles requests for the application home page.
  */
@@ -53,7 +55,7 @@ public class HomeController {
 		   
 		try {
 			
-			
+			DBIO_Cubrid_Test.main(null);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

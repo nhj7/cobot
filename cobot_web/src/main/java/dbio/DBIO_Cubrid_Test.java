@@ -16,24 +16,26 @@ public class DBIO_Cubrid_Test {
 	
 	static{
 		try {
-			Class.forName("cubrid.jdbc.driver.CUBRIDDriver");
+			Class.forName("org.mariadb.jdbc.Driver");
+			Class.forName("net.sf.log4jdbc.DriverSpy");
+			//System.out.println("1111");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		CUBRIDStatement cst;
+		
 	}
 	
 	
 	
 	public static void main(String[] args) throws Throwable {
-		String url = "jdbc:cubrid:127.0.0.1:30000:demodb:::";
+		String url = "jdbc:log4jdbc:mariadb://220.230.118.187:33067/cobot";
 		
-	 	Connection conn = DriverManager.getConnection(url, "tester", "tester");
+	 	Connection conn = DriverManager.getConnection(url, "cobot", "cobot1234");
 	 	Statement stmt = conn.createStatement();
 
-	 	ResultSet rs = stmt.executeQuery("SELECT * FROM code"); 
+	 	ResultSet rs = stmt.executeQuery("SELECT * FROM tb_coin"); 
 	 	while(rs.next())
 	 	{
 	  		System.out.print(rs.getString(1) + " : ");

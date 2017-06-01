@@ -156,12 +156,12 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.25</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
-		<dependency>
-			<groupId>com.googlecode.log4jdbc</groupId>
-			<artifactId>log4jdbc</artifactId>
-			<version>1.2</version>
-		</dependency>
+	<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
+	<dependency>
+		<groupId>com.googlecode.log4jdbc</groupId>
+		<artifactId>log4jdbc</artifactId>
+		<version>1.2</version>
+	</dependency>
 
 	</dependencies>
 	<properties>
