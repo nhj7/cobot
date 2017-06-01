@@ -7,7 +7,7 @@
 		<title>COBOT</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="/favicon_72_72.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="/favicon_72_72.ico">
 		<link rel=”apple-touch-icon” href=”/favicon.ico” />
 		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
