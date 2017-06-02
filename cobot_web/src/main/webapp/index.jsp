@@ -10,6 +10,13 @@
 		<link rel="stylesheet" href="/css/main.css" />
 		
 		<link rel="icon" type="image/png" sizes="192x192" href="/favicon_192_192.png">
+		<link rel="icon" type="image/png' %}" sizes="32x32" href="/favicon_32_32.png">
+		<link rel="icon" type="image/png' %}" sizes="96x96" href="/favicon_96_96.png">
+		<link rel="icon" type="image/png' %}" sizes="16x16" href="/favicon_16_16.png">
+		
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
 		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 		

@@ -19,7 +19,7 @@ public class DBIO_Cubrid_Test {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			Class.forName("net.sf.log4jdbc.DriverSpy");
-			System.out.println("1  111");
+			//System.out.println("1  111");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
