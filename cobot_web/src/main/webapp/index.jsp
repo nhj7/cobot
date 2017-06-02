@@ -9,18 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />
 		
-		
-		
-		<link rel="icon" type="image/png" sizes="72x72" href="/favicon_72_72.png">
-		<link rel="icon" type="image/png" sizes="128x128" href="/favicon_128_128.png">
-		<link rel="icon" type="image/png" sizes="196x196" href="/favicon_196_196.png">
-		
-			
-		<link rel=”shortcut icon" sizes="72x72" href=”/favicon_72_72.ico” />
-		<link rel="shortcut icon" type="image/x-ico" sizes="128x128" href="/favicon_128_128.ico">
-		<link rel="shortcut icon" type="image/x-ico" sizes="196x196" href="/favicon_196_196.ico">
-		
-		<link rel=”apple-touch-icon” href=”/favicon.ico” />
+		<link rel="icon" type="image/png" sizes="192x192" href="/favicon_192_192.png">
 		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 		
