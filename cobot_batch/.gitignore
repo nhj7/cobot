@@ -6,3 +6,4 @@ target/classes/*
 **/MANIFEST.MF
 .classpath
 .project
+/bin/
