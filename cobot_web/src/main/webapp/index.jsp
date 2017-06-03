@@ -8,6 +8,7 @@
 <html>
 	<head>
 		<title>코봇-필요한 정보를 손쉽게</title>
+		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/main.css" />		
