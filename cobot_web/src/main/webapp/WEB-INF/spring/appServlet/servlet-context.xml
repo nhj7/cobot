@@ -24,8 +24,10 @@
 	<resources mapping="/js/**" location="/js/" />
 	<resources mapping="/sass/**" location="/sass/" />
 	<resources mapping="/ico/**" location="/ico/" />
-	<resources mapping="/*.ico" location="/" />
-	<resources mapping="/*.png" location="/" />
+	<resources mapping="*.ico" location="/" />
+	<resources mapping="*.png" location="/" />
+	<resources mapping="/img/**" location="/img/" />
+	
 	
 	
 

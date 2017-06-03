@@ -1878,7 +1878,7 @@
 				text-align: left;
 				padding: 0.5em 1em 0.5em 1em;
 				color: #fff;
-				background: #222729 url("images/overlay.png");
+				background: #222729 url("img/overlay.png");
 			}
 
 			table.default thead {
@@ -1906,10 +1906,10 @@
 		background-color: #8ebebc;
 		border: 0;
 		cursor: pointer;
-		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
-		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
-		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
-		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
+		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("img/overlay.png");
+		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("img/overlay.png");
+		background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("img/overlay.png");
+		background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("img/overlay.png");
 		-moz-transition: background-color 0.35s ease-in-out;
 		-webkit-transition: background-color 0.35s ease-in-out;
 		-ms-transition: background-color 0.35s ease-in-out;
@@ -1936,13 +1936,13 @@
 
 	.item {
 		box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.05);
-		margin-bottom: 40px;
+		margin-bottom: 1em;
 	}
 
 		.item header {
 			background: #fff;
 			margin: 0;
-			padding: 1em 0 1em 0;
+			padding: 1em 0 0em 0;
 			font-size: 0.8em;
 		}
 
@@ -1971,6 +1971,18 @@
 		.icon > .label {
 			display: none;
 		}
+		
+	#aside {
+		position: fixed;
+		top: 0;
+		left: 100%;
+		width: 175px;
+		height: 100%;
+		color: #fff;
+		background: #222629 url("img/overlay.png");
+		box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.1);
+		text-align: right;
+	}
 
 /* Header */
 
@@ -1981,7 +1993,7 @@
 		width: 375px;
 		height: 100%;
 		color: #fff;
-		background: #222629 url("images/overlay.png");
+		background: #222629 url("img/overlay.png");
 		box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.1);
 		text-align: right;
 	}
@@ -2125,10 +2137,10 @@
 		#main > section {
 			margin: 0;
 			overflow: hidden;
-			padding: 4em 0;
+			padding: 0.4em 0;
 			box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
 			text-align: center;
-			background-image: url("images/overlay.png");
+			background-image: url("img/overlay.png");
 		}
 
 			#main > section.dark {
@@ -2155,26 +2167,28 @@
 					}
 
 			#main > section.cover {
-				padding: 6em 0;
+				padding: 0.5em 0;
 				background-size: cover;
 				background-position: center center;
 			}
 
 			#main > section.one {
-				background-color: #81918E;
-				background-image: url("../../images/banner.jpg");
+				background-color: white;
+				/* background-image: url("../../img/banner.jpg"); */
+				background-image: url("../../img/theme/matrix/매트릭스2.gif") ;
+				
 			}
 
 			#main > section.two {
-				background-color: #f5fafa;
+				background-color: white;
 			}
 
 			#main > section.three {
-				background-color: #ecf1f1;
+				background-color: white;
 			}
 
 			#main > section.four {
-				background-color: #e8edec;
+				background-color: white;
 			}
 
 /* Wide */
@@ -2214,11 +2228,11 @@
 		/* Main */
 
 			#main > section {
-				padding: 3em 0;
+				padding: 0.3em 0;
 			}
 
 			#main section.cover {
-				padding: 5em 0;
+				padding: 0.4em 0;
 			}
 
 	}
@@ -2353,7 +2367,7 @@
 				width: 275px;
 				z-index: 10002;
 				width: 275px;
-				background: #222729 url("images/overlay.png");
+				background: #222729 url("img/overlay.png");
 				box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.125);
 			}
 
@@ -2423,7 +2437,7 @@
 						left: 0.5em;
 						top: 0.5em;
 						display: block;
-						width: 3.25em;
+						width: 2.25em;
 						height: 2.25em;
 						line-height: 2.25em;
 					}
@@ -2471,11 +2485,11 @@
 			}
 
 				#main > section {
-					padding: 3em 0;
+					padding: 0.3em 0;
 				}
 
 				#main section.cover {
-					padding: 4em 0;
+					padding: 0.3em 0;
 				}
 
 	}
@@ -2510,15 +2524,15 @@
 		/* Main */
 
 			#main > section {
-				padding: 2em 0;
+				padding: 0.2em 0;
 			}
 
 			#main section.cover {
-				padding: 4em 0em;
+				padding: 0.3em 0em;
 			}
 
 				#main section.cover header {
-					padding: 0 1em;
+					padding: 0 0em;
 				}
 
 		/* Footer */

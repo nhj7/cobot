@@ -1,175 +1,231 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="util.*" %>
+<%
+	System.out.println("index.jsp call");
+%>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>COBOT</title>
+		<title>코봇-필요한 정보를 손쉽게</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="/css/main.css" />
-		
-		<link rel="icon" type="image/png" sizes="192x192" href="/favicon_192_192.png">
-		<link rel="icon" type="image/png' %}" sizes="32x32" href="/favicon_32_32.png">
-		<link rel="icon" type="image/png' %}" sizes="96x96" href="/favicon_96_96.png">
-		<link rel="icon" type="image/png' %}" sizes="16x16" href="/favicon_16_16.png">
-		
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-		
+		<link rel="stylesheet" href="/css/main.css" />		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
 		
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
+		
+		<!-- To support Android -->
+		
+		<link rel=”icon” sizes=”196×196″ href=”/img/ico/favicon_196_196.png”>
+		<link rel=”icon” sizes=”192×192″ href=”/img/ico/favicon_192_192.png”>
+		<link rel=”icon” sizes=”180×180″ href=”/img/ico/favicon_180_180.png”>
+		<link rel=”icon” sizes=”152×152″ href=”/img/ico/favicon_152_152.png”>
+		<link rel=”icon” sizes=”144×144″ href=”/img/ico/favicon_144_144.png”>
+		<link rel=”icon” sizes=”128×128″ href=”/img/ico/favicon_128_128.png”>
+		<link rel=”icon” sizes=”114×114″ href=”/img/ico/favicon_114_114.png”>
+		<link rel=”icon” sizes=”96×96″ href=”/img/ico/favicon_96_96.png”>
+		<link rel=”icon” sizes=”76×76″ href=”/img/ico/favicon_76_76.png”>
+		<link rel=”icon” sizes=”72×72″ href=”/img/ico/favicon_72_72.png”>
+		<link rel=”icon” sizes=”60×60″ href=”/img/ico/favicon_60_60.png”>
+		<link rel=”icon” sizes=”57×57″ href=”/img/ico/favicon_57_57.png”>
+		<link rel=”icon” sizes=”32×32″ href=”/img/ico/favicon_32_32.png”>
+		<link rel=”icon” sizes=”16×16″ href=”/img/ico/favicon_16_16.png”>
+		
+		<link rel="shortcut icon" href="/img/ico/favicon_128_128.ico" />
+		
+		
+		
+		
+		<meta name="msapplication-TileColor" content="#194386">
+		<meta name="theme-color" content="white">
+		
 	</head>
 	<body>
-
+	
 		<!-- Header -->
-			<div id="header">
-
-				<div class="top">
-
-					<!-- Logo -->
-						<div id="logo">
-							<span class="image avatar48"><img src="" alt="" /></span>
-							<h1 id="title">Guest</h1>
-							<p>회원가입을 해주세요.</p>
-						</div>
-
+		<div id="header">
+			<div class="top">
+				<!-- Logo -->
+					<div id="logo">
+						<span class="image avatar48"><img src="" alt="" /></span>
+						<h1 id="title">Guest</h1>
+						<p>회원가입을 해주세요.</p>
+					</div>
+	
 					<!-- Nav -->
-						<nav id="nav">
-							<!--
-
-								Prologue's nav expects links in one of two formats:
-
-								1. Hash link (scrolls to a different section within the page)
-
-								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
-
-								2. Standard link (sends the user to another page/site)
-
-								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
-
-							-->
-							<ul>
-								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">준비중</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">준비중</span></a></li>
-								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
-							</ul>
-						</nav>
-
-				</div>
-
-				<div class="bottom">
-
-					<!-- Social Icons -->
-						<ul class="icons">
-							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-							<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+					<nav id="nav">
+						<ul>
+							<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
+							<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">준비중</span></a></li>
+							<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">준비중</span></a></li>
+							<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 						</ul>
-
-				</div>
-
+					</nav>
 			</div>
+			<!-- End Top -->
+			
+			
+			
+			<div class="bottom">
 
+				<!-- Social Icons -->
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+			</div>
+		</div>
+		<!-- End Header -->
+		
+		<script>
+		
+			function doHideNShow(){
+				if( $("#serch_img").attr("src").indexOf("감추기") > -1 ){
+					$("#div_search").css("display","none");
+					$("#serch_img").attr("src", "/img/btn/보기.png");
+				}else{
+					$("#div_search").css("display","block");
+					$("#serch_img").attr("src", "/img/btn/감추기.png");
+				}
+			}
+		</script>
+		
 		<!-- Main -->
 			<div id="main">
 
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
-						<div class="container">
-
-							<header>
-								<header>
-									<h2>시세조회</h2>
-								</header>
-								<h2 class="alt" style="text-align:left;font-size:16px">
-									
-									<li >비트코인 $2,255</li>
-									<li >이더 $255</li>
-								</h2>
-								
-							</header>
-
-							<footer>
-								<a href="#portfolio" class="button scrolly">Go 1</a>
-							</footer>
-
+						<div id="btn_wrapp_search" style="text-align:right;width:95%">
+							<img id="serch_img" src="/img/btn/감추기.png" width="16px" height="16px" onclick="doHideNShow();"/>
+							
+						</div>
+						<div id="div_search" class="container">
+							<div class="row" >
+								<span style="width:100%;">
+									<input type="text" placeholder="검색기능 구현 중" class="search_txt"  />
+								</span>
+							</div>
 						</div>
 					</section>
+					
+					<style>
+					.search_txt{
+						width:60%;
+						font-size:14px;
+						background-image:url('/img/search_icon.png');
+						background-repeat:no-repeat;
+						background-size:14px 80%;
+						background-position:98% 50%;
+					}
+					#coinRank {display: table; width: 100%; font-size:14px;}
+					#coinRank .rankRow {display: table-row;}
+					#coinRank .rCell {
+						display: table-cell; 
+						padding: 3px; 
+						border-bottom: 1px solid #DDD;
+						background-color:white;
+						vartical-align:middle;
+						line-height: 20px;
+					}
+					#coinRank .col_ex { width: 5%;}
+					#coinRank .col_coin {width: 10%;}
+					#coinRank .col_btc {width: 15%;}
+					#coinRank .col_usd {width: 20%;}
+					#coinRank .col_krw {width: 20%;text-align:right;}
+					#coinRank .col_ch {width: 20%;}
+					.rIcon {width: 20px;height:16px; }
+					.up{ color:red }
+					.down{ color:blue }
+					</style>
 
-				<!-- Portfolio -->
-					<section id="portfolio" class="two">
-						<div class="container">
-
-							<header>
-								<h2>1</h2>
-							</header>
-
-							<p style="text-align:left;font-size:16px">
-								&nbsp;&nbsp;Bitcoin
-								
-							</p>
-
+				<!-- coin_table -->
+					<section id="coin_table" class="two">
+						<div class="container">							
 							<div class="row">
-							
-								
 								<div class="4u 12u$(mobile)">
 									<article class="item">
-										<a class="image fit"><img src="" alt="" /></a>
-										<header>
-											<h3>
-												<b>Bitcoin</b>
-											</h3>
-											<ul>
-												<li>비트코인은 비싸다</li>
-												
-											</ul>
-										</header>
+										
+										<div id="btn_wrapp_coinRank" style="text-align:right;">
+											<img src="/img/btn/세팅.png" width="16px" height="16px"/>
+											&nbsp;&nbsp;&nbsp;
+											<img src="/img/btn/닫기.png" width="16px" height="16px"/>
+										</div>
+										
+										
+										<div id="coinRank">
+											<div class="rankRow" style="font-weight:bold;">
+												<span class="rCell col_ex" style="text-align:center;">Ex</span>
+												<span class="rCell col_coin" style="text-align:center;">Coin</span>
+												<span class="rCell col_btc" style="text-align:center;">BTC</span>
+												<span class="rCell col_usd" style="text-align:center;">$</span>
+												<span class="rCell col_krw" style="text-align:center;">KRW</span>
+												<span class="rCell col_ch" style="text-align:center;">CH</span>
+											</div>
+											<div class="rankRow">
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/폴로닉스.png" title="폴로닉스" /></span>
+												<span class="rCell col_coin">BTC</span>
+												<span class="rCell col_btc">1</span>
+												<span class="rCell col_usd">2,324</span>
+												<span class="rCell col_krw">2,733,333</span>
+												<span class="rCell col_ch up">+6.29</span>
+											</div>
+											
+											<div class="rankRow">
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/폴로닉스.png" title="폴로닉스" /></span>
+												<span class="rCell col_coin">ETH</span>
+												<span class="rCell col_btc">0.87691000</span>
+												<span class="rCell col_usd">212</span>
+												<span class="rCell col_krw">247,294</span>
+												<span class="rCell col_ch down">-2.45</span>
+											</div>
+											
+											<div class="rankRow">
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/빗썸.png" title="빗썸" /></span>
+												<span class="rCell col_coin">BTC</span>
+												<span class="rCell col_btc">1</span>
+												<span class="rCell col_usd">-</span>
+												<span class="rCell col_krw">3,095,000</span>
+												<span class="rCell col_ch up">+0.29</span>
+											</div>
+										</div>
 									</article>
 									
-									<article class="item">
-										<a class="image fit"><img src="" alt="" /></a>
-										<header>
-											<h3>
-												<b>Etherium</b>
-											</h3>
-											<ul>
-												<li>이더리움은 10분의 1 가격이다. </li>
-												
-											</ul>
-										</header>
+									<article  class="item">
+										
+										
+										
 									</article>
 									
 								</div>
 								<div class="4u 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>Magna Nullam</h3>
-										</header>
+									<article id="coinone_chat" class="item" >
+										<div id="btn_wrapp_coinRank" style="text-align:right;">
+											<img src="/img/btn/세팅.png" width="16px" height="16px"/>
+											&nbsp;&nbsp;&nbsp;
+											<img src="/img/btn/닫기.png" width="16px" height="16px" onclick="$('#coinone_chat').remove();"/>
+										</div>
+										<iframe src="https://coinone.co.kr/chat/" width="90%" height=300px></iframe>
 									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>Natoque Vitae</h3>
-										</header>
-									</article>
+									<!-- article class="item" style="background-color:red">
+										폴로닉스 채팅 닫기
+										<iframe src="https://poloniex.com/trollbox" width="90%" height=300px></iframe>
+										
+									</article-->
 								</div>
 								<div class="4u$ 12u$(mobile)">
 									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
+										<a href="#" class="image fit"><img src="img/pic06.jpg" alt="" /></a>
 										<header>
 											<h3>Dolor Penatibus</h3>
 										</header>
 									</article>
 									<article class="item">
-										<a href="#" class="image fit"><img src="images/pic07.jpg" alt="" /></a>
+										<a href="#" class="image fit"><img src="img/pic07.jpg" alt="" /></a>
 										<header>
 											<h3>Orci Convallis</h3>
 										</header>
@@ -188,7 +244,7 @@
 								<h2>About Me</h2>
 							</header>
 
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
+							<a href="#" class="image featured"><img src="img/pic08.jpg" alt="" /></a>
 
 							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
 							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
@@ -230,7 +286,7 @@
 					</section>
 
 			</div>
-
+		<!-- End Main -->
 		<!-- Footer -->
 			<div id="footer">
 
@@ -249,6 +305,6 @@
 			<script src="/js/util.js"></script>
 			<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/js/main.js"></script>
-
+			
 	</body>
 </html>

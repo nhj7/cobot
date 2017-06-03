@@ -110,10 +110,30 @@
 					});
 
 			// Fix: Remove transitions on WP<10 (poor/buggy performance).
-				if (skel.vars.os == 'wp' && skel.vars.osVersion < 10)
+				if (skel.vars.os == 'wp' && skel.vars.osVersion < 10){
 					$('#headerToggle, #header, #main')
-						.css('transition', 'none');
+					.css('transition', 'none');
+					alert("");
+				}
+					
 
 	});
-
+	
+	
+	setTimeout( '$("#main > section.one").css("background-image","url()");', 1000);
+	
+	setTimeout("setThemeColor('green');", 150);
+	
+	setTimeout("setThemeColor('#005000');", 600);
+	setTimeout("setThemeColor('green');", 900);
+	
+	setTimeout("setThemeColor('white');", 1050); 
+	
+	
+	//alert( $("#main > section.one").attr("class") );
 })(jQuery);
+
+function setThemeColor( color ){
+	$('meta[name=theme-color]').remove();	
+	$('head').append('<meta name="theme-color" content="'+color+'">');
+}
