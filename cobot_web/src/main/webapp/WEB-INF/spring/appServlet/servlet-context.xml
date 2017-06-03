@@ -26,6 +26,7 @@
 	<resources mapping="/ico/**" location="/ico/" />
 	<resources mapping="*.ico" location="/" />
 	<resources mapping="*.png" location="/" />
+	<resources mapping="*.txt" location="/" />
 	<resources mapping="/img/**" location="/img/" />
 	
 	
