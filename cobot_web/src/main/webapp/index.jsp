@@ -86,12 +86,12 @@
 		<script>
 		
 			function doHideNShow(){
-				if( $("#serch_img").attr("src").indexOf("감추기") > -1 ){
+				if( $("#serch_img").attr("src").indexOf("hide") > -1 ){
 					$("#div_search").css("display","none");
-					$("#serch_img").attr("src", "/img/btn/보기.png");
+					$("#serch_img").attr("src", "/img/btn/show.png");
 				}else{
 					$("#div_search").css("display","block");
-					$("#serch_img").attr("src", "/img/btn/감추기.png");
+					$("#serch_img").attr("src", "/img/btn/hide.png");
 				}
 			}
 		</script>
@@ -102,7 +102,7 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
 						<div id="btn_wrapp_search" style="text-align:right;width:95%">
-							<img id="serch_img" src="/img/btn/감추기.png" width="16px" height="16px" onclick="doHideNShow();"/>
+							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow();"/>
 							
 						</div>
 						<div id="div_search" class="container">
@@ -152,9 +152,9 @@
 									<article class="item">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<img src="/img/btn/세팅.png" width="16px" height="16px"/>
+											<img src="/img/btn/setting.png" width="16px" height="16px"/>
 											&nbsp;&nbsp;&nbsp;
-											<img src="/img/btn/닫기.png" width="16px" height="16px"/>
+											<img src="/img/btn/close.png" width="16px" height="16px"/>
 										</div>
 										
 										
@@ -168,7 +168,7 @@
 												<span class="rCell col_ch" style="text-align:center;">CH</span>
 											</div>
 											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/폴로닉스.png" title="폴로닉스" /></span>
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
 												<span class="rCell col_coin">BTC</span>
 												<span class="rCell col_btc">1</span>
 												<span class="rCell col_usd">2,324</span>
@@ -177,7 +177,7 @@
 											</div>
 											
 											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/폴로닉스.png" title="폴로닉스" /></span>
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
 												<span class="rCell col_coin">ETH</span>
 												<span class="rCell col_btc">0.87691000</span>
 												<span class="rCell col_usd">212</span>
@@ -186,7 +186,7 @@
 											</div>
 											
 											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/빗썸.png" title="빗썸" /></span>
+												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/2.png" title="빗썸" /></span>
 												<span class="rCell col_coin">BTC</span>
 												<span class="rCell col_btc">1</span>
 												<span class="rCell col_usd">-</span>
