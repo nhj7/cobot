@@ -1,4 +1,4 @@
-package com.prototype.nhj.svc;
+package kr.co.cobot.svc;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;

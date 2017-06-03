@@ -50,7 +50,10 @@ public aspect aspectTmp {
 	public void doConCheck(JoinPoint joinPoint) {
 		Object[] args = joinPoint.getArgs();
 		System.out.println("doConCheck : "+joinPoint.getSignature()); // For testing purposes.
-		System.out.println("Controller param : " + args[1]);
+		if( args != null && args.length > 1 ){
+			System.out.println("Controller param : " + args[1]);
+		}
+			
 		
 
 		// System.out.println("point cut : " + sig);

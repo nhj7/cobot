@@ -1,4 +1,4 @@
-package com.prototype.nhj.ctrl;
+package kr.co.cobot.ctrl;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.prototype.nhj.svc.HomeSvc;
+import kr.co.cobot.svc.HomeSvc;
 
 /**  
  * Handles requests for the application home page.
