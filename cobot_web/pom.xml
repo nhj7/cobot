@@ -46,7 +46,7 @@
 			<version>1.8.6</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -167,6 +167,12 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-servlet-api -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>9.0.0.M17</version>
+		</dependency>
 
 	</dependencies>
 	<build>
@@ -219,7 +225,7 @@
 					<complianceLevel>1.8</complianceLevel>
 					<outxml>true</outxml>
 					<!-- new configuration is here -->
-					
+
 				</configuration>
 				<executions>
 					<execution>
