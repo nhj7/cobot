@@ -8,7 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nhj.api.poloniex.PoloniexAPI;
+import nhj.api.exchange.PoloniexAPI;
 import nhj.db.mybatis.MyBatisFactory;
 import nhj.util.DateUtil;
 import nhj.util.PrintUtil;
@@ -69,7 +69,7 @@ public class BAT_BUYER {
 			
 			String mm = DateUtil.getDttm("mm");			
 			
-			// ÄÚÀÎ´ç ±¸¸Å °¡°Ý
+			// ï¿½ï¿½ï¿½Î´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			BigDecimal UNIT_BTC = btc_bal.divide( new BigDecimal( LIMIT_NUMBER_COIN ), 8, BigDecimal.ROUND_CEILING );
 			
 			l("btc_bal : "+btc_bal + ", UNIT_BTC : " + UNIT_BTC);
@@ -77,7 +77,7 @@ public class BAT_BUYER {
 			
 			
 			
-			// ±¸ÀÔ ÃßÃµ ÄÚÀÎ Á¶È¸ ¸®½ºÆ® 
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ãµ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½Æ® 
 			List RCM_LIST = dao.selectRcmList(mm);
 			PrintUtil.printList(RCM_LIST);
 			for(int i = 0 ; i < RCM_LIST.size();i++){
@@ -97,7 +97,7 @@ public class BAT_BUYER {
 						BigDecimal PER_CH = setPerCh(COIN_INFO, RCM_Map.get("CUR_PRICE"));
 						
 						
-						l("ÀÌ¹Ì º¸À¯ÇÑ ÄÚÀÎÀÔ´Ï´Ù. " + ccd + ", PER_CH : " + PER_CH + ", BUY_PRICE : " + COIN_INFO.get("BUY_PRICE") + ", CUR_PRICE : " + RCM_Map.get("CUR_PRICE") );
+						l("ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. " + ccd + ", PER_CH : " + PER_CH + ", BUY_PRICE : " + COIN_INFO.get("BUY_PRICE") + ", CUR_PRICE : " + RCM_Map.get("CUR_PRICE") );
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -106,13 +106,13 @@ public class BAT_BUYER {
 				}else{
 					
 					if( MY_COINS.size() < LIMIT_NUMBER_COIN ){
-						// TODO ... ±¸¸ÅÇÏ±â    
+						// TODO ... ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½    
 						
 						
 						
 						Map NEW_VAL_MAP = new HashMap();
 						
-						// ±¸¸Å°¡°Ý °áÁ¤ÇÏ±â
+						// ï¿½ï¿½ï¿½Å°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 						BigDecimal BUY_PRICE = ((BigDecimal)RCM_Map.get("CUR_PRICE")).divide( new BigDecimal(1.0025), 2);
 						
 						BigDecimal AMOUNT = UNIT_BTC.divide( BUY_PRICE , 8, BigDecimal.ROUND_FLOOR);
@@ -125,20 +125,20 @@ public class BAT_BUYER {
 						NEW_VAL_MAP.put("BUY_DTTM", DateUtil.getDttm("yyyy-MM-dd kk:mm:ss"));
 						MY_COINS.put(ccd  , NEW_VAL_MAP);
 						
-						l("[" + ccd + "] : ÄÚÀÎÀ» [" + RCM_Map.get("CUR_PRICE") + "]¿¡ ±¸¸Å¿äÃ»ÇÏ¿´½À´Ï´Ù.");
+						l("[" + ccd + "] : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ [" + RCM_Map.get("CUR_PRICE") + "]ï¿½ï¿½ ï¿½ï¿½ï¿½Å¿ï¿½Ã»ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 						
 						break;
 					}else{
-						l("º¸À¯ ÄÚÀÎÀÌ ÃÊ°úÇÏ¿© ±¸¸ÅÇÏ½Ç ¼ö ¾ø½À´Ï´Ù. [" + ccd + "]" );
+						l("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. [" + ccd + "]" );
 					}
 				}
 			}
 			
-			l("Á¤»ê : ======================================================");
+			l("ï¿½ï¿½ï¿½ï¿½ : ======================================================");
 			
 			BigDecimal AVG_PER_CH = BigDecimal.ZERO;
 			
-			// ÇöÀç °¡°Ý Á¶È¸ ¹× ¼¼ÆÃ
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			{
 				String[] arr_ccd = new String[MY_COINS.size()];
 				java.util.Iterator it = MY_COINS.keySet().iterator();
@@ -175,11 +175,11 @@ public class BAT_BUYER {
 				BigDecimal PER_CH = new BigDecimal( VAL_MAP.get("PER_CH").toString());
 				
 				AVG_PER_CH = AVG_PER_CH.add(PER_CH);
-				l( ccd + " : Áõ°¨À² : " + VAL_MAP.get("PER_CH")  + ", BUY_PRICE : " + VAL_MAP.get("BUY_PRICE") + ", BUY_DTTM : " + VAL_MAP.get("BUY_DTTM"));
+				l( ccd + " : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : " + VAL_MAP.get("PER_CH")  + ", BUY_PRICE : " + VAL_MAP.get("BUY_PRICE") + ", BUY_DTTM : " + VAL_MAP.get("BUY_DTTM"));
 			}
 			
 			AVG_PER_CH = AVG_PER_CH.divide( new BigDecimal(MY_COINS.size() - 1), 2 );
-			l("Á¤»ê : Æò±Õ : " + AVG_PER_CH);
+			l("ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½ï¿½ : " + AVG_PER_CH);
 			
 			String newMM = "";
 			

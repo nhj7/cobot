@@ -122,12 +122,14 @@
 	
 	setTimeout( '$("#main > section.one").css("background-image","url()");', 1000);
 	
+	/*
 	setTimeout("setThemeColor('green');", 150);
 	
 	setTimeout("setThemeColor('#005000');", 600);
 	setTimeout("setThemeColor('green');", 900);
 	
 	setTimeout("setThemeColor('white');", 1050); 
+	*/
 	
 	
 	//alert( $("#main > section.one").attr("class") );

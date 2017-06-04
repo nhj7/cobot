@@ -9,7 +9,7 @@ import java.sql.Statement;
 import org.aspectj.lang.Signature;
 
 import cubrid.jdbc.driver.CUBRIDStatement;
-import util.NetUtil;
+import nhj.util.NetUtil;
 
 
 

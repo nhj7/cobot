@@ -7,7 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nhj.api.poloniex.PoloniexAPI;
+import nhj.api.exchange.PoloniexAPI;
 import nhj.config.LogBackConfigurer;
 import nhj.db.mybatis.MyBatisFactory;
 import nhj.util.DateUtil;

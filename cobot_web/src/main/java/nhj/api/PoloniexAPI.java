@@ -1,6 +1,5 @@
-package nhj.api.exchange;
+package nhj.api;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,24 +20,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.cobot.bat.BAT_CO_SNAP;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import nhj.api.IInvestmentAPI;
-import nhj.api.VoDeal;
-import nhj.api.VoProduct;
 import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
-public class PoloniexAPI implements IInvestmentAPI {
+public class PoloniexAPI {
 	
-	final static Logger logger = LoggerFactory.getLogger(BAT_CO_SNAP.class);
+	
 	
 	private String apiKey;
 	private String apiSecret;
@@ -71,7 +64,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 	    post.setEntity(new UrlEncodedFormEntity(params));
 
 	    CloseableHttpResponse response = httpClient.execute(post);
-	    HttpEntity responseEntity = response.getEntity();
+	    HttpEntity responseEntity = (HttpEntity) response.getEntity();
 	    return EntityUtils.toString(responseEntity);
 	}
 	
@@ -79,7 +72,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 		return String.valueOf(System.currentTimeMillis());
 	}
 	
-	@Override
+	
 	public Map<String, Map> returnBalances() throws Throwable {
 	    
 		String nonce = getNonce();
@@ -151,81 +144,22 @@ public class PoloniexAPI implements IInvestmentAPI {
 	
 	
 	public static void main(String[] args) throws Throwable {
-		String key = "K3Z5ZFD6-5X36MSHK-5D23RLL1-PQ2HN46X";
-		String secret = "85dc221d70f2f905087950717b808c61ab3b5e32ed07cb94b03484da9e2dc74dfd9ef3594ac6aff36a1a7f61b26e835570a03952f41e1ed7c713448ef0431d56";
 		
-		PoloniexAPI api = new PoloniexAPI(key, secret);
 		
 		//Map rtnMap = api.buy("BCN", new BigDecimal( "0.00000141") , new BigDecimal(5000) );
 		
 		//System.out.println("rtnMap : "+rtnMap);
 		
-		Map m = api.returnBalances();
+		//Map m = api.returnBalances();
 		
-		System.out.println(m);
+		PoloniexAPI api = new PoloniexAPI("", "");
+		
+		List poloList = api.returnTicker();
+		
+		System.out.println(poloList);
 	}
 	
 	
-	@Override
-	public Map buy(String currencyPair, BigDecimal rate, BigDecimal amount) throws Throwable {
-		
-		logger.info("buy ���� : " + currencyPair + " , " + rate + " , "  + amount );
-		
-		long cur = System.currentTimeMillis();
-		
-		currencyPair = "BTC_"+currencyPair;
-		
-		String nonce = getNonce();
-	    String queryArgs = "command=buy&nonce=" + nonce + "&currencyPair=" + currencyPair + "&rate=" + rate + "&amount=" + amount ;
-	    String jsonStr = request(queryArgs);
-	    
-	    logger.info("buy.jsonStr : " + jsonStr);
-	    
-	    JsonParser jp = new JsonParser();
-	    JsonObject jo = jp.parse(( jsonStr )).getAsJsonObject();
-	    
-	    
-	    
-	    
-	    Map rtnMap = new HashMap();
-	    
-	    if( jo.get("orderNumber") != null){
-	    	String orderNumber = jo.get("orderNumber").toString();
-	    	rtnMap.put("orderNumber", orderNumber);
-	    }
-	    
-	    //((JsonObject)jo.get("resultingTrades")))
-	    
-	    JsonArray ja_trades = jo.get("resultingTrades").getAsJsonArray();
-	    
-	    ja_trades.forEach(item ->
-		    {
-		    	JsonObject obj = item.getAsJsonObject();
-		    	
-		    	
-		    	
-		    	//li.add(vo);
-		    	
-		    }
-	    );
-	    
-	    
-	    
-	    logger.info("buy ���� : " + currencyPair + " , " + rate + " , "  + amount + " , " + (System.currentTimeMillis() - cur) + "ms" );
-	    
-	    return rtnMap;
-		
-		
-		
-	}
-
-	@Override
-	public void sell() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List returnDepositAddresses() throws Throwable {
 		String nonce = getNonce();
 	    
@@ -242,15 +176,18 @@ public class PoloniexAPI implements IInvestmentAPI {
 	    
 	    for(int i = 1; it.hasNext();i++){
 	    	Entry en = (Entry)it.next();
+	    	/*
 	    	VoProduct vo = new VoProduct();
 	    	vo.name = en.getKey().toString();
 	    	vo.depositAddress = en.getValue().toString().replaceAll("\"", "");
 	    	li.add(vo);
+	    	*/
+	    	
 	    }
 	    return li; 
 	}
 
-	@Override
+	
 	public List returnDepositsWithdrawals() throws Throwable {
 		String nonce = getNonce();
 		
@@ -269,7 +206,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 	    ja_deposits.forEach(item ->
 		    {
 		    	JsonObject obj = item.getAsJsonObject();
-		    	
+		    	/*
 		    	VoDeal vo = new VoDeal();
 		    	vo.type = "deposit";
 		    	vo.currency = obj.get("currency").toString();
@@ -282,6 +219,8 @@ public class PoloniexAPI implements IInvestmentAPI {
 		    	vo.status = obj.get("status").toString();
 		    	
 		    	li.add(vo);
+		    	*/
+		    	
 		    	
 		    }
 	    );
@@ -289,7 +228,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 	    return li; 
 	}
 
-	@Override
+	
 	public List returnTicker() throws Throwable {
 		
 		String html = URLUtil.htmlToString("https://poloniex.com/public?command=returnTicker");
@@ -358,7 +297,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 		return jo.get(key).toString().replaceAll("\"", "");
 	}
 
-	@Override
+	
 	public void buy() throws Throwable {
 		// TODO Auto-generated method stub
 		

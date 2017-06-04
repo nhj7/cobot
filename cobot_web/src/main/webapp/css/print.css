@@ -1,0 +1,54 @@
+body {
+  font-size: 0.7em;
+  background-color: #fff; }
+  body #resolutionAlert, body #criticalMessage {
+    display: none !important; }
+
+.header {
+  background: none;
+  background-color: #ffffff;
+  border: none;
+  text-align: center;
+  height: auto;
+  float: none; }
+  .header .logo {
+    float: none !important;
+    background: none;
+    margin-bottom: 22px; }
+    .header .logo a img {
+      padding: 0;
+      width: 280px !important;
+      height: auto !important; }
+  .header .tabs {
+    display: none; }
+
+.main {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important; }
+
+.footer, body.feature .footer {
+  background: none;
+  background-color: #ffffff;
+  max-width: initial; }
+  .footer .meta, body.feature .footer .meta {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #ccc; }
+    .footer .meta .group, body.feature .footer .meta .group {
+      border: none; }
+    .footer .meta img, body.feature .footer .meta img {
+      display: none; }
+  .footer *, body.feature .footer * {
+    color: #1e2324 !important; }
+  .footer .links, .footer .switchLink, body.feature .footer .links, body.feature .footer .switchLink {
+    display: none; }
+
+body.balancesPage #wdInfo, body.balancesPage .sectionHeading, body.balancesPage th.actions, body.balancesPage td.actions, body.balancesPage #marketFilterMessage, body.balancesPage #balances .sectionBody + p, body.balancesPage h1 {
+  display: none !important; }
+body.balancesPage th.value {
+  border: none; }
+body.balancesPage #balancesTable th.name, body.balancesPage #balancesTable td.name {
+  display: table-cell; }
+
+/*# sourceMappingURL=print.css.map */

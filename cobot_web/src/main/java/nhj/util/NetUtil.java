@@ -1,4 +1,4 @@
-package util;
+package nhj.util;
 
 import java.net.InetAddress;
 

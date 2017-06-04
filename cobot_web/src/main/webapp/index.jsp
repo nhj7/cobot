@@ -101,7 +101,8 @@
 
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
-						<div id="btn_wrapp_search" style="text-align:right;width:95%">
+						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;">
+							Cobot v 0.1 &nbsp;&nbsp;
 							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow();"/>
 							
 						</div>
@@ -125,6 +126,7 @@
 					}
 					#coinRank {display: table; width: 100%; font-size:14px;}
 					#coinRank .rankRow {display: table-row;}
+					#coinRank .rankRow .header { color:red; }
 					#coinRank .rCell {
 						display: table-cell; 
 						padding: 3px; 
@@ -139,9 +141,11 @@
 					#coinRank .col_usd {width: 20%;}
 					#coinRank .col_krw {width: 20%;text-align:right;}
 					#coinRank .col_ch {width: 20%;}
+					.crheader{ text-align:center; background-color:#005766 !important; color:white;}
 					.rIcon {width: 20px;height:16px; }
 					.up{ color:red }
 					.down{ color:blue }
+					.rr_even{ background-color:#F8FFFF !important;}
 					</style>
 
 				<!-- coin_table -->
@@ -158,15 +162,18 @@
 										</div>
 										
 										
+										
 										<div id="coinRank">
+										
 											<div class="rankRow" style="font-weight:bold;">
-												<span class="rCell col_ex" style="text-align:center;">Ex</span>
-												<span class="rCell col_coin" style="text-align:center;">Coin</span>
-												<span class="rCell col_btc" style="text-align:center;">BTC</span>
-												<span class="rCell col_usd" style="text-align:center;">$</span>
-												<span class="rCell col_krw" style="text-align:center;">KRW</span>
-												<span class="rCell col_ch" style="text-align:center;">CH</span>
+												<span class="rCell col_ex crheader" >Ex</span>
+												<span class="rCell col_coin crheader" style="">Coin</span>
+												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
+												<span class="rCell col_usd crheader" style="text-align:center;">$</span>
+												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
+												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
 											</div>
+											
 											<div class="rankRow">
 												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
 												<span class="rCell col_coin">BTC</span>
@@ -177,12 +184,12 @@
 											</div>
 											
 											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
-												<span class="rCell col_coin">ETH</span>
-												<span class="rCell col_btc">0.87691000</span>
-												<span class="rCell col_usd">212</span>
-												<span class="rCell col_krw">247,294</span>
-												<span class="rCell col_ch down">-2.45</span>
+												<span class="rCell col_ex rr_even"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
+												<span class="rCell col_coin rr_even">ETH</span>
+												<span class="rCell col_btc rr_even">0.87691000</span>
+												<span class="rCell col_usd rr_even">212</span>
+												<span class="rCell col_krw rr_even">247,294</span>
+												<span class="rCell col_ch down rr_even">-2.45</span>
 											</div>
 											
 											<div class="rankRow">
@@ -204,41 +211,31 @@
 									
 								</div>
 								<div class="4u 12u$(mobile)">
-									<article id="coinone_chat" class="item" >
+								
+								
+									<!-- article id="coinone_chat" class="item" >
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<img src="/img/btn/세팅.png" width="16px" height="16px"/>
+											<img src="/img/btn/setting.png" width="16px" height="16px"/>
 											&nbsp;&nbsp;&nbsp;
-											<img src="/img/btn/닫기.png" width="16px" height="16px" onclick="$('#coinone_chat').remove();"/>
+											<img src="/img/btn/close.png" width="16px" height="16px" onclick="$('#coinone_chat').remove();"/>
 										</div>
 										<iframe src="https://coinone.co.kr/chat/" width="90%" height=300px></iframe>
-									</article>
+									</article  -->
 									<!-- article class="item" style="background-color:red">
 										폴로닉스 채팅 닫기
 										<iframe src="https://poloniex.com/trollbox" width="90%" height=300px></iframe>
 										
 									</article-->
+									
 								</div>
-								<div class="4u$ 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="img/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>Dolor Penatibus</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="img/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>Orci Convallis</h3>
-										</header>
-									</article>
-								</div>
+								
 							</div>
 
 						</div>
 					</section>
 
 				<!-- About Me -->
-					<section id="about" class="three">
+					<!-- section id="about" class="three">
 						<div class="container">
 
 							<header>
@@ -255,10 +252,10 @@
 							ornare iaculis.</p>
 
 						</div>
-					</section>
+					</section-->
 
 				<!-- Contact -->
-					<section id="contact" class="four">
+					<!-- section id="contact" class="four">
 						<div class="container">
 
 							<header>
@@ -284,7 +281,7 @@
 							</form>
 
 						</div>
-					</section>
+					</section-->
 
 			</div>
 		<!-- End Main -->

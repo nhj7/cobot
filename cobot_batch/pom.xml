@@ -13,7 +13,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
- 
+
 				</configuration>
 			</plugin>
 
@@ -156,31 +156,62 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.25</version>
 		</dependency>
-	<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
-	<dependency>
-		<groupId>com.googlecode.log4jdbc</groupId>
-		<artifactId>log4jdbc</artifactId>
-		<version>1.2</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
+		<dependency>
+			<groupId>com.googlecode.log4jdbc</groupId>
+			<artifactId>log4jdbc</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-container-grizzly -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-container-grizzly</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-container-grizzly-client -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-container-grizzly-client</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-container-jdk-client -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-container-jdk-client</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-spi -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-spi</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-core -->
+		<dependency>
+			<groupId>org.glassfish.tyrus</groupId>
+			<artifactId>tyrus-core</artifactId>
+			<version>1.13.1</version>
+		</dependency>
 
 	</dependencies>
 	<properties>
 
-    <spring.maven.artifact.version>3.0.5.RELEASE</spring.maven.artifact.version>      
+		<spring.maven.artifact.version>3.0.5.RELEASE</spring.maven.artifact.version>
 
-    <!-- 
+		<!-- 해당 문제 발생시. [WARN] Using platform encoding (MS949 actually) to copy 
+			filtered resources, i.e. build is platform dependent! -->
 
-    해당 문제 발생시.
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    [WARN] Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!        
-
-     -->
-
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 
 
-  </properties>
+	</properties>
 </project>   
