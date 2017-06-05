@@ -1,4 +1,4 @@
 /target/
 /.settings/*
 .settings/*
-web.xml
+/src/**/web.xml
