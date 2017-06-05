@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.co.cobot.conf.HibernateCfg;
 import kr.co.cobot.entity.TbExchange;
 
 public class ExchManager implements Runnable {
 
-	@Override
+	@Override 
 	public void run() {
 		
 		
@@ -29,8 +31,12 @@ public class ExchManager implements Runnable {
 				for(int i = 0; i < exchList.size() ; i++){
 					
 					TbExchange te = (TbExchange) exchList.get(i);
-					//Map map = new BeanMap(someBean);
-
+					ObjectMapper oMapper = new ObjectMapper();
+					
+					// object -> Map
+			        Map<String, Object> map = oMapper.convertValue(te, Map.class);
+			        System.out.println(map);
+					
 				}
 				
 				
