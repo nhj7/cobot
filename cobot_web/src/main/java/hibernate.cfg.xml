@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="cobot_sf">
+  <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
+  <property name="hibernate.connection.password">cobot1234</property>
+  <property name="hibernate.connection.url">jdbc:mariadb://220.230.118.187:33067</property>
+  <property name="hibernate.connection.username">cobot</property>
+  <mapping class="kr.co.cobot.entity.TbExchange"/>
+ </session-factory>
+</hibernate-configuration>

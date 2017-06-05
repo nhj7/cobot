@@ -1,13 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="util.*" %>
+<%@ page import="nhj.util.*" %>
 <%
 	System.out.println("index.jsp call");
+	
+	if(true){
+		//throw new Exception("123123");
+	}
+		
 %>
 <!DOCTYPE HTML>
 <html>
 	<head>
 		<title>코봇-필요한 정보를 손쉽게</title>
+		<meta name=”description=” Content=”코봇,비트코인,코인,가상화폐,암호화폐,4차혁명,쉽게보는4차혁명”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />

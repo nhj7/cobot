@@ -49,12 +49,25 @@
 			<web-resource-name>Secured</web-resource-name>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
-		<user-data-constraint> 
-			<transport-guarantee>${ssl.redirect}</transport-guarantee> 
+		<ip-constraint>
+			<allow>172.30.1.0/24</allow>
+		</ip-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Secured</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
 
-	<!-- error 페이지  -->
+	<!-- error 페이지 -->
 
 	<error-page>
 		<error-code>400</error-code>
@@ -76,5 +89,5 @@
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/WEB-INF/jsp/error/exception.jsp</location>
 	</error-page>
-	
+
 </web-app>

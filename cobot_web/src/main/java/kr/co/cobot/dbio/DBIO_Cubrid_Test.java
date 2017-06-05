@@ -1,4 +1,4 @@
-package dbio;
+package kr.co.cobot.dbio;
 
 
 import java.sql.Connection;

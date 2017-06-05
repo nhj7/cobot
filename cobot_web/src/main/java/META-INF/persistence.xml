@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="cobot_web" transaction-type="RESOURCE_LOCAL">
+		<class>kr.co.cobot.entity.TbAn1</class>
+		<class>kr.co.cobot.entity.TbAn1Id</class>
+		<class>kr.co.cobot.entity.TbBuyReq</class>
+		<class>kr.co.cobot.entity.TbBuyReqId</class>
+		<class>kr.co.cobot.entity.TbCoSnap</class>
+		<class>kr.co.cobot.entity.TbCoSnapId</class>
+		<class>kr.co.cobot.entity.TbCoin</class>
+		<class>kr.co.cobot.entity.TbExchCo</class>
+		<class>kr.co.cobot.entity.TbExchCoId</class>
+		<class>kr.co.cobot.entity.TbExchange</class>
+		
+		<properties>
+			<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+			<property name="hibernate.connection.driver_class" value="org.mariadb.jdbc.Driver"/>
+			<property name="hibernate.connection.url" value='jdbc:log4jdbc:mariadb://220.230.118.187:33067/cobot'/>
+			<property name="hibernate.default_schema" value="cobot"/>
+			<property name="hibernate.connection.username" value="cobot"/>
+			<property name="hibernate.connection.password" value="cobot1234"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mariadb://220.230.118.187:33067"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="djdl77&amp;&amp;"/>
+			<property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>

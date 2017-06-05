@@ -4,6 +4,8 @@ import javax.servlet.ServletContextEvent;
 
 import org.springframework.web.context.ContextLoaderListener;
 
+import kr.co.cobot.bot.ExchManager;
+
 public class CobotContextListener extends ContextLoaderListener{
 
 	@Override
@@ -22,7 +24,7 @@ public class CobotContextListener extends ContextLoaderListener{
 		System.out.println("CobotContextListener Start...");
 		System.out.println("mode : " + System.getProperty("mode") );
 		
-		
+		new Thread( new ExchManager()).start();
 		
 	}
 	
