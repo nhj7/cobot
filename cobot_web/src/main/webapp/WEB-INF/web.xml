@@ -7,14 +7,13 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
-	
-	<!-- listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener-->
+
+	<!-- listener> <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> 
+		</listener -->
 	<listener>
 		<listener-class>kr.co.cobot.conf.CobotContextListener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -45,13 +44,37 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<security-constraint>
+	<!-- security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secured</web-resource-name>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
-		<user-data-constraint>
-			<transport-guarantee>${ssl.redirect}</transport-guarantee>
+		<user-data-constraint> 
+			<transport-guarantee>${ssl.redirect}</transport-guarantee> 
 		</user-data-constraint>
-	</security-constraint>
+	</security-constraint-->
+
+	<!-- error 페이지  -->
+
+	<error-page>
+		<error-code>400</error-code>
+		<location>/WEB-INF/jsp/error/error400.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/jsp/error/error404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/jsp/error/error403.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/jsp/error/error500.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/jsp/error/exception.jsp</location>
+	</error-page>
+	
 </web-app>
