@@ -43,20 +43,7 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
-
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>Secured</web-resource-name>
-			<url-pattern>/*</url-pattern>
-		</web-resource-collection>
-		<ip-constraint>
-			<allow>172.30.1.0/24</allow>
-		</ip-constraint>
-		<user-data-constraint>
-			<transport-guarantee>NONE</transport-guarantee>
-		</user-data-constraint>
-	</security-constraint>
-	
+		
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secured</web-resource-name>
