@@ -41,6 +41,10 @@ function openSocket() {
 		}else{
 			//alert( jo.value.eid_1 );
 			//writeResponse( event.data );
+			
+			$("#coinRank div[data-cd=data]").css("background-color","white");
+			$("#coinRank_bak div[data-cd=data]").css("background-color","white");
+			
 			$("#coinRank div[data-cd=data]").remove();
 			$("#coinRank_bak div[data-cd=data]").remove();
 			regCoins( jo.value.eid_2.concat(jo.value.eid_1)  );

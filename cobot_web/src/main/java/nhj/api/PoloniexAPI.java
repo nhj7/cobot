@@ -281,12 +281,13 @@ public class PoloniexAPI {
 			
 			tickMap.put("price", get(tickJo, "last"));
 			tickMap.put("per_ch", get(tickJo, "percentChange"));
-			tickMap.put("base_vol", get(tickJo, "baseVolume"));
-			tickMap.put("quote_vol", get(tickJo, "quoteVolume"));
 			
-			tickMap.put("is_frozen", get(tickJo, "isFrozen"));
-			tickMap.put("high24hr", get(tickJo, "high24hr"));
-			tickMap.put("low24hr", get(tickJo, "low24hr"));
+			//tickMap.put("base_vol", get(tickJo, "baseVolume"));
+			//tickMap.put("quote_vol", get(tickJo, "quoteVolume"));
+			
+			//tickMap.put("is_frozen", get(tickJo, "isFrozen"));
+			//tickMap.put("high24hr", get(tickJo, "high24hr"));
+			//tickMap.put("low24hr", get(tickJo, "low24hr"));
 			
 			//System.out.println("tickMap : " + tickMap);
 			//System.out.println("tickJo : " + tickJo);
