@@ -1,5 +1,12 @@
 package kr.co.cobot.bot;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import nhj.api.PoloniexAPI;
+import nhj.util.PrintUtil;
+
 public class TickManager implements Runnable {
 
 	//
@@ -8,17 +15,31 @@ public class TickManager implements Runnable {
 	public synchronized void run() {
 		
 		
-		try {
+		while(true){
+			try {
+				
+				
+				PoloniexAPI api = new PoloniexAPI("", "");
+				
+				List coinInfo = api.returnTicker();
+				Map m = new HashMap();
+				
+				//PrintUtil.printList(coinInfo);
+				
+				m.put("eid" + 1, coinInfo);
+				DATA.setCoinInfo(m);
+				
+				Thread.sleep( 60000 );
+				
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
-			
-			
-			Thread.sleep(2000);
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		
+		
 		
 		
 		

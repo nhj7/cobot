@@ -5,6 +5,7 @@ import javax.servlet.ServletContextEvent;
 import org.springframework.web.context.ContextLoaderListener;
 
 import kr.co.cobot.bot.ExchManager;
+import kr.co.cobot.bot.TickManager;
 
 public class CobotContextListener extends ContextLoaderListener{
 
@@ -21,10 +22,11 @@ public class CobotContextListener extends ContextLoaderListener{
 		// TODO Auto-generated method stub
 		super.contextInitialized(event);
 		
-		System.out.println("CobotContextListener Start...");
+		System.out.println("CobotContextListener Start........");
 		System.out.println("mode : " + System.getProperty("mode") );
 		
 		new Thread( new ExchManager()).start();
+		new Thread( new TickManager()).start();
 		
 	}
 	

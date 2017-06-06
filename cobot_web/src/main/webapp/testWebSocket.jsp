@@ -20,6 +20,12 @@
 
 	<!-- Script to utilise the WebSocket -->
 	<script type="text/javascript">
+	var text = '{ "employees" : [' +
+	'{ "firstName":"John" , "lastName":"Doe" },' +
+	'{ "firstName":"Anna" , "lastName":"Smith" },' +
+	'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+		var obj = JSON.parse(text);
+	alert(obj);
 		var webSocket;
 		var messages = document.getElementById("messages");
 
@@ -32,7 +38,7 @@
 			}
 
 			// Create a new instance of the websocket
-			webSocket = new WebSocket("ws://localhost:8080/echo");
+			webSocket = new WebSocket("ws://localhost/echo");
 
 			/**
 			 * Binds functions to the listeners for the websocket.

@@ -12,7 +12,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>코봇-필요한 정보를 손쉽게</title>
+		<title>코봇-거래소 정보 모아보자</title>
 		<meta name=”description=” Content=”코봇,비트코인,코인,가상화폐,암호화폐,4차혁명,쉽게보는4차혁명”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
@@ -130,23 +130,35 @@
 						background-size:14px 80%;
 						background-position:98% 50%;
 					}
-					#coinRank {display: table; width: 100%; font-size:14px;}
-					#coinRank .rankRow {display: table-row;}
-					#coinRank .rankRow .header { color:red; }
-					#coinRank .rCell {
+					.coinRank {
+						display: table-block; 
+						width: 100%; 
+						font-size:14px;
+						height:400px;
+						overflow:scroll;
+					}
+					.coinRank .rankRow {
+						display: table-row;
+						height:1em;
+						width:100%;
+						
+					}
+					.coinRank .rankRow .header { color:red; }
+					.coinRank .rCell {
 						display: table-cell; 
-						padding: 3px; 
+						padding-top: 3px; 
+						padding-bottom: 3px;
 						border-bottom: 1px solid #DDD;
 						background-color:white;
 						vartical-align:middle;
 						line-height: 20px;
 					}
-					#coinRank .col_ex { width: 5%;}
-					#coinRank .col_coin {width: 10%;}
-					#coinRank .col_btc {width: 15%;}
-					#coinRank .col_usd {width: 20%;}
-					#coinRank .col_krw {width: 20%;text-align:right;}
-					#coinRank .col_ch {width: 20%;}
+					.coinRank .col_ex { width: 9%;}
+					.coinRank .col_coin {width: 15%;}
+					.coinRank .col_btc {width: 20%;}
+					.coinRank .col_usd {width: 20%;}
+					.coinRank .col_krw {width: 20%;}
+					.coinRank .col_ch {width: 15%;}
 					.crheader{ text-align:center; background-color:#005766 !important; color:white;}
 					.rIcon {width: 20px;height:16px; }
 					.up{ color:red }
@@ -158,8 +170,8 @@
 					<section id="coin_table" class="two">
 						<div class="container">							
 							<div class="row">
-								<div class="4u 12u$(mobile)">
-									<article class="item">
+								<div class="4u 12u$(mobile)" style="width:100%;">
+									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
 											<img src="/img/btn/setting.png" width="16px" height="16px"/>
@@ -167,46 +179,18 @@
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
 										</div>
 										
-										
-										
-										<div id="coinRank">
-										
-											<div class="rankRow" style="font-weight:bold;">
+										<div class="coinRank" id="coinRank" style="font-weight:bold;width:100%;" >
+											<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
 												<span class="rCell col_ex crheader" >Ex</span>
 												<span class="rCell col_coin crheader" style="">Coin</span>
 												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
-												<span class="rCell col_usd crheader" style="text-align:center;">$</span>
+												<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
 												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
 												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
 											</div>
 											
-											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
-												<span class="rCell col_coin">BTC</span>
-												<span class="rCell col_btc">1</span>
-												<span class="rCell col_usd">2,324</span>
-												<span class="rCell col_krw">2,733,333</span>
-												<span class="rCell col_ch up">+6.29</span>
-											</div>
-											
-											<div class="rankRow">
-												<span class="rCell col_ex rr_even"><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>
-												<span class="rCell col_coin rr_even">ETH</span>
-												<span class="rCell col_btc rr_even">0.87691000</span>
-												<span class="rCell col_usd rr_even">212</span>
-												<span class="rCell col_krw rr_even">247,294</span>
-												<span class="rCell col_ch down rr_even">-2.45</span>
-											</div>
-											
-											<div class="rankRow">
-												<span class="rCell col_ex"><img class="rIcon" src="/img/exchange/2.png" title="빗썸" /></span>
-												<span class="rCell col_coin">BTC</span>
-												<span class="rCell col_btc">1</span>
-												<span class="rCell col_usd">-</span>
-												<span class="rCell col_krw">3,095,000</span>
-												<span class="rCell col_ch up">+0.29</span>
-											</div>
 										</div>
+										
 									</article>
 									
 									<article  class="item">
@@ -290,6 +274,17 @@
 					</section-->
 
 			</div>
+		<!-- div>
+			<button type="button" onclick="openSocket();">Open</button>
+			<button type="button" onclick="send();">Send</button>
+			<button type="button" onclick="closeSocket();">Close</button>
+		</div-->
+		입력 : <input type=text id="input_txt" style="width:100%;" /> <br />
+		상태 : <input type=text id="prg_txt" style="width:100%;" />
+		
+		<!-- Server responses get written here -->
+		<div id="messages"></div>
+	
 		<!-- End Main -->
 		<!-- Footer -->
 			<div id="footer">
@@ -302,13 +297,7 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="/js/jquery.min.js"></script>
-			<script src="/js/jquery.scrolly.min.js"></script>
-			<script src="/js/jquery.scrollzer.min.js"></script>
-			<script src="/js/skel.min.js"></script>
-			<script src="/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/js/main.js"></script>
+			<script src="/js/include.jsp"></script>
 			
 	</body>
 </html>

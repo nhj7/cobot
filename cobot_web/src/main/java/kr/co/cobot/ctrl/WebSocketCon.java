@@ -2,6 +2,7 @@ package kr.co.cobot.ctrl;
 
 import java.io.IOException;
 
+import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -10,8 +11,12 @@ import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.co.cobot.bot.DATA;
+import nhj.util.JSONUtil;
 
 @Controller("TestWebSocketController")
 @RequestMapping(value = "Test")
@@ -42,7 +47,11 @@ public class WebSocketCon {
 
 		try {
 			final Basic basic = session.getBasicRemote();
-			basic.sendText("Connection Established");
+			
+			JSONObject jo = new JSONObject();
+			jo.put("cmd", "status");
+			jo.put("value", "Connection onOpen!!!");
+			basic.sendText( jo.toJSONString() );
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -71,13 +80,21 @@ public class WebSocketCon {
 	 * When a user sends a message to the server, this method will intercept the
 	 * message and allow us to react to it. For now the message is read as a
 	 * String.
+	 * @throws Throwable 
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		System.out.println("Message from " + session.getId() + ": " + message);
 		try {
 			final Basic basic = session.getBasicRemote();
-			basic.sendText("to : " + message);
+			JSONObject jo = new JSONObject();
+			jo.put("cmd", "coin_info");
+			jo.put("value", JSONUtil.getJson(DATA.getCoinInfo()).toJSONString() );
+			
+			basic.sendText( jo.toJSONString() );
+			
+			
+			//basic.sendText("to : " + message);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

@@ -20,6 +20,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -288,7 +290,7 @@ public class PoloniexAPI {
 			//System.out.println("tickJo : " + tickJo);
 			//System.out.println(arrTitle[1]);
 			
-			li.add(tickMap);
+			li.add( (JSONObject) new JSONParser().parse(JSONObject.toJSONString(tickMap)) );
 		}
 		return li;
 	}

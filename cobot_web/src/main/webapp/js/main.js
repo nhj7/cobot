@@ -15,6 +15,8 @@
 	});
 
 	$(function() {
+		
+		
 
 		var	$window = $(window),
 			$body = $('body');
@@ -120,7 +122,7 @@
 	});
 	
 	
-	setTimeout( '$("#main > section.one").css("background-image","url()");', 1000);
+	//setTimeout( '$("#main > section.one").css("background-image","url()");', 1000);
 	
 	/*
 	setTimeout("setThemeColor('green');", 150);
@@ -130,12 +132,32 @@
 	
 	setTimeout("setThemeColor('white');", 1050); 
 	*/
-	
-	
+	initCoins();
+	setInterval("initCoins();", 60000);
+	//initCoins();
 	//alert( $("#main > section.one").attr("class") );
 })(jQuery);
+
+function initCoins(){
+	
+	if (webSocket !== undefined
+			&& webSocket.readyState !== WebSocket.CLOSED) {
+		//alert(WebSocket.CLOSED);
+		send();
+	}else{
+		//alert(11);
+		openSocket();
+	}
+	
+}
 
 function setThemeColor( color ){
 	$('meta[name=theme-color]').remove();	
 	$('head').append('<meta name="theme-color" content="'+color+'">');
+}
+
+function exactRound(num, decimals) {
+	if (decimals<0)decimals=0;
+    var sign = num >= 0 ? 1 : -1;
+    return (Math.round((num * Math.pow(10, decimals)) + (sign * 0.001)) / Math.pow(10, decimals)).toFixed(decimals);
 }
