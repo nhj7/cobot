@@ -20,6 +20,10 @@ import com.google.gson.JsonParser;
 
 public class BithumbAPI {
 	
+	public static void log( String log ){
+		//System.out.println(log);
+	}
+	
 	public static String replaceDQuote( Object jo ){
 		if( jo == null ){
 			return "";
@@ -34,10 +38,10 @@ public class BithumbAPI {
 		newJo.addProperty("ccd", "BTC");
 		newJo.addProperty("unit_cid", "9998");
 		
-		String str_price = replaceDQuote(jo.get("sell_price"));
+		String str_price = replaceDQuote(jo.get("buy_price"));
 		String str_opening_price = replaceDQuote(jo.get("opening_price"));
 		newJo.addProperty("price", str_price );
-		newJo.addProperty("opening_price", str_opening_price );
+		//newJo.addProperty("opening_price", str_opening_price );
 	    
 	    BigDecimal opening_price = new BigDecimal( str_opening_price ) ;
 	    BigDecimal price = new BigDecimal( str_price ) ;
@@ -60,17 +64,20 @@ public class BithumbAPI {
 	    
 	}
 	
-	
+	private static boolean switchPrice = true;
 	public static Map transMap( String ccd, JsonObject jo ){
 		Map newJo = new HashMap();
 		newJo.put("eid", "2");
 		newJo.put("ccd", ccd);
 		newJo.put("unit_cid", "9998");
 		
-		String str_price = replaceDQuote(jo.get("sell_price"));
+		String str_price = replaceDQuote( switchPrice ? jo.get("sell_price") : jo.get("buy_price") );
+		
+		
+		
 		String str_opening_price = replaceDQuote(jo.get("opening_price"));
 		newJo.put("price", str_price );
-		newJo.put("opening_price", str_opening_price );
+		//newJo.put("opening_price", str_opening_price );
 	    
 	    BigDecimal opening_price = new BigDecimal( str_opening_price ) ;
 	    BigDecimal price = new BigDecimal( str_price ) ;
@@ -112,9 +119,12 @@ public class BithumbAPI {
 			JsonObject btc_jo = jp.parse(( btc_json )).getAsJsonObject();
 		    JsonObject btc_info = btc_jo.get("data").getAsJsonObject();
 		    
+		    log("BTC : " + btc_info);
+		    
+		    
 		    Map newBtc = transMap( "BTC",btc_info );
 		    
-		    //System.out.println("BTC : " + newBtc);
+		    
 		    
 		    list.add( newBtc );
 		}
@@ -153,7 +163,7 @@ public class BithumbAPI {
 				
 				JsonObject tickJo = ((JsonElement)en.getValue()).getAsJsonObject();
 				
-				//System.out.println( title + " : " + tickJo);
+				log( title + " : " + tickJo);
 				
 				Map newCoin = transMap( title, tickJo );
 				
@@ -165,6 +175,8 @@ public class BithumbAPI {
 			}
 			
 		}
+		
+		switchPrice = switchPrice ? false : true;
 		
 		return list;
 		
