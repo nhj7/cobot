@@ -288,9 +288,10 @@
 			<button type="button" onclick="send();">Send</button>
 			<button type="button" onclick="closeSocket();">Close</button>
 		</div-->
-		입력 : <input type=text id="input_txt" style="width:100%;" /> <br />
-		상태 : <input type=text id="prg_txt" style="width:100%;" />
-		
+		<div style="display:none;">
+			입력 : <input type=text id="input_txt" style="width:100%;" /> <br />
+			상태 : <input type=text id="prg_txt" style="width:100%;" />
+		</div>
 		<!-- Server responses get written here -->
 		<div id="messages"></div>
 	
@@ -300,6 +301,7 @@
 			
 					<!-- Copyright -->
 					<ul class="copyright">
+						<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
 						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.</li>
 						<li>감사 인삿말 한마디 정도도 개발자에게는 큰 힘이 됩니다. ^^ <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
 						
