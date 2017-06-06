@@ -35,7 +35,7 @@ public class TickManager implements Runnable {
 				BithumbAPI bithumb = new BithumbAPI(); 
 				List bitList = bithumb.getTickData("");
 				
-				PrintUtil.printList(bitList);
+				//PrintUtil.printList(bitList);
 				
 				m.put("eid_" + 2, bitList);
 				
