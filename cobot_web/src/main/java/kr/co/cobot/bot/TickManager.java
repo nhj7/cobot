@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nhj.api.BithumbAPI;
 import nhj.api.PoloniexAPI;
 import nhj.util.PrintUtil;
 
@@ -19,17 +20,28 @@ public class TickManager implements Runnable {
 			try {
 				
 				
-				PoloniexAPI api = new PoloniexAPI("", "");
+				PoloniexAPI poloniex = new PoloniexAPI("", "");
 				
-				List coinInfo = api.returnTicker();
+				List poloList = poloniex.returnTicker();
+				
+				
+				//PrintUtil.printList(poloList);
+				
+				
 				Map m = new HashMap();
+				m.put("eid_" + 1, poloList);
 				
-				//PrintUtil.printList(coinInfo);
 				
-				m.put("eid" + 1, coinInfo);
+				BithumbAPI bithumb = new BithumbAPI(); 
+				List bitList = bithumb.getTickData("");
+				
+				//PrintUtil.printList(bitList);
+				
+				m.put("eid_" + 2, bitList);
+				
 				DATA.setCoinInfo(m);
 				
-				Thread.sleep( 60000 );
+				Thread.sleep( 15000 );
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
@@ -50,7 +62,7 @@ public class TickManager implements Runnable {
 		
 		new Thread(new TickManager()).start();
 		
-		Thread.sleep(1000);
+		Thread.sleep(1000000);
 		
 		System.out.println("main quit");
 		

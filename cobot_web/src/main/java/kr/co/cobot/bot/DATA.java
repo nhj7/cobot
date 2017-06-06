@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
 
 public class DATA {
-	private static Map<String, JSONObject> EXCH_INFO = new HashMap();	// 거래소 리스트
-	private static Map<String, List<JSONObject>> COIN_INFO = new HashMap(); // 거래소별 코인 리스트
+	private static Map<String, JsonObject> EXCH_INFO = new HashMap();	// 거래소 리스트
+	private static Map<String, Object> COIN_INFO = new HashMap(); // 거래소별 코인 리스트
 	
-	public static void setCoinInfo( Map<String, List<JSONObject>> NEW_COIN_INFO ){
+	public static <EXCH_INFO> void setCoinInfo( Map NEW_COIN_INFO ){
 		synchronized (EXCH_INFO) {
 			COIN_INFO = NEW_COIN_INFO;
 		}
 	}
 	
-	public static Map<String, List<JSONObject>> getCoinInfo(){
+	public static Map<String, Object> getCoinInfo(){
 		return COIN_INFO;
 	}
 	

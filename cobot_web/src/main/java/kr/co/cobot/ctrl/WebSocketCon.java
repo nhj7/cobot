@@ -1,8 +1,10 @@
 package kr.co.cobot.ctrl;
 
 import java.io.IOException;
+import java.util.Map;
 
-import javax.websocket.EncodeException;
+import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -11,16 +13,20 @@ import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.JsonObject;
+
 import kr.co.cobot.bot.DATA;
-import nhj.util.JSONUtil;
+import kr.co.cobot.conf.GetHttpSessionConfigurator;
+import nhj.util.JsonUtil;
 
 @Controller("TestWebSocketController")
 @RequestMapping(value = "Test")
-@ServerEndpoint(value = "/echo")
+@ServerEndpoint(value = "/echo"
+//, configurator=GetHttpSessionConfigurator.class
+)
 
 public class WebSocketCon {
 	private static final java.util.Set<Session> sessions = java.util.Collections
@@ -35,6 +41,9 @@ public class WebSocketCon {
 	public String testView() {
 		return "common/testWebSocket";
 	}
+	
+	
+	
 
 	/**
 	 * @OnOpen allows us to intercept the creation of a new session. The session
@@ -42,17 +51,22 @@ public class WebSocketCon {
 	 *         we'll let the user know that the handshake was successful.
 	 */
 	@OnOpen
-	public void onOpen(Session session) {
-		System.out.println("Open session id : " + session.getId());
+	public void onOpen(Session session , EndpointConfig config) {
+		System.out.println("[WebSocket] Open session id : " + session.getId());
 
 		try {
 			final Basic basic = session.getBasicRemote();
 			
-			JSONObject jo = new JSONObject();
-			jo.put("cmd", "status");
-			jo.put("value", "Connection onOpen!!!");
-			basic.sendText( jo.toJSONString() );
+			JsonObject jo = new JsonObject();
+			jo.addProperty("cmd", "status");
+			jo.addProperty("value", "Connection onOpen!!!");
+			
+			//System.out.println("onOpen : jo.getAsString() : " + jo.toString());
+			
+			basic.sendText( jo.toString() );
 		} catch (IOException e) {
+			
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 
@@ -75,7 +89,11 @@ public class WebSocketCon {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 
+	
 	/**
 	 * When a user sends a message to the server, this method will intercept the
 	 * message and allow us to react to it. For now the message is read as a
@@ -84,14 +102,20 @@ public class WebSocketCon {
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		System.out.println("Message from " + session.getId() + ": " + message);
+		System.out.println("[Websocket] Message from [" + session.getId() + "] : " + message + " : ");
 		try {
 			final Basic basic = session.getBasicRemote();
-			JSONObject jo = new JSONObject();
-			jo.put("cmd", "coin_info");
-			jo.put("value", JSONUtil.getJson(DATA.getCoinInfo()).toJSONString() );
+			JsonObject jo = new JsonObject();
+			jo.addProperty("cmd", "coin_info");
 			
-			basic.sendText( jo.toJSONString() );
+			Map m = DATA.getCoinInfo();
+			
+			jo.add("value", JsonUtil.getJsonFromMap(DATA.getCoinInfo()) );
+			
+			
+			//System.out.println("jo.getAsString() : " + jo.toString());
+			
+			basic.sendText( jo.toString() );
 			
 			
 			//basic.sendText("to : " + message);
@@ -104,7 +128,7 @@ public class WebSocketCon {
 
 	@OnError
 	public void onError(Throwable e, Session session) {
-
+		e.printStackTrace();
 	}
 
 	/**
@@ -114,7 +138,12 @@ public class WebSocketCon {
 	 */
 	@OnClose
 	public void onClose(Session session) {
-		System.out.println("Session " + session.getId() + " has ended");
+		System.out.println("[Websocket] Session " + session.getId() + " has ended");
 		sessions.remove(session);
 	}
+
+
+
+
+	
 }

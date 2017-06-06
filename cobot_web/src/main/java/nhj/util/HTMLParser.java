@@ -7,9 +7,6 @@ import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.DataNode;
 import org.jsoup.nodes.Document;
@@ -128,6 +125,8 @@ public class HTMLParser {
 	            	String kwds = scriptStr.substring(scriptStr.indexOf("var aKwds") + 11 , scriptStr.indexOf("var aCds")-2);  
 	            	//print("" + kwds);
 	            	
+	            	
+	            	/*
 	            	JSONParser jp = new JSONParser();
 	            	JSONArray ja = (JSONArray)jp.parse(kwds);
 	            	
@@ -151,6 +150,7 @@ public class HTMLParser {
 	            			
 	            		}
 	            	}
+	            	*/
 	            	
 	            	
 	            	

@@ -20,9 +20,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -233,14 +232,15 @@ public class PoloniexAPI {
 	
 	public List returnTicker() throws Throwable {
 		
-		String html = URLUtil.htmlToString("https://poloniex.com/public?command=returnTicker");
+		String json_str = URLUtil.htmlToString("https://poloniex.com/public?command=returnTicker");
 		
 		//System.out.println(html);
 		
-		JsonParser jp = new JsonParser();
-		JsonElement je = jp.parse(html);
+		Gson gson = new Gson();
 		
-		//System.out.println(je);
+		
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(json_str);
 		
 		JsonObject jo = je.getAsJsonObject();
 		Iterator list = jo.entrySet().iterator();
@@ -250,6 +250,8 @@ public class PoloniexAPI {
 			
 			Entry en = (Entry)list.next();
 			String title = (String) en.getKey();
+			
+			
 			
 			//System.out.println("title : " + title);
 			
@@ -264,7 +266,7 @@ public class PoloniexAPI {
 			}else if( "XMR".equals(arrTitle[0])  ){
 				unit_cid = "4";
 			}else if( "USDT".equals(arrTitle[0])  ){
-				unit_cid = "99";
+				unit_cid = "9999";
 			}
 			
 			JsonObject tickJo = ((JsonElement)en.getValue()).getAsJsonObject();
@@ -290,7 +292,10 @@ public class PoloniexAPI {
 			//System.out.println("tickJo : " + tickJo);
 			//System.out.println(arrTitle[1]);
 			
-			li.add( (JSONObject) new JSONParser().parse(JSONObject.toJSONString(tickMap)) );
+			
+			//String serialized = gson.toJson(tickMap);
+			
+			li.add( tickMap );
 		}
 		return li;
 	}

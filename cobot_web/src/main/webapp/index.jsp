@@ -13,7 +13,7 @@
 <html>
 	<head>
 		<title>코봇-거래소 정보 모아보자</title>
-		<meta name=”description=” Content=”코봇,비트코인,코인,가상화폐,암호화폐,4차혁명,쉽게보는4차혁명”>
+		<meta name=”description=” Content=”코봇,비트코인,코인,가상화폐,암호화폐,4차혁명,쉽게보는 4차혁명”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -91,13 +91,13 @@
 		
 		<script>
 		
-			function doHideNShow(){
-				if( $("#serch_img").attr("src").indexOf("hide") > -1 ){
-					$("#div_search").css("display","none");
-					$("#serch_img").attr("src", "/img/btn/show.png");
+			function doHideNShow(imgObj, id ){
+				if( $(imgObj).attr("src").indexOf("hide") > -1 ){
+					$("#" + id).css("display","none");
+					$(imgObj).attr("src", "/img/btn/show.png");
 				}else{
-					$("#div_search").css("display","block");
-					$("#serch_img").attr("src", "/img/btn/hide.png");
+					$("#" + id).css("display","block");
+					$(imgObj).attr("src", "/img/btn/hide.png");
 				}
 			}
 		</script>
@@ -109,13 +109,13 @@
 					<section id="top" class="one dark cover">
 						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;">
 							Cobot v 0.1 &nbsp;&nbsp;
-							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow();"/>
+							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
 							
 						</div>
 						<div id="div_search" class="container">
 							<div class="row" >
 								<span style="width:100%;">
-									<input type="text" placeholder="검색기능 구현 중" class="search_txt"  />
+									<input type="text" placeholder="코인원, 코빗 구현 예정" class="search_txt"  />
 								</span>
 							</div>
 						</div>
@@ -153,7 +153,7 @@
 						vartical-align:middle;
 						line-height: 20px;
 					}
-					.coinRank .col_ex { width: 9%;}
+					.coinRank .col_ex { width: 3em;}
 					.coinRank .col_coin {width: 15%;}
 					.coinRank .col_btc {width: 20%;}
 					.coinRank .col_usd {width: 20%;}
@@ -164,6 +164,9 @@
 					.up{ color:red }
 					.down{ color:blue }
 					.rr_even{ background-color:#F8FFFF !important;}
+					.up_bg{ background-color:#FFFCFC !important;}
+					.down_bg{ background-color:#F8FFFF !important;}
+					.none{display:none;}
 					</style>
 
 				<!-- coin_table -->
@@ -174,6 +177,7 @@
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
+											<span style="float:left;">* USD/KRW 1,120, USDT $1.03</span>
 											<img src="/img/btn/setting.png" width="16px" height="16px"/>
 											&nbsp;&nbsp;&nbsp;
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
@@ -184,7 +188,7 @@
 												<span class="rCell col_ex crheader" >Ex</span>
 												<span class="rCell col_coin crheader" style="">Coin</span>
 												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
-												<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
+												<span class="rCell col_usd crheader" style="text-align:center;">USD(T)</span>
 												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
 												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
 											</div>
@@ -203,19 +207,24 @@
 								<div class="4u 12u$(mobile)">
 								
 								
-									<!-- article id="coinone_chat" class="item" >
-										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<img src="/img/btn/setting.png" width="16px" height="16px"/>
+									<div id="btn_wrapp_coinRank" style="text-align:right;">
+											<span style="float:left;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">* 코인 추가 및 삭제</span>
+											<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" onclick="doHideNShow(this, 'coinRank_bak');"/>
 											&nbsp;&nbsp;&nbsp;
-											<img src="/img/btn/close.png" width="16px" height="16px" onclick="$('#coinone_chat').remove();"/>
+											<img src="/img/btn/close.png" width="16px" height="16px"/>
 										</div>
-										<iframe src="https://coinone.co.kr/chat/" width="90%" height=300px></iframe>
-									</article  -->
-									<!-- article class="item" style="background-color:red">
-										폴로닉스 채팅 닫기
-										<iframe src="https://poloniex.com/trollbox" width="90%" height=300px></iframe>
 										
-									</article-->
+										<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
+											<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
+												<span class="rCell col_ex crheader" >Ex</span>
+												<span class="rCell col_coin crheader" style="">Coin</span>
+												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
+												<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
+												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
+												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
+											</div>
+											
+										</div>
 									
 								</div>
 								

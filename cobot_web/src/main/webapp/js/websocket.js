@@ -39,8 +39,11 @@ function openSocket() {
 			writeStatus( jo.value );
 			send();
 		}else{
-			//writeResponse(event.data);
-			regCoins( JSON.parse(jo.value).eid1 );
+			//alert( jo.value.eid_1 );
+			//writeResponse( event.data );
+			$("#coinRank div[data-cd=data]").remove();
+			$("#coinRank_bak div[data-cd=data]").remove();
+			regCoins( jo.value.eid_2.concat(jo.value.eid_1)  );
 		}
 	};
 
@@ -71,65 +74,156 @@ function writeResponse(text) {
 }
 
 
-//		Application
-
+// Application
+// cookie save. 
 function regCoins( coins ){
 	
-	$("#coinRank div[data-cd=data]").remove();
+	/*
+	var activeCoins = JSON.parse($.cookie("kr.co.cobot.activeCoins"));
+	if( activeCoins == null || activeCoins == ""){
+		activeCoins = JSON.parse( "{eid_1:}" );
+	}
+	*/
 	
+	var BitCoin;
+	for(var i = 0; i < coins.length;i++){
+		
+		//writeResponse( coins[i].price );
+		if( coins[i].ccd == "BTC" && coins[i].unit_cid == "9999" ){
+			BitCoin = coins[i]; 
+		} 
+	}
 	
 	for(var i = 0; i < coins.length;i++){
-		if( coins[i].unit_cid != "1" &&  coins[i].unit_cid != "99" ){
+		if( 
+			// BTC, USD, KRW 
+			!( coins[i].unit_cid == "1" || coins[i].unit_cid == "9999" || coins[i].unit_cid == "9998" )
+		){
 			continue;
 		}
+		
+		if( coins[i].unit_cid == "9999" && coins[i].ccd != "BTC" ){
+			continue;
+		}
+		
 		var rankRow = document.createElement("div");
 		rankRow.setAttribute("class","rankRow");
 		rankRow.setAttribute("data-cd","data");
-		rankRow.setAttribute("ondoubleclick","$(this).remove();");
 		
-		var even_class = (i % 2 == 0 ? "rr_even":"");
+		$(rankRow).on('dblclick', function() {
+			
+			if( this.parentNode.id == "coinRank" ){
+				document.getElementById("coinRank_bak").appendChild(this);
+			}else{
+				document.getElementById("coinRank").appendChild(this);
+			}
+			
+			/*
+			try{
+				$("#coinRank_bak").append($(this).clone());
+			}catch(e){
+				alert(e);
+			}
+			
+			$(this).remove();
+			*/
+			
+		});
 		
-		var str_html = '<span class="rCell col_ex '+ even_class +' "><img class="rIcon" src="/img/exchange/1.png" title="폴로닉스" /></span>';
+		var ch = exactRound( coins[i].per_ch * 100 , 2 );
+		var upndownCls = "";
+		var even_class = "up_bg";
+		
+		if( ch > 0 ){
+			ch = "+" + ch;
+			upndownCls = "up";
+		}else if( ch < 0 ){
+			upndownCls = "down";
+			even_class = "down_bg";
+			
+		}
+		
+		
+		
+		
+		var str_html = '<span onclick="$(this.parentNode).dblclick();" class="rCell col_ex '+ even_class +' ">'
+		 + '<img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="폴로닉스" /></span>';
 		
 		str_html += '<span class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
 		
 		var price = coins[i].price;
-		if( coins[i].unit_cid == "99" ){
+		if( coins[i].unit_cid == "9999" || coins[i].unit_cid == "9998" ){
 			price = "-";
 		}
 		
 		str_html += '<span class="rCell col_btc '+ even_class +'">'+ price +'</span>';
 		
 		var usd = "";
-		if( coins[i].unit_cid == "99" ){
+		if( coins[i].unit_cid == "9999" ){
 			usd = coins[i].price;
+		}else{
+			usd = BitCoin.price * price;
 		}
 		
-		if( exactRound(usd, 0) == 0 ){
-			usd = exactRound(usd, 4);
+		var tmpUsd = exactRound(usd, 0);
+		
+		if( tmpUsd > 10 ){
+			if( tmpUsd < 100 ){
+				usd = exactRound(usd, 2);
+			}else if( tmpUsd < 1000 ){
+				usd = exactRound(usd, 1);
+			}else{
+				usd = tmpUsd;
+			}
+			
+			
 		}else{
-			usd = exactRound(usd, 0);
+			usd = exactRound(usd, 4);
 		}
+		
+		
+		
+		
+		var krw = usd * 1.03 * 1120;
+		if( coins[i].unit_cid == "9998" ){
+			krw = coins[i].price;
+			
+			usd = krw / 1120;
+		}
+		
+		usd = formatValue(usd);
+		krw = formatValue(krw);
 		
 		str_html += '<span class="rCell col_usd '+ even_class +'">' + usd + '</span>';
-		str_html += '<span class="rCell col_krw '+ even_class +'">' + '-' + '</span>';
+		str_html += '<span class="rCell col_krw '+ even_class +'">' + krw + '</span>';
 		
-		var ch = exactRound( coins[i].per_ch * 100 , 2 );
-		var upndownCls = "";
-		if( ch > 0 ){
-			ch = "+" + ch;
-			upndownCls = "up";
-		}else if( ch < 0 ){
-			upndownCls = "down";
-			
-		}
+		
 		str_html += '<span class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
 		rankRow.innerHTML = str_html;
+		if( coins[i].unit_cid == "9998" || coins[i].ccd == "BTC" ){
+			document.getElementById("coinRank").appendChild(rankRow);
+		}else{
+			document.getElementById("coinRank_bak").appendChild(rankRow);
+		}
 		
-		document.getElementById("coinRank").appendChild(rankRow);
 	}
 }
 
+function formatValue( value ){
+	var tmpValue = exactRound(value, 0);
+	if( tmpValue > 10 ){
+		if( tmpValue < 100 ){
+			value = exactRound(value, 2);
+		}else if( tmpValue < 1000 ){
+			value = exactRound(value, 1);
+		}else{
+			value = tmpValue;
+		}
+	}else{
+		value = exactRound(value, 4);
+	}
+	return value;
+}
 
 
 

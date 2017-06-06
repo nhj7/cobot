@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,7 +26,7 @@ public class ExchManager implements Runnable {
 				// 트랜잭션 시작
 				List exchList = session.createQuery("from TbExchange").list();
 				
-				Map<String, JSONObject> NEW_EXCH_INFO = new HashMap();
+				Map<String, Map> NEW_EXCH_INFO = new HashMap();
 				for(int i = 0; i < exchList.size() ; i++){
 					
 					TbExchange te = (TbExchange) exchList.get(i);
@@ -39,7 +37,7 @@ public class ExchManager implements Runnable {
 			        
 			        //System.out.println(map);
 			        
-			        NEW_EXCH_INFO.put( map.get("eid").toString(),  (JSONObject) new JSONParser().parse(JSONObject.toJSONString(map)));
+			        NEW_EXCH_INFO.put( map.get("eid").toString(),  map );
 					
 				}
 				

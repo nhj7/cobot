@@ -14,8 +14,8 @@ public aspect aspectTmp {
 
 		Object[] args = thisJoinPoint.getArgs();
 
-		System.out.println("point cut : " + sig);
-		System.out.println("param : " + args[0]);
+		System.out.println("[aspectJ] point cut : " + sig);
+		System.out.println("[aspectJ] param : " + args[0]);
 
 	}
 
@@ -34,7 +34,7 @@ public aspect aspectTmp {
 		Object[] args = thisJoinPoint.getArgs();
 
 		// System.out.println("point cut : " + sig);
-		System.out.println("Controller param : " + args[0]);
+		System.out.println("[aspectJ] Controller param : " + args[0]);
 
 	}
 
@@ -49,9 +49,9 @@ public aspect aspectTmp {
 	@Before("controller() && method()")
 	public void doConCheck(JoinPoint joinPoint) {
 		Object[] args = joinPoint.getArgs();
-		System.out.println("doConCheck : "+joinPoint.getSignature()); // For testing purposes.
+		//System.out.println("[aspectJ] doConCheck : "+joinPoint.getSignature()); // For testing purposes.
 		if( args != null && args.length > 1 ){
-			System.out.println("Controller param : " + args[1]);
+			//System.out.println("[aspectJ] Controller param : " + args[1]);
 		}
 			
 		
