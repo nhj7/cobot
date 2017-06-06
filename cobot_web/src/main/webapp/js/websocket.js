@@ -76,14 +76,26 @@ function writeResponse(text) {
 
 // Application
 // cookie save. 
+var activeCoins;
 function regCoins( coins ){
 	
-	/*
-	var activeCoins = JSON.parse($.cookie("kr.co.cobot.activeCoins"));
-	if( activeCoins == null || activeCoins == ""){
-		activeCoins = JSON.parse( "{eid_1:}" );
+	//alert($.cookie("kr.co.cobot.activeCoins"));
+	
+	var cData = $.cookie("kr.co.cobot.activeCoins");
+	
+	
+	
+	if( cData == undefined ){
+		activeCoins = 
+		{		
+				"eid_1":[ "BTC" , "ETH"]
+				, "eid_2":[ "BTC" , "ETH", "XRP"]
+		};
+	}else{
+		activeCoins = JSON.parse(cData);
 	}
-	*/
+	
+	//alert(activeCoins.eid_1);
 	
 	var BitCoin;
 	for(var i = 0; i < coins.length;i++){
@@ -110,13 +122,32 @@ function regCoins( coins ){
 		rankRow.setAttribute("class","rankRow");
 		rankRow.setAttribute("data-cd","data");
 		
+		rankRow.setAttribute("data-eid", coins[i].eid);
+		rankRow.setAttribute("data-ccd", coins[i].ccd );
+		
 		$(rankRow).on('dblclick', function() {
 			
 			if( this.parentNode.id == "coinRank" ){
+				var eid = $(this).attr("data-eid");
+				var ccd = $(this).attr("data-ccd");
+				var tmpCoins = activeCoins["eid_" + eid ];
+				
+				//alert(tmpCoins + " : " + tmpCoins.indexOf( ccd ));
+				
+				tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );
+				
+				//alert(tmpCoins);
+				
 				document.getElementById("coinRank_bak").appendChild(this);
 			}else{
+				
+				activeCoins["eid_" + $(this).attr("data-eid") ].push( $(this).attr("data-ccd") );
+				
+				
 				document.getElementById("coinRank").appendChild(this);
 			}
+			
+			$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
 			
 			/*
 			try{
@@ -200,7 +231,11 @@ function regCoins( coins ){
 		
 		str_html += '<span class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
 		rankRow.innerHTML = str_html;
-		if( coins[i].unit_cid == "9998" || coins[i].ccd == "BTC" ){
+		
+		var chkList;
+		chkList = activeCoins["eid_" + coins[i].eid];
+				
+		if( chkList.indexOf( coins[i].ccd ) > -1 ){
 			document.getElementById("coinRank").appendChild(rankRow);
 		}else{
 			document.getElementById("coinRank_bak").appendChild(rankRow);

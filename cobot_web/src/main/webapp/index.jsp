@@ -58,7 +58,7 @@
 					<div id="logo">
 						<span class="image avatar48"><img src="" alt="" /></span>
 						<h1 id="title">Guest</h1>
-						<p>회원가입을 해주세요.</p>
+						<p>SNS 로그인을 통한<br /> 잔고 정산 기능 추가 예정.<br /></p>
 					</div>
 	
 					<!-- Nav -->
@@ -297,12 +297,23 @@
 		<!-- End Main -->
 		<!-- Footer -->
 			<div id="footer">
-
-				<!-- Copyright -->
+			
+					<!-- Copyright -->
 					<ul class="copyright">
-						<li>&copy; Cobot. All rights reserved.</li><li></a></li>
+						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.</li>
+						<li>감사 인삿말 한마디 정도도 개발자에게는 큰 힘이 됩니다. ^^ <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
+						
 					</ul>
-
+					<ul class="copyright">
+						<li>BTC : 1Hi3zc7sSxd9ovG2kwZ62yVbaPM4dXrJK<br /></li>
+						<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
+						<li></li>
+						
+					</ul>
+					<ul class="copyright">
+						
+						<li>&copy; Cobot. All rights reserved.</li>
+					</ul>
 			</div>
 
 		<!-- Scripts -->
