@@ -323,7 +323,7 @@ public class PoloniexAPI implements IInvestmentAPI {
 			}else if( "XMR".equals(arrTitle[0])  ){
 				unit_cid = "4";
 			}else if( "USDT".equals(arrTitle[0])  ){
-				unit_cid = "99";
+				unit_cid = "9999";
 			}
 			
 			JsonObject tickJo = ((JsonElement)en.getValue()).getAsJsonObject();

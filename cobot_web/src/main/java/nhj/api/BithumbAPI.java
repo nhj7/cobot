@@ -1,4 +1,4 @@
-package nhj.api.exchange;
+package nhj.api;
 
 import java.io.BufferedInputStream;
 import java.math.BigDecimal;
@@ -6,8 +6,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.util.ByteArrayBuffer;
@@ -57,6 +59,40 @@ public class BithumbAPI {
 	    return newJo;
 	    
 	}
+	
+	
+	public static Map transMap( String ccd, JsonObject jo ){
+		Map newJo = new HashMap();
+		newJo.put("eid", "2");
+		newJo.put("ccd", ccd);
+		newJo.put("unit_cid", "9998");
+		
+		String str_price = replaceDQuote(jo.get("sell_price"));
+		String str_opening_price = replaceDQuote(jo.get("opening_price"));
+		newJo.put("price", str_price );
+		newJo.put("opening_price", str_opening_price );
+	    
+	    BigDecimal opening_price = new BigDecimal( str_opening_price ) ;
+	    BigDecimal price = new BigDecimal( str_price ) ;
+	    
+	    BigDecimal upndown_price = price.subtract(opening_price);
+	    
+	    newJo.put("upndown_price", upndown_price );
+	    
+	    BigDecimal ch = upndown_price.divide(opening_price  , 8 ,  BigDecimal.ROUND_DOWN );
+	    //ch = ch.add(new BigDecimal(100));
+	    
+	    //System.out.println( "per_ch" + ch);
+	    
+	    newJo.put("per_ch", ch );
+	    
+	    
+	    //System.out.println("newBtc : " + newJo );
+	    
+	    return newJo;
+	    
+	}
+	
 
 	public static List getTickData(String coinType) throws Throwable {
 
@@ -76,9 +112,9 @@ public class BithumbAPI {
 			JsonObject btc_jo = jp.parse(( btc_json )).getAsJsonObject();
 		    JsonObject btc_info = btc_jo.get("data").getAsJsonObject();
 		    
-		    JsonObject newBtc = transJsonObject( btc_info );
+		    Map newBtc = transMap( "BTC",btc_info );
 		    
-		    System.out.println("BTC : " + newBtc);
+		    //System.out.println("BTC : " + newBtc);
 		    
 		    list.add( newBtc );
 		}
@@ -119,9 +155,9 @@ public class BithumbAPI {
 				
 				//System.out.println( title + " : " + tickJo);
 				
-				JsonObject newCoin = transJsonObject( tickJo );
+				Map newCoin = transMap( title, tickJo );
 				
-				System.out.println( title + " : " + newCoin );
+				//System.out.println( title + " : " + newCoin );
 				
 				list.add( newCoin );
 				
