@@ -208,7 +208,7 @@
 								
 								
 									<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">* 코인 추가 및 삭제</span>
+											<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">* 코인 추가 및 삭제</span>
 											<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" onclick="doHideNShow(this, 'coinRank_bak');"/>
 											&nbsp;&nbsp;&nbsp;
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
@@ -302,8 +302,8 @@
 					<!-- Copyright -->
 					<ul class="copyright">
 						<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
-						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.</li>
-						<li>감사 인삿말 한마디 정도도 개발자에게는 큰 힘이 됩니다. ^^ <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
+						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
+						<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
 						
 					</ul>
 					<ul class="copyright">
@@ -313,7 +313,14 @@
 						
 					</ul>
 					<ul class="copyright">
-						
+						<li>개발예정 내역</li>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 코인원, 코빗 시세 정보 추가 </li>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 실시간 환율 </li>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp; - SNS 로그인 기능 </li>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 잔고 등록 및 정산 기능 </li>
+					</ul>
+					<ul class="copyright">
+						<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
 						<li>&copy; Cobot. All rights reserved.</li>
 					</ul>
 			</div>
