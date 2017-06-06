@@ -41,7 +41,7 @@ public class TickManager implements Runnable {
 				
 				DATA.setCoinInfo(m);
 				
-				Thread.sleep( 15000 );
+				Thread.sleep( 7000 );
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
