@@ -108,14 +108,14 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
 						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;">
-							Cobot v 0.1 &nbsp;&nbsp;
+							Cobot v 0.1.1 &nbsp;
 							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
 							
 						</div>
 						<div id="div_search" class="container">
 							<div class="row" >
 								<span style="width:100%;">
-									<input type="text" placeholder="코인원, 코빗 구현 예정" class="search_txt"  />
+									<input type="text" placeholder="코빗 구현 예정" class="search_txt"  />
 								</span>
 							</div>
 						</div>
