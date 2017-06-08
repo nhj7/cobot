@@ -133,7 +133,7 @@
 	setTimeout("setThemeColor('white');", 1050); 
 	*/
 	initCoins();
-	setInterval("initCoins();", 8000);
+	setInterval("initCoins();", 7000);
 	//initCoins();
 	//alert( $("#main > section.one").attr("class") );
 })(jQuery);
