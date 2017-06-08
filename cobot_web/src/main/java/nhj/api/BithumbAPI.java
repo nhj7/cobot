@@ -101,7 +101,7 @@ public class BithumbAPI {
 	}
 	
 
-	public static List getTickData(String coinType) throws Throwable {
+	public static List returnTicker() throws Throwable {
 
 		Date d = new Date();
 		long time = d.getTime();
@@ -221,6 +221,6 @@ public class BithumbAPI {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		getTickData("");
+		System.out.println(returnTicker());
 	}
 }

@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import nhj.api.BithumbAPI;
+import nhj.api.CoinoneAPI;
 import nhj.api.PoloniexAPI;
 import nhj.util.PrintUtil;
 
 public class TickManager implements Runnable {
 
 	//
+	static{
+		CoinoneAPI.init();// WS Socket init
+	}
 	
 	@Override
 	public synchronized void run() {
@@ -33,13 +37,17 @@ public class TickManager implements Runnable {
 				
 				
 				BithumbAPI bithumb = new BithumbAPI(); 
-				List bitList = bithumb.getTickData("");
+				List bitList = bithumb.returnTicker();
 				
 				//PrintUtil.printList(bitList);
 				
 				m.put("eid_" + 2, bitList);
 				
 				DATA.setCoinInfo(m);
+				
+				List coinList = CoinoneAPI.returnTicker();
+				
+				m.put("eid_" + 3, coinList);
 				
 				Thread.sleep( 7000 );
 				

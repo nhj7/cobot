@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="nhj.util.*" %>
 <%
-	System.out.println( "[]"+DateUtil.getCurDate("yyyy-MM-dd") + "] index.jsp call : " + request.getRemoteAddr());
+	System.out.println( "["+DateUtil.getCurDate("yyyy-MM-dd kk:mm:ss") + "] index.jsp call : " + request.getRemoteAddr());
 	
 	if(true){
 		//throw new Exception("123123");

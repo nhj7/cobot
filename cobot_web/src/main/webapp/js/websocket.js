@@ -47,7 +47,7 @@ function openSocket() {
 			
 			$("#coinRank div[data-cd=data]").remove();
 			$("#coinRank_bak div[data-cd=data]").remove();
-			regCoins( jo.value.eid_2.concat(jo.value.eid_1)  );
+			regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_1)  );
 		}
 	};
 
@@ -236,8 +236,10 @@ function regCoins( coins ){
 		str_html += '<span class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
 		rankRow.innerHTML = str_html;
 		
-		var chkList;
-		chkList = activeCoins["eid_" + coins[i].eid];
+		if( activeCoins["eid_" + coins[i].eid] == null ){
+			activeCoins["eid_" + coins[i].eid] = new Array();
+		}
+		var chkList = activeCoins["eid_" + coins[i].eid];
 				
 		if( chkList.indexOf( coins[i].ccd ) > -1 ){
 			document.getElementById("coinRank").appendChild(rankRow);
