@@ -24,6 +24,7 @@ public class ExchManager implements Runnable {
 			try {
 				
 				// 트랜잭션 시작
+				/*
 				List exchList = session.createQuery("from TbExchange").list();
 				
 				Map<String, Map> NEW_EXCH_INFO = new HashMap();
@@ -41,8 +42,10 @@ public class ExchManager implements Runnable {
 					
 				}
 				
-				DATA.setExchs(NEW_EXCH_INFO);
 				
+				
+				DATA.setExchs(NEW_EXCH_INFO);
+				*/
 				Thread.sleep( 60000 );
 				
 				// DBIO_Cubrid_Test.main(null);
