@@ -8,6 +8,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class JsonUtil {
+	
+	public static String get(JsonObject jo, String memberName){
+		return jo.get(memberName).toString().replaceAll("\"", "");
+	}
+	
 	public static JsonObject getJsonFromMap(Map<String, Object> map) {
 		JsonObject jsonData = new JsonObject();
 	    for (String key : map.keySet()) {

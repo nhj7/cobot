@@ -19,7 +19,7 @@ import io.socket.emitter.Emitter;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable{
-	private static Map<String, Map<String, String> > WS_COIN_INFO = new HashMap();
+	private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
 	
 	private CoinoneAPI(){
 		
@@ -34,48 +34,8 @@ public class CoinoneAPI implements Runnable{
 	}
 	
 	public static void init(){
-		new Thread( getInstance() ).start();
-	}
-	
-	
-	
-	public synchronized static void setPrice( String json_str ){
-		Gson gson = new Gson();
-		JsonObject jo = gson.fromJson(json_str, JsonObject.class);
-		
-		for(Iterator it = jo.entrySet().iterator();it.hasNext();){
-			
-			Entry en = (Entry) it.next();
-			String title = en.getKey().toString();
-			String value = en.getValue().toString().replaceAll("\"", "");
-			String[] arrTitle  = title.split("_");
-			
-			String currency = arrTitle[0].toUpperCase();
-			
-			Map coin_info;
-			if( WS_COIN_INFO.get(currency) == null ){
-				coin_info = new HashMap<String, String>();
-				WS_COIN_INFO.put(currency, coin_info );
-			}else{
-				coin_info = WS_COIN_INFO.get(currency);
-			}
-			
-			if( arrTitle.length == 2 ){
-				coin_info.put("price", value);
-			}else{
-				coin_info.put("yesterday_price", value);
-			}
-		}
-		
-		//System.out.println("[WS_COIN_INFO] : "+WS_COIN_INFO);
-		
-	}
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-
+		System.out.println("[KorbitAPI].start!");
+		//new Thread( getInstance() ).start();
 		try {
 			Options opts = new Options();
 			opts.transports = new String[]{ "websocket", "polling"};
@@ -114,6 +74,48 @@ public class CoinoneAPI implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public synchronized static void setPrice( String json_str ){
+		Gson gson = new Gson();
+		JsonObject jo = gson.fromJson(json_str, JsonObject.class);
+		
+		for(Iterator it = jo.entrySet().iterator();it.hasNext();){
+			
+			Entry en = (Entry) it.next();
+			String title = en.getKey().toString();
+			String value = en.getValue().toString().replaceAll("\"", "");
+			String[] arrTitle  = title.split("_");
+			
+			String currency = arrTitle[0].toUpperCase();
+			
+			Map coin_info;
+			if( COIN_INFO.get(currency) == null ){
+				coin_info = new HashMap<String, String>();
+				COIN_INFO.put(currency, coin_info );
+			}else{
+				coin_info = COIN_INFO.get(currency);
+			}
+			
+			if( arrTitle.length == 2 ){
+				coin_info.put("price", value);
+			}else{
+				coin_info.put("yesterday_price", value);
+			}
+		}
+		
+		//System.out.println("[WS_COIN_INFO] : "+WS_COIN_INFO);
+		
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+
+		
 		
 	}
 	
@@ -121,7 +123,7 @@ public class CoinoneAPI implements Runnable{
 		
 		List list = new ArrayList();
 		
-		for(Iterator it = WS_COIN_INFO.keySet().iterator();it.hasNext();){
+		for(Iterator it = COIN_INFO.keySet().iterator();it.hasNext();){
 			
 			String ccd = it.next().toString();
 			
@@ -134,9 +136,9 @@ public class CoinoneAPI implements Runnable{
 			
 			tickMap.put("unit_cid", "9998");	// KRW
 			
-			BigDecimal last = new BigDecimal( WS_COIN_INFO.get(ccd).get("price") );
+			BigDecimal last = new BigDecimal( COIN_INFO.get(ccd).get("price") );
 			
-			BigDecimal first = new BigDecimal( WS_COIN_INFO.get(ccd).get("yesterday_price") );
+			BigDecimal first = new BigDecimal( COIN_INFO.get(ccd).get("yesterday_price") );
 			
 			BigDecimal ch = last.subtract(first);
 			

@@ -11,6 +11,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import nhj.util.JsonUtil;
 @Controller("TestWebSocketController")
 @RequestMapping(value = "Test")
 @ServerEndpoint(value = "/echo"
-//, configurator=GetHttpSessionConfigurator.class
+, configurator=GetHttpSessionConfigurator.class
 )
 
 public class WebSocketCon {
@@ -52,8 +53,12 @@ public class WebSocketCon {
 	 */
 	@OnOpen
 	public void onOpen(Session session , EndpointConfig config) {
+		String ip = (String )config.getUserProperties().get("ip");
+		System.out.println("[WebSocket] Open session id : " + session.getId() + " : ip : " + ip );
+		
+		
 		System.out.println("[WebSocket] Open session id : " + session.getId());
-
+		
 		try {
 			final Basic basic = session.getBasicRemote();
 			
@@ -123,7 +128,7 @@ public class WebSocketCon {
 			ex.printStackTrace();
 		}
 
-		sendAllSessionToMessage(session, message);
+		//sendAllSessionToMessage(session, message);
 	}
 
 	@OnError

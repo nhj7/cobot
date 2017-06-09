@@ -42,12 +42,12 @@ function openSocket() {
 			//alert( jo.value.eid_1 );
 			//writeResponse( event.data );
 			
-			$("#coinRank div[data-cd=data]").css("background-color","white");
-			$("#coinRank_bak div[data-cd=data]").css("background-color","white");
+			//$("#coinRank div[data-cd=data]").css("background-color","white");
+			//$("#coinRank_bak div[data-cd=data]").css("background-color","white");
 			
-			$("#coinRank div[data-cd=data]").remove();
-			$("#coinRank_bak div[data-cd=data]").remove();
-			regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_1)  );
+			
+			
+			regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_1)  );
 		}
 	};
 
@@ -81,8 +81,12 @@ function writeResponse(text) {
 // Application
 // cookie save. 
 var activeCoins;
+var arrCoinRank = new Array();
+var arrCoinRank_bak = new Array(); // coinRank_bak
 function regCoins( coins ){
 	
+	arrCoinRank = [];
+	arrCoinRank_bak = [];
 	//alert($.cookie("kr.co.cobot.activeCoins"));
 	
 	var cData = $.cookie("kr.co.cobot.activeCoins");
@@ -110,6 +114,10 @@ function regCoins( coins ){
 		} 
 	}
 	
+	
+	
+	
+	// for loop coins. 
 	for(var i = 0; i < coins.length;i++){
 		if( 
 			// BTC, USD, KRW 
@@ -123,12 +131,19 @@ function regCoins( coins ){
 		}
 		
 		var rankRow = document.createElement("div");
+		
+		var str_id = "rankRow_" + coins[i].eid + "_" + coins[i].ccd;
+		
+		rankRow.setAttribute("id", str_id );
 		rankRow.setAttribute("class","rankRow");
 		rankRow.setAttribute("data-cd","data");
 		
+		//.up_flash{ background-color:#FFFCFC !important;}
+		//.down_flash{ background-color:#F8FFFF !important;}
+		
 		rankRow.setAttribute("data-eid", coins[i].eid);
 		rankRow.setAttribute("data-ccd", coins[i].ccd );
-		
+				
 		$(rankRow).on('dblclick', function() {
 			
 			if( this.parentNode.id == "coinRank" ){
@@ -138,16 +153,11 @@ function regCoins( coins ){
 				
 				//alert(tmpCoins + " : " + tmpCoins.indexOf( ccd ));
 				
-				tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );
-				
-				//alert(tmpCoins);
-				
+				tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );				
 				document.getElementById("coinRank_bak").appendChild(this);
 			}else{
 				
 				activeCoins["eid_" + $(this).attr("data-eid") ].push( $(this).attr("data-ccd") );
-				
-				
 				document.getElementById("coinRank").appendChild(this);
 			}
 			
@@ -175,14 +185,10 @@ function regCoins( coins ){
 		}else if( ch < 0 ){
 			upndownCls = "down";
 			even_class = "down_bg";
-			
 		}
 		
-		
-		
-		
 		var str_html = '<span onclick="$(this.parentNode).dblclick();" class="rCell col_ex '+ even_class +' ">'
-		 + '<img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="폴로닉스" /></span>';
+		 + '<img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span>';
 		
 		str_html += '<span class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
 		
@@ -229,8 +235,8 @@ function regCoins( coins ){
 		usd = formatValue(usd);
 		krw = formatValue(krw);
 		
-		str_html += '<span class="rCell col_usd '+ even_class +'">' + usd + '</span>';
-		str_html += '<span class="rCell col_krw '+ even_class +'">' + krw + '</span>';
+		str_html += '<span class="rCell col_usd '+ even_class +'">' + comma(usd) + '</span>';
+		str_html += '<span class="rCell col_krw '+ even_class +'">' + comma(krw) + '</span>';
 		
 		
 		str_html += '<span class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
@@ -240,14 +246,90 @@ function regCoins( coins ){
 			activeCoins["eid_" + coins[i].eid] = new Array();
 		}
 		var chkList = activeCoins["eid_" + coins[i].eid];
+		
+		
+		rankRow.setAttribute("data-ch", ch );
+		
+		//document.getElementById("rankRow_" + coins[i].eid )
 				
 		if( chkList.indexOf( coins[i].ccd ) > -1 ){
-			document.getElementById("coinRank").appendChild(rankRow);
+			
+			
+			
+			var oldRankRow = document.getElementById(str_id);
+			//alert(oldRankRow);
+			
+			if( oldRankRow != null ){
+				//alert(str_id + " : old_ch - " + oldRankRow.getAttribute("data-ch") + ", new_ch : " + ch );
+				
+				try{
+					var old_ch = parseFloat(oldRankRow.getAttribute("data-ch"));
+					var new_ch = parseFloat(ch);
+					if( old_ch < new_ch ){
+						rankRow.setAttribute("data-ch-cd", "up" );
+					}else if( old_ch > new_ch ){
+						rankRow.setAttribute("data-ch-cd", "down" );
+					}else{
+						
+					}
+				}catch(e){
+					alert(e);
+				}
+				
+				
+			}
+			
+			arrCoinRank.push(rankRow);
+			//document.getElementById("coinRank").appendChild(rankRow);
 		}else{
-			document.getElementById("coinRank_bak").appendChild(rankRow);
+			arrCoinRank_bak.push(rankRow);
+			//document.getElementById("coinRank_bak").appendChild(rankRow);
+		}
+		
+	} // end for coins
+	
+	$("#coinRank div[data-cd=data]").remove();
+	$("#coinRank_bak div[data-cd=data]").remove();
+	
+	for(var i = 0; i < arrCoinRank.length;i++){
+		document.getElementById("coinRank").appendChild( arrCoinRank[i] );
+	}
+	
+	for(var i = 0; i < arrCoinRank_bak.length;i++){
+		document.getElementById("coinRank_bak").appendChild( arrCoinRank_bak[i] );
+	}
+	
+	flashCoins();
+	//var arrCoinRank = new Array();
+	//var arrCoinRank_bak = new Array(); // coinRank_bak
+}
+
+function flashCoins(){
+	
+	//return;
+	
+	for(var i = 0; i < arrCoinRank.length;i++){
+		if( arrCoinRank[i].getAttribute( "data-ch-cd" ) != null ){
+			//arrCoinRank[i].onFlash();
+			if( arrCoinRank[i].getAttribute("data-ch-cd") == "up"){
+				flash_class = "up_flash";
+			}else{
+				flash_class = "down_flash";
+			}
+			
+			
+			$("#"+arrCoinRank[i].getAttribute("id") + " .rCell").addClass(flash_class);
+			
+			var cmdStr = "$('#"+arrCoinRank[i].getAttribute("id") + " .rCell').removeClass('"+flash_class+"');";
+			//alert(cmdStr);
+			setTimeout(cmdStr ,500);
 		}
 		
 	}
+	
+	
+	
+	
 }
 
 function formatValue( value ){

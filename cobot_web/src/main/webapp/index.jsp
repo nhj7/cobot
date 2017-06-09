@@ -100,6 +100,12 @@
 					$(imgObj).attr("src", "/img/btn/hide.png");
 				}
 			}
+
+			//콤마찍기
+			function comma(n) {
+				var parts=n.toString().split(".");
+			    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+			}
 		</script>
 		
 		<!-- Main -->
@@ -107,15 +113,15 @@
 
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
-						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;">
-							Cobot v 0.1.1 &nbsp;
+						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;font-size:0.9em;font-weight:bold;">
+							Cobot v 0.1.2
 							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
 							
 						</div>
 						<div id="div_search" class="container">
 							<div class="row" >
 								<span style="width:100%;">
-									<input type="text" placeholder="코빗 구현 예정" class="search_txt"  />
+									<input type="text" placeholder="다음 코인 정렬 구현 예정" class="search_txt"  />
 								</span>
 							</div>
 						</div>
@@ -159,13 +165,19 @@
 					.coinRank .col_usd {width: 20%;}
 					.coinRank .col_krw {width: 20%;}
 					.coinRank .col_ch {width: 15%;}
-					.crheader{ text-align:center; background-color:#005766 !important; color:white;}
+					.crheader{ text-align:center; background-color:#008299 !important; color:white;}
 					.rIcon {width: 20px;height:16px; }
 					.up{ color:red }
 					.down{ color:blue }
 					.rr_even{ background-color:#F8FFFF !important;}
+					/*
 					.up_bg{ background-color:#FFFCFC !important;}
 					.down_bg{ background-color:#F8FFFF !important;}
+					*/
+					.up_bg{ background-color:#FFFFFF !important;}
+					.down_bg{ background-color:#FFFFFF !important;}
+					.up_flash{ background-color:#FFEAEA !important;}
+					.down_flash{ background-color:#E6FFFF !important;}
 					.none{display:none;}
 					</style>
 
@@ -177,7 +189,7 @@
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;">* USD/KRW 1,120, USDT $1.03</span>
+											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">USD/KRW 1,120, USDT $1.03</span>
 											<img src="/img/btn/setting.png" width="16px" height="16px"/>
 											&nbsp;&nbsp;&nbsp;
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
@@ -327,6 +339,6 @@
 
 		<!-- Scripts -->
 			<script src="/js/include.jsp"></script>
-			
+	<div id="coinRankTmp" style="display:none"></div>		
 	</body>
 </html>

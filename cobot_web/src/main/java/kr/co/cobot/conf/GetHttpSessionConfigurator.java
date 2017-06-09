@@ -6,23 +6,34 @@ import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 
 public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurator {
-	private HttpSession httpSession;
+	public String ip;
 
 	
 	@Override
+	public boolean checkOrigin(String originHeaderValue) {
+		// TODO Auto-generated method stub
+		ip = originHeaderValue;
+		//config.getUserProperties().put("ip", ip);
+		
+		
+		return super.checkOrigin(originHeaderValue);
+	}
+
+
+	@Override
 	public void modifyHandshake(ServerEndpointConfig config, HandshakeRequest request, HandshakeResponse response) {
 		
-		System.out.println("modifyHandshake execute!!! : " + request.getClass().getName());
+		//System.out.println("modifyHandshake execute!!! : " + request.getClass().getName());
 		
 		//super.modifyHandshake(config, request, response);
 		
 		
 		
-		httpSession = (HttpSession) request.getHttpSession();
+		//httpSession = (HttpSession) request.getHttpSession();
 		
-		System.out.println("config.getUserProperties() : "+config.getUserProperties() + ", session : " + httpSession);
+		//System.out.println("config.getUserProperties() : "+config.getUserProperties() + ", session : " + httpSession);
 		
-		config.getUserProperties().put(HttpSession.class.getName(), httpSession);
+		config.getUserProperties().put("ip", ip);
 		
 		
 
