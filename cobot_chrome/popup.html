@@ -1,0 +1,26 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Cobot.co.kr</title>
+    <link rel=”icon” sizes=”16×16″ href=”favicon_16_16.png”>
+	<link rel="shortcut icon" href="favicon_128_128.png" />
+    <style>
+		iframe{
+			position: fixed;
+			overflow:hidden;
+			height:100%;
+			width:100%;
+		}
+	</style>
+  </head>
+  <body style="margin:0px;padding:0px;overflow:hidden">
+	
+    <iframe frameborder="0" src="http://cobot.co.kr" height="100%" width="100%"></iframe>
+  </body>
+</html>
+

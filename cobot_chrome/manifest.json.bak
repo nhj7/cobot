@@ -1,0 +1,9 @@
+{ 
+	"name": "Cobot"
+	, "permissions": ["webview"]
+	, "description": "Cobot, Bitcoin, crypto currency"
+	, "version": "0.1"
+	, "manifest_version": 2
+	, "app": { "background": { "scripts": ["background.js"] } }, "icons": { "16": "favicon_16_16.png", "128": "favicon_128_128.png" } 
+}
+

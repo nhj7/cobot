@@ -111,7 +111,7 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
 						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;font-size:0.9em;font-weight:bold;">
-							Cobot v 0.1.2
+							Cobot v 0.1.3
 							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
 							
 						</div>
