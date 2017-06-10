@@ -226,9 +226,9 @@
 								<div class="4u 12u$(mobile)">
 								
 								
-									<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">* 코인 추가 및 삭제</span>
-											<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" onclick="doHideNShow(this, 'coinRank_bak');"/>
+									<div id="btn_wrapp_coinRank" style="text-align:right;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">
+											<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.9em;" >코인 추가 및 삭제</span>
+											<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" />
 											&nbsp;&nbsp;&nbsp;
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
 										</div>
