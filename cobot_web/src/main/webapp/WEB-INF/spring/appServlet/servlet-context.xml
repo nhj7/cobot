@@ -28,6 +28,7 @@
 	<resources mapping="*.png" location="/" />
 	<resources mapping="*.txt" location="/" />
 	<resources mapping="/img/**" location="/img/" />
+	<resources mapping="/lib/**" location="/lib/" />
 	
 	
 	

@@ -3,7 +3,6 @@ package kr.co.cobot.ctrl;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -11,7 +10,6 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +21,7 @@ import kr.co.cobot.bot.DATA;
 import kr.co.cobot.conf.GetHttpSessionConfigurator;
 import nhj.util.JsonUtil;
 
-@Controller("TestWebSocketController")
+@Controller("WebSocketController")
 @RequestMapping(value = "Test")
 @ServerEndpoint(value = "/echo"
 , configurator=GetHttpSessionConfigurator.class
@@ -58,6 +56,8 @@ public class WebSocketCon {
 		
 		
 		System.out.println("[WebSocket] Open session id : " + session.getId());
+		
+		
 		
 		try {
 			final Basic basic = session.getBasicRemote();

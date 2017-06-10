@@ -13,7 +13,7 @@
 <html>
 	<head>
 		<title>코봇-거래소 정보 모아보자</title>
-		<meta name=”description=” Content=”코봇,비트코인,코인,가상화폐,암호화폐,4차혁명,쉽게보는 4차혁명”>
+		<meta name=”description=” Content=”코봇에서는 모든 거래소의 시세정보를 모아서 볼수 있게 하려는 모토로 개발이 진행 되고 있습니다. 추가적인 기능으로 잔고정산, 채팅, 암호화화폐 정보 검색 등의 기능이 추가될 예정이오니 많은 관심 바랍니다.”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,11 +42,8 @@
 		
 		<link rel="shortcut icon" href="/img/ico/favicon_128_128.ico" />
 		
-		
-		
-		
 		<meta name="msapplication-TileColor" content="#194386">
-		<meta name="theme-color" content="white">
+		<meta name="theme-color" content="black">
 		
 	</head>
 	<body>
@@ -142,6 +139,16 @@
 						font-size:14px;
 						height:400px;
 						overflow:scroll;
+						
+					}
+					.coinRank::-webkit-scrollbar {
+					    width: 5px ;
+					}
+					
+					
+					::-webkit-scrollbar-thumb {
+					    border-radius: 10px;
+					    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 					}
 					.coinRank .rankRow {
 						display: table-row;
@@ -310,8 +317,11 @@
 		<!-- End Main -->
 		<!-- Footer -->
 			<div id="footer">
-			
 					<!-- Copyright -->
+					<!-- ul class="copyright">
+						<li><a href="/lib/cobot_chrome.crx">Chrome에서 사용하기</a></li>
+					</ul-->
+					
 					<ul class="copyright">
 						<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
 						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
@@ -323,13 +333,6 @@
 						<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
 						<li></li>
 						
-					</ul>
-					<ul class="copyright">
-						<li>개발예정 내역</li>
-						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 코인원, 코빗 시세 정보 추가 </li>
-						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 실시간 환율 </li>
-						<li>&nbsp;&nbsp;&nbsp;&nbsp; - SNS 로그인 기능 </li>
-						<li>&nbsp;&nbsp;&nbsp;&nbsp; - 잔고 등록 및 정산 기능 </li>
 					</ul>
 					<ul class="copyright">
 						<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
