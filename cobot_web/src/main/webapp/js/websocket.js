@@ -187,8 +187,8 @@ function regCoins( coins ){
 			even_class = "down_bg";
 		}
 		
-		var str_html = '<span onclick="$(this.parentNode).dblclick();" class="rCell col_ex '+ even_class +' ">'
-		 + '<img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span>';
+		var str_html = '<span class="rCell col_ex '+ even_class +' ">'
+		 + '<a href="javascript:;" onclick="$(this.parentNode.parentNode).dblclick();"><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
 		
 		str_html += '<span class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
 		

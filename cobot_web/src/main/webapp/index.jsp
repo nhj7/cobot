@@ -211,44 +211,32 @@
 												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
 												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
 											</div>
-											
 										</div>
-										
 									</article>
-									
 									<article  class="item">
-										
-										
-										
 									</article>
-									
 								</div>
 								<div class="4u 12u$(mobile)">
-								
-								
-									<div id="btn_wrapp_coinRank" style="text-align:right;" onclick="doHideNShow(document.getElementById('serch_img'), 'coinRank_bak');">
-											<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.9em;" >코인 추가 및 삭제</span>
-											<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" />
-											&nbsp;&nbsp;&nbsp;
-											<img src="/img/btn/close.png" width="16px" height="16px"/>
+									<a href="javascript:;" onclick="doHideNShow(document.getElementById('c_img'), 'coinRank_bak');">
+									<div id="btn_wrapp_coinRank" style="text-align:right;" >
+										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >코인 전체 내역(Click Me)</span>
+										<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
+										&nbsp;&nbsp;&nbsp;
+										<img src="/img/btn/close.png" width="16px" height="16px"/>
+									</div>
+									</a>
+									<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
+										<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
+											<span class="rCell col_ex crheader" >Ex</span>
+											<span class="rCell col_coin crheader" style="">Coin</span>
+											<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
+											<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
+											<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
+											<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
 										</div>
-										
-										<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
-											<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
-												<span class="rCell col_ex crheader" >Ex</span>
-												<span class="rCell col_coin crheader" style="">Coin</span>
-												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
-												<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
-												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
-												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
-											</div>
-											
-										</div>
-									
+									</div>
 								</div>
-								
 							</div>
-
 						</div>
 					</section>
 
