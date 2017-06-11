@@ -252,11 +252,21 @@
 									//alert(22);
 									var aVal = a.getAttribute("data-" + colId).replace(/,/gi,""); 
 									var bVal = b.getAttribute("data-" + colId).replace(/,/gi,"");
+									if( aVal == "-"){
+										aVal = "1";
+									}
+									if( bVal == "-"){
+										bVal = "1";
+									}
 									if( !isNaN(aVal) ){
 										aVal = parseFloat(aVal);
 										bVal = parseFloat(bVal);
+										
+										return orderBy == "asc" ? aVal - bVal : bVal - aVal;
 									}
-									return orderBy == "asc" ? aVal > bVal : bVal > aVal;
+									if( aVal > bVal ) return orderBy == "asc" ? 1 : -1 ;
+									if( bVal > aVal ) return orderBy == "asc" ? -1 : 1 ;
+									return 0;
 								}		
 							);
 							$("#coinRank div[data-cd=data]").remove();
