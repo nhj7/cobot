@@ -45,7 +45,9 @@ function openSocket() {
 			//$("#coinRank div[data-cd=data]").css("background-color","white");
 			//$("#coinRank_bak div[data-cd=data]").css("background-color","white");
 			
-			
+			per_krw = jo.value.per_krw;
+			//alert(per_krw);
+			$("#per_krw").text( comma(per_krw) );
 			
 			regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_1)  );
 		}
@@ -83,6 +85,9 @@ function writeResponse(text) {
 var activeCoins;
 var arrCoinRank = new Array();
 var arrCoinRank_bak = new Array(); // coinRank_bak
+var per_usdt = 1.01;
+var per_krw = 1120;
+
 function regCoins( coins ){
 	
 	arrCoinRank = [];
@@ -97,7 +102,7 @@ function regCoins( coins ){
 		activeCoins = 
 		{		
 				"eid_1":[ "BTC" , "ETH"]
-				, "eid_2":[ "BTC" , "ETH", "XRP"]
+				, "eid_3":[ "BTC" , "ETH", "XRP"]
 		};
 	}else{
 		activeCoins = JSON.parse(cData);
@@ -225,11 +230,11 @@ function regCoins( coins ){
 		
 		
 		
-		var krw = usd * 1.03 * 1120;
+		var krw = usd * per_usdt * per_krw;
 		if( coins[i].unit_cid == "9998" ){
 			krw = coins[i].price;
 			
-			usd = krw / 1120;
+			usd = krw / 1120 / per_usdt;
 		}
 		
 		usd = formatValue(usd);
@@ -247,7 +252,10 @@ function regCoins( coins ){
 		}
 		var chkList = activeCoins["eid_" + coins[i].eid];
 		
-		
+		rankRow.setAttribute("data-ccd", coins[i].ccd );
+		rankRow.setAttribute("data-btc", price );
+		rankRow.setAttribute("data-usdt", usd );
+		rankRow.setAttribute("data-krw", krw );
 		rankRow.setAttribute("data-ch", ch );
 		
 		//document.getElementById("rankRow_" + coins[i].eid )
@@ -270,15 +278,12 @@ function regCoins( coins ){
 					}else if( old_ch > new_ch ){
 						rankRow.setAttribute("data-ch-cd", "down" );
 					}else{
-						
+						rankRow.setAttribute("data-ch-cd", "" );
 					}
 				}catch(e){
 					alert(e);
 				}
-				
-				
 			}
-			
 			arrCoinRank.push(rankRow);
 			//document.getElementById("coinRank").appendChild(rankRow);
 		}else{
@@ -288,16 +293,18 @@ function regCoins( coins ){
 		
 	} // end for coins
 	
-	$("#coinRank div[data-cd=data]").remove();
+	// sort coins
+	//cfg_order = {"colId":colId , "orderBy" : orderBy};
+	if( cfg_order.colId == undefined ){
+		$("#coinRank div[data-cd=data]").remove();
+		$("#coinRank").append( arrCoinRank);
+	}else{
+		exeOrder(cfg_order.colId, cfg_order.orderBy, arrCoinRank );
+	}
+	
 	$("#coinRank_bak div[data-cd=data]").remove();
+	$("#coinRank_bak").append( arrCoinRank_bak);
 	
-	for(var i = 0; i < arrCoinRank.length;i++){
-		document.getElementById("coinRank").appendChild( arrCoinRank[i] );
-	}
-	
-	for(var i = 0; i < arrCoinRank_bak.length;i++){
-		document.getElementById("coinRank_bak").appendChild( arrCoinRank_bak[i] );
-	}
 	
 	flashCoins();
 	//var arrCoinRank = new Array();
@@ -309,7 +316,7 @@ function flashCoins(){
 	//return;
 	
 	for(var i = 0; i < arrCoinRank.length;i++){
-		if( arrCoinRank[i].getAttribute( "data-ch-cd" ) != null ){
+		if( arrCoinRank[i].getAttribute( "data-ch-cd" ) != "" ){
 			//arrCoinRank[i].onFlash();
 			if( arrCoinRank[i].getAttribute("data-ch-cd") == "up"){
 				flash_class = "up_flash";

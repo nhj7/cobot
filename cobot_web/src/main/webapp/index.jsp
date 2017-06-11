@@ -57,14 +57,42 @@
 						<h1 id="title">Guest</h1>
 						<p>SNS 로그인을 통한<br /> 잔고 정산 기능 추가 예정.<br /></p>
 					</div>
+					
+					<script>
+					/*
+					<div id="chat_import" style="display:none;">
+											<iframe id="chat_iframe" src="" style="width:100%;height:350px;display:block"></iframe>
+										</div>
+					*/
+						var coinoneUrl = "https://coinone.co.kr/chat/";
+						var steemUrl = "https://steemit.chat/channel/korea";
+						function chatOnOff( target ){
+							
+							var chat_iframe = $("#chat_iframe");
+							
+							if( target == chat_iframe.attr("data-target") ){
+								chat_iframe.attr("src", "");
+								chat_iframe.attr("data-flag", "off");
+								chat_iframe.attr("data-target", "");
+								$("#chat_import").hide();
+							}else{
+								chat_iframe.attr("data-target", target)
+								chat_iframe.attr("src", ( target=="coinone" ? coinoneUrl : steemUrl ));
+								$("#chat_import").show();
+							}
+							 
+								
+								
+						}
+					</script>
 	
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
-							<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">준비중</span></a></li>
-							<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">준비중</span></a></li>
-							<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
+							<li><a href="javascript:;" onclick="chatOnOff('coinone');" id="coinone-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Coinone Chat</span></a></li>
+							<li><a href="javascript:;" onclick="chatOnOff('steem');"  id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Steem Chat</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 						</ul>
 					</nav>
 			</div>
@@ -86,24 +114,7 @@
 		</div>
 		<!-- End Header -->
 		
-		<script>
 		
-			function doHideNShow(imgObj, id ){
-				if( $(imgObj).attr("src").indexOf("hide") > -1 ){
-					$("#" + id).css("display","none");
-					$(imgObj).attr("src", "/img/btn/show.png");
-				}else{
-					$("#" + id).css("display","block");
-					$(imgObj).attr("src", "/img/btn/hide.png");
-				}
-			}
-
-			//콤마찍기
-			function comma(n) {
-				var parts=n.toString().split(".");
-			    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
-			}
-		</script>
 		
 		<!-- Main -->
 			<div id="main">
@@ -111,14 +122,14 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover">
 						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;font-size:0.9em;font-weight:bold;">
-							Cobot v 0.1.3
-							<img id="serch_img" src="/img/btn/hide.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
+							Cobot v 0.1.4
+							<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
 							
 						</div>
-						<div id="div_search" class="container">
+						<div id="div_search" class="container" style="display:none;">
 							<div class="row" >
 								<span style="width:100%;">
-									<input type="text" placeholder="다음 코인 정렬 구현 예정" class="search_txt"  />
+									<input type="text" placeholder="" class="search_txt"  />
 								</span>
 							</div>
 						</div>
@@ -137,7 +148,7 @@
 						display: table-block; 
 						width: 100%; 
 						font-size:14px;
-						height:400px;
+						max-height:400px;
 						overflow:scroll;
 						
 					}
@@ -187,6 +198,71 @@
 					.down_flash{ background-color:#E6FFFF !important;}
 					.none{display:none;}
 					</style>
+					
+					<script>
+		
+						function doHideNShow(imgObj, id ){
+							if( $(imgObj).attr("src").indexOf("hide") > -1 ){
+								$("#" + id).css("display","none");
+								$(imgObj).attr("src", "/img/btn/show.png");
+							}else{
+								$("#" + id).css("display","block");
+								$(imgObj).attr("src", "/img/btn/hide.png");
+							}
+						}
+			
+						//콤마찍기
+						function comma(n) {
+							var parts=n.toString().split(".");
+						    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+						}
+						
+						
+						var cfg_order = [];
+						
+						function setOrder( obj, colId ){
+							var headerObj = $( obj );
+							var orderBy = "";
+							$("#rankRow_header").children().each(
+								function(){
+									$(this).text($(this).attr("title"));	
+								}		
+							);
+							if( cfg_order.colId == undefined ){
+								orderBy = "asc";
+							}else{
+								if( cfg_order.colId != colId){
+									orderBy = "asc";
+								}else{
+									orderBy = cfg_order.orderBy=="asc"?"desc":"asc";
+								}
+							}
+							
+							headerObj.text(headerObj.attr("title") + (orderBy=="asc"?"↑":"↓"));
+							cfg_order = {"colId":colId , "orderBy" : orderBy};
+							$.cookie("kr.co.cobot.cfg_order", JSON.stringify(cfg_order), { expires: 365 } );
+							
+							exeOrder(colId, orderBy, $("#coinRank div[data-cd=data]"));
+						}
+						
+						function exeOrder( colId, orderBy, dataArray ){
+							
+							dataArray.sort(
+								function(a, b){
+									//alert(22);
+									var aVal = a.getAttribute("data-" + colId).replace(/,/gi,""); 
+									var bVal = b.getAttribute("data-" + colId).replace(/,/gi,"");
+									if( !isNaN(aVal) ){
+										aVal = parseFloat(aVal);
+										bVal = parseFloat(bVal);
+									}
+									return orderBy == "asc" ? aVal > bVal : bVal > aVal;
+								}		
+							);
+							$("#coinRank div[data-cd=data]").remove();
+							$("#coinRank").append( dataArray );
+						}
+					</script>
 
 				<!-- coin_table -->
 					<section id="coin_table" class="two">
@@ -196,24 +272,29 @@
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">USD/KRW 1,120, USDT $1.03</span>
+											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1.01</data></span>
 											<img src="/img/btn/setting.png" width="16px" height="16px"/>
 											&nbsp;&nbsp;&nbsp;
 											<img src="/img/btn/close.png" width="16px" height="16px"/>
 										</div>
 										
+										
+										
 										<div class="coinRank" id="coinRank" style="font-weight:bold;width:100%;" >
 											<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
-												<span class="rCell col_ex crheader" >Ex</span>
-												<span class="rCell col_coin crheader" style="">Coin</span>
-												<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
-												<span class="rCell col_usd crheader" style="text-align:center;">USD(T)</span>
-												<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>
-												<span class="rCell col_ch crheader" style="text-align:center;">CH</span>
+												<span class="rCell col_ex crheader" onclick="setOrder(this,'eid')" id="header_eid" title="Ex">Ex</span>
+												<span class="rCell col_coin crheader" onclick="setOrder(this,'ccd')" id="header_ccd" title="Coin">Coin</span>
+												<span class="rCell col_btc crheader" onclick="setOrder(this,'btc')" id="header_btc" title="BTC" style="text-align:center;" >BTC</span>
+												<span class="rCell col_usd crheader" onclick="setOrder(this,'usdt')" id="header_usdt" title="USDT" style="text-align:center;">USDT</span>
+												<span class="rCell col_krw crheader" onclick="setOrder(this,'krw')" id="header_krw" title="KRW" style="text-align:center;">KRW</span>
+												<span class="rCell col_ch crheader" onclick="setOrder(this,'ch')" id="header_ch" title="CH" style="text-align:center;">CH</span>
 											</div>
 										</div>
 									</article>
 									<article  class="item">
+										<div id="chat_import" style="display:none;">
+											<iframe id="chat_iframe" src="" style="width:100%;height:350px;display:block"></iframe>
+										</div>
 									</article>
 								</div>
 								<div class="4u 12u$(mobile)">
@@ -228,7 +309,7 @@
 									<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
 										<div class="rankRow" id="rankRow_header" style="font-weight:bold;width:100%;">
 											<span class="rCell col_ex crheader" >Ex</span>
-											<span class="rCell col_coin crheader" style="">Coin</span>
+											<span class="rCell col_coin crheader" >Coin</span>
 											<span class="rCell col_btc crheader" style="text-align:center;">BTC</span>
 											<span class="rCell col_usd crheader" style="text-align:center;">USD</span>
 											<span class="rCell col_krw crheader" style="text-align:center;">KRW</span>

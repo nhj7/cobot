@@ -56,6 +56,11 @@ public class TickManager implements Runnable {
 					m.put("eid_" + 4, korbitList);
 				}
 				
+				{
+					String per_krw = CoinoneAPI.getPerKrw();
+					m.put("per_krw" , per_krw);
+				}
+				
 				DATA.setCoinInfo(m);				
 				Thread.sleep( 3000 );
 				

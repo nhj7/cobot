@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.omg.CORBA.PERSIST_STORE;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,8 +35,12 @@ public class CoinoneAPI implements Runnable{
 		return api;
 	}
 	
+	
+	
+	
+	
 	public static void init(){
-		System.out.println("[KorbitAPI].start!");
+		System.out.println("[CoinoneAPI].start!");
 		//new Thread( getInstance() ).start();
 		try {
 			Options opts = new Options();
@@ -70,6 +76,8 @@ public class CoinoneAPI implements Runnable{
 
 			});
 			socket.connect();
+			
+			new Thread(getInstance()).start();
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,11 +118,25 @@ public class CoinoneAPI implements Runnable{
 		
 	}
 	
+	public static String getPerKrw(){
+		return per_krw;
+	}
+	
+	private static String per_krw = ""; 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		
-
+		while(true){
+			
+			try {
+				per_krw = getUSDCurrency(); 
+				Thread.sleep(3000);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		
 	}
@@ -155,14 +177,14 @@ public class CoinoneAPI implements Runnable{
 	}
 	
 	
-	public static String getUSDCurrency() throws Throwable{
+	private static String getUSDCurrency() throws Throwable{
 		
-		String url = "https://api.coinone.co.kr/currency/?format=json&currencyType=JP";
+		String url = "https://api.coinone.co.kr/currency/?format=json";
 		String rtnJsonStr = URLUtil.htmlToString(url);
 		
 		JsonObject jo = new Gson().fromJson(rtnJsonStr, JsonObject.class);
 		
-		return jo.get("currency").toString();	
+		return get(jo,"currency").toString();	
 		
 	}
 	

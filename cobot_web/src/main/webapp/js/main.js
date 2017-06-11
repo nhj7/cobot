@@ -132,6 +132,17 @@
 	
 	setTimeout("setThemeColor('white');", 1050); 
 	*/
+	
+	cfg_order = $.cookie("kr.co.cobot.cfg_order");
+	
+	if( cfg_order == undefined || cfg_order == "" ){
+		cfg_order = [];
+	}else{
+		cfg_order = JSON.parse(cfg_order);
+		var hObj = $("#header_"+cfg_order.colId);
+		hObj.text( hObj.attr("title") + ( cfg_order.orderBy == "asc"? "↑":"↓" ) );
+	}
+	
 	initCoins();
 	setInterval("initCoins();", 3000);
 	//initCoins();
