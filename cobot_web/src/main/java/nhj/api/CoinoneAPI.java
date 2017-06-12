@@ -54,7 +54,12 @@ public class CoinoneAPI implements Runnable{
 			  public void call(Object... args) {
 			    //socket.emit("foo", "hi");
 			    //socket.disconnect();
-				System.out.println("EVENT_CONNECT : "+args);
+				  
+				for(int i = 0; i <  args.length;i++){
+					System.out.println("EVENT_CONNECT : "+args[i]);
+				}  
+				  
+				
 			  }
 
 			}).on("update", new Emitter.Listener() {

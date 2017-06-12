@@ -29,7 +29,7 @@
 	<resources mapping="*.txt" location="/" />
 	<resources mapping="/img/**" location="/img/" />
 	<resources mapping="/lib/**" location="/lib/" />
-	
+	<resources mapping="/chartist/**" location="/chartist/" />
 	
 	
 
