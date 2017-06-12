@@ -71,7 +71,7 @@ body{
 		<td><%=HTMLParsingAPI.LAP_TM / 1000  %>초</td>
 	</tr>
 </table>
-집계에는 평균 3분 소요됩니다.
+집계에는 평균 3~5분 소요됩니다.
 
 </body>
 </html>
