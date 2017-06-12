@@ -84,5 +84,18 @@ public class HomeCon {
 
 		return "home";
 	}
+	
+	@RequestMapping(value = { "/EOS_SCAN" })
+	public String EOS_SCAN(Model model, @RequestParam Map ioMap, ServletRequest req) {
+
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+
+		String formattedDate = dateFormat.format(date);
+
+		
+
+		return "EOS_Ether_Scan_Bot";
+	}
 
 }

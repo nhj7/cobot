@@ -6,6 +6,7 @@ import java.util.Map;
 
 import nhj.api.BithumbAPI;
 import nhj.api.CoinoneAPI;
+import nhj.api.HTMLParsingAPI;
 import nhj.api.KorbitAPI;
 import nhj.api.PoloniexAPI;
 import nhj.util.PrintUtil;
@@ -16,6 +17,7 @@ public class TickManager implements Runnable {
 	static{
 		CoinoneAPI.init();	// WS Socket init
 		KorbitAPI.init();	// Web scrapping init
+		HTMLParsingAPI.init();	
 	}
 	
 	@Override

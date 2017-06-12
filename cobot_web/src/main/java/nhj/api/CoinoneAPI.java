@@ -77,6 +77,7 @@ public class CoinoneAPI implements Runnable{
 			  @Override
 			  public void call(Object... args) {
 				  System.out.println("EVENT_DISCONNECT : "+args[0]);
+				  socket.connect();
 			  }
 
 			});
