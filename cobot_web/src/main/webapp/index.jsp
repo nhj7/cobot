@@ -16,10 +16,13 @@
 		<meta name=”description=” Content=”코봇에서는 모든 거래소의 시세정보를 모아서 볼수 있게 하려는 모토로 개발이 진행 되고 있습니다. 추가적인 기능으로 잔고정산, 채팅, 암호화화폐 정보 검색 등의 기능이 추가될 예정이오니 많은 관심 바랍니다.”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name=apple-mobile-web-app-capable content=yes>
+		<meta name=apple-mobile-web-app-status-bar-style content=black>
 		<link rel="stylesheet" href="/css/main.css" />		
 		<!--[if lte IE 8]><script src="/js/ie/html5shiv.js"></script><![endif]-->
-		
+		 
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 		
@@ -44,10 +47,14 @@
 		
 		<meta name="msapplication-TileColor" content="#194386">
 		<meta name="theme-color" content="black">
-		
+		<style>
+			body{
+				 ;
+			}
+			
+		</style>
 	</head>
-	<body>
-	
+	<body >	
 		<!-- Header -->
 		<div id="header">
 			<div class="top">
@@ -55,7 +62,7 @@
 					<div id="logo">
 						<span class="image avatar48"><img src="" alt="" /></span>
 						<h1 id="title">Guest</h1>
-						<p>SNS 로그인을 통한<br /> 잔고 정산 기능 추가 예정.<br /></p>
+						<p>SNS 로그인 구현 예정</p>
 					</div>
 					
 					<script>
@@ -69,7 +76,6 @@
 						function chatOnOff( target ){
 							
 							var chat_iframe = $("#chat_iframe");
-							
 							if( target == chat_iframe.attr("data-target") ){
 								chat_iframe.attr("src", "");
 								chat_iframe.attr("data-flag", "off");
@@ -79,19 +85,64 @@
 								chat_iframe.attr("data-target", target)
 								chat_iframe.attr("src", ( target=="coinone" ? coinoneUrl : steemUrl ));
 								$("#chat_import").show();
-							}
-							 
-								
-								
+							}	
+						}
+						
+						var etherScanUrl = "/EOS_SCAN";
+						function utilPageImport( target ){
+							
+							var util_iframe = $("#util_iframe");
+							if( target == util_iframe.attr("data-target") ){
+								util_iframe.attr("src", "");
+								util_iframe.attr("data-flag", "off");
+								util_iframe.attr("data-target", "");
+								$("#util_import").hide();
+							}else{
+								util_iframe.attr("data-target", target)
+								util_iframe.attr("src", ( target=="etherScan" ? etherScanUrl : "" ));
+								$("#util_import").show();
+							}	
 						}
 					</script>
-	
+					<style>
+						.nav_detail{
+							font-size:0.7em;
+							font-weight:bold;
+						}
+					</style>
 					<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li><a href="javascript:;" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">시세조회</span></a></li>
-							<li><a href="javascript:;" onclick="chatOnOff('coinone');" id="coinone-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Coinone Chat</span></a></li>
-							<li><a href="javascript:;" onclick="chatOnOff('steem');"  id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Steem Chat</span></a></li>
+							<li>
+								<a href="javascript:;" id="top-link" class="skel-layers-ignoreHref nav_detail" >
+									Ticker &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/stock.png" />
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" onclick="chatOnOff('coinone');" id="coinone-link" class="skel-layers-ignoreHref nav_detail">
+									Coinone Chat &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/chat.png" />
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" onclick="chatOnOff('steem');"  id="about-link" class="skel-layers-ignoreHref nav_detail">
+									Steem Chat &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/chat.png" />
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" onclick="utilPageImport('etherScan');" id="contact-link" class="skel-layers-ignoreHref nav_detail">
+									IOC Scanner(EOS) &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/search.png" />
+								</a>
+							</li>
+							
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 						</ul>
 					</nav>
@@ -120,35 +171,30 @@
 			<div id="main">
 
 				<!-- Intro -->
-					<section id="top" class="one dark cover">
-						<div id="btn_wrapp_search" style="text-align:center;width:95%;color:black;font-size:0.9em;font-weight:bold;">
-							Cobot v 0.1.4
-							<img id="serch_img" src="/img/btn/show.png" width="16px" height="16px" onclick="doHideNShow(this, 'div_search');"/>
-							
+					<section id="top" class="one dark cover" style="margin:0 0 0 0;padding:10 0 0 0 ;">
+						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
+							<span style="position:relative;float: right;left:-0%;width:100%"><input type="text" placeholder="Cobot v1.0.0   " class="search_txt"  /></span> 
+							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
-						<div id="div_search" class="container" style="display:none;">
-							<div class="row" >
-								<span style="width:100%;">
-									<input type="text" placeholder="" class="search_txt"  />
-								</span>
-							</div>
-						</div>
+						
 					</section>
 					
 					<style>
 					.search_txt{
-						width:60%;
+						width:50%;
 						font-size:14px;
 						background-image:url('/img/search_icon.png');
 						background-repeat:no-repeat;
 						background-size:14px 80%;
 						background-position:98% 50%;
+						border : 1px solid green !important;
+						align:center; text-align:center;
 					}
 					.coinRank {
 						display: table-block; 
 						width: 100%; 
 						font-size:14px;
-						max-height:400px;
+						max-height:50vh;
 						overflow:scroll;
 						
 					}
@@ -276,16 +322,16 @@
 
 				<!-- coin_table -->
 					<section id="coin_table" class="two">
-						<div class="container">							
-							<div class="row">
-								<div class="4u 12u$(mobile)" style="width:100%;">
+						<div class="container" style="width:100%;padding:0 0 0 0 !important;">							
+							<div class="row" style="width:100%;margin:0 0 0 0 !important;">
+								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1.01</data></span>
-											<img src="/img/btn/setting.png" width="16px" height="16px"/>
+											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">&nbsp;&nbsp;&nbsp;USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1.01</data></span>
+											<!-- img src="/img/btn/setting.png" width="16px" height="16px"/-->
 											&nbsp;&nbsp;&nbsp;
-											<img src="/img/btn/close.png" width="16px" height="16px"/>
+											<!-- img src="/img/btn/close.png" width="16px" height="16px"/-->&nbsp;&nbsp;&nbsp;
 										</div>
 										
 										
@@ -307,7 +353,7 @@
 										</div>
 									</article>
 								</div>
-								<div class="4u 12u$(mobile)">
+								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
 									<a href="javascript:;" onclick="doHideNShow(document.getElementById('c_img'), 'coinRank_bak');">
 									<div id="btn_wrapp_coinRank" style="text-align:right;" >
 										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >코인 전체 내역(Click Me)</span>
@@ -331,25 +377,14 @@
 						</div>
 					</section>
 
-				<!-- About Me -->
-					<!-- section id="about" class="three">
-						<div class="container">
-
-							<header>
-								<h2>About Me</h2>
-							</header>
-
-							<a href="#" class="image featured"><img src="img/pic08.jpg" alt="" /></a>
-
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-							ornare iaculis.</p>
-
+				<!-- Util Section -->
+				<section id="secUtil" class="three">
+					<div class="container">
+						<div id="util_import" style="display:none;">
+							<iframe id="util_iframe" src="" style="width:100%;height:350px;display:block"></iframe>
 						</div>
-					</section-->
+					</div>
+				</section>
 
 				<!-- Contact -->
 					<!-- section id="contact" class="four">
@@ -395,32 +430,53 @@
 	
 		<!-- End Main -->
 		<!-- Footer -->
-			<div id="footer">
-					<!-- Copyright -->
-					<!-- ul class="copyright">
-						<li><a href="/lib/cobot_chrome.crx">Chrome에서 사용하기</a></li>
-					</ul-->
+		<!-- style>
+			#footer{
+				color:white !important;				
+				font-weight:bold !important;
+				background:url('/img/main.png') no-repeat !important ;
+				background-size: 100% 100% !important;
+			
+			}
+		</style-->
+		<div id="footer" style="">
+				<!-- Copyright -->
+				<!-- ul class="copyright">
+					<li><a href="/lib/cobot_chrome.crx">Chrome에서 사용하기</a></li>
+				</ul-->
+				
+				<ul class="copyright">
+					<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
+					<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
+					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
 					
-					<ul class="copyright">
-						<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
-						<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
-						<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
-						
-					</ul>
-					<ul class="copyright">
-						<li>BTC : 1Hi3zc7sSxd9ovG2kwZ62yVbaPM4dXrJK<br /></li>
-						<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
-						<li></li>
-						
-					</ul>
-					<ul class="copyright">
-						<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
-						<li>&copy; Cobot. All rights reserved.</li>
-					</ul>
-			</div>
+				</ul>
+				<ul class="copyright">
+					<li>BTC : 1Hi3zc7sSxd9ovG2kwZ62yVbaPM4dXrJK<br /></li>
+					<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
+					<li></li>
+					
+				</ul>
+				<ul class="copyright">
+					<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+					<li>&copy; Cobot. All rights reserved.</li>
+				</ul>
+		</div>
 
 		<!-- Scripts -->
-			<script src="/js/include.jsp"></script>
-	<div id="coinRankTmp" style="display:none"></div>		
+		<script src="/js/include.jsp"></script>
+		<div id="coinRankTmp" style="display:none"></div>
+		<%@ include file="/footer.jsp"  %>
+	<script async="async">(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d    =d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 	</body>
+	<script async="async">
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-100941339-1', 'auto');
+	  ga('send', 'pageview');
+	
+	</script>
 </html>

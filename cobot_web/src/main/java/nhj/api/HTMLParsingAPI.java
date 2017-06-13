@@ -130,7 +130,7 @@ public class HTMLParsingAPI implements Runnable {
 			TOTAL_PAGE = curPage;
 			TOTAL_ETHER = totalEther;
 			LAP_TM = lap_tm;
-			LAST_DTTM = DateUtil.getCurDate("YYYY-MM-DD kk:mm:ss");
+			LAST_DTTM = DateUtil.getCurDate("yyyy-MM-dd kk:mm:ss");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

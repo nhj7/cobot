@@ -133,6 +133,15 @@
 	setTimeout("setThemeColor('white');", 1050); 
 	*/
 	
+	
+	if(navigator.userAgent.match(/Android/i)){
+		// Set a timeout...
+		setTimeout(function(){
+			// Hide the address bar!
+			window.scrollTo(0, 1);
+		}, 0);
+	}
+	
 	cfg_order = $.cookie("kr.co.cobot.cfg_order");
 	
 	if( cfg_order == undefined || cfg_order == "" ){

@@ -22,7 +22,7 @@ public class CobotContextListener extends ContextLoaderListener{
 		// TODO Auto-generated method stub
 		super.contextInitialized(event);
 		
-		System.out.println("CobotContextListener Start........");
+		System.out.println("CobotContextListener Start......");
 		System.out.println("mode : " + System.getProperty("mode") );
 		
 		new Thread( new ExchManager()).start();

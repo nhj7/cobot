@@ -2175,7 +2175,7 @@
 			#main > section.one {
 				background-color: white;
 				/* background-image: url("../../img/banner.jpg"); */
-				/* background-image: url("../../img/theme/matrix/매트릭스2.gif") ; */
+				/* background-image: url("../../img/theme/matrix/留ㅽ듃由��뒪2.gif") ; */
 				
 			}
 
@@ -2248,7 +2248,7 @@
 			}
 
 			.container {
-				padding: 0 2em 0 2em;
+				padding: 0 0em 0 0em;
 			}
 
 		/* List */
@@ -2327,7 +2327,7 @@
 			}
 
 			.container {
-				padding: 0 2em 0 2em;
+				padding: 0 0em 0 0em;
 			}
 
 		/* Item */
@@ -2511,7 +2511,7 @@
 			}
 
 			.container {
-				padding: 0 15px 0 15px;
+				padding: 0 0px 0 0px;
 			}
 
 		/* List */
