@@ -7,7 +7,7 @@ import javax.websocket.server.ServerEndpointConfig;
 
 public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurator {
 	public String ip;
-
+	public HttpSession httpSession;
 	
 	@Override
 	public boolean checkOrigin(String originHeaderValue) {
@@ -29,11 +29,15 @@ public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurato
 		
 		
 		
-		//httpSession = (HttpSession) request.getHttpSession();
+		httpSession = (HttpSession) request.getHttpSession();
+		
+		System.out.println("httpSession : " + httpSession);
 		
 		//System.out.println("config.getUserProperties() : "+config.getUserProperties() + ", session : " + httpSession);
+		if( httpSession != null ){
+			config.getUserProperties().put("ip", httpSession.getAttribute("ip"));
+		}
 		
-		config.getUserProperties().put("ip", ip);
 		
 		
 

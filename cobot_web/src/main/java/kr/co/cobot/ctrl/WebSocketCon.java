@@ -106,13 +106,14 @@ public class WebSocketCon {
 	 * @throws Throwable 
 	 */
 	@OnMessage
-	public void onMessage(String message, Session session) {
-		System.out.println("[Websocket] Message from [" + session.getId() + "] : " + message + " : ");
+	public void onMessage(String message, Session session, EndpointConfig config) {
+		//System.out.println("session.getUserProperties() : " + session.getUserProperties());
+		System.out.println("[Websocket] Message from [" + session.getId() + "] : " + message + " : " + session.getUserProperties().get("ip"));
 		try {
 			final Basic basic = session.getBasicRemote();
 			JsonObject jo = new JsonObject();
 			jo.addProperty("cmd", "coin_info");
-			
+			jo.addProperty("activeUser", sessions.size());
 			Map m = DATA.getCoinInfo();
 			
 			jo.add("value", JsonUtil.getJsonFromMap(DATA.getCoinInfo()) );

@@ -7,7 +7,10 @@
 	if(true){
 		//throw new Exception("123123");
 	}
-		
+	
+	System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
+	
+	session.setAttribute("ip", request.getRemoteAddr());
 %>
 <!DOCTYPE HTML>
 <html>
@@ -53,6 +56,7 @@
 			}
 			
 		</style>
+		<%@ include file="/footer.jsp"  %>
 	</head>
 	<body >	
 		<!-- Header -->
@@ -130,7 +134,7 @@
 							</li>
 							<li>
 								<a href="javascript:;" onclick="utilPageImport('etherScan');" id="contact-link" class="skel-layers-ignoreHref nav_detail">
-									IOC Scanner(EOS) &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/search.png" />
+									ICO Scanner(EOS) &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/search.png" />
 								</a>
 							</li>
 							
@@ -466,17 +470,8 @@
 		<!-- Scripts -->
 		<script src="/js/include.jsp"></script>
 		<div id="coinRankTmp" style="display:none"></div>
-		<%@ include file="/footer.jsp"  %>
+		
 	<script async="async">(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d    =d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 	</body>
-	<script async="async">
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 	
-	  ga('create', 'UA-100941339-1', 'auto');
-	  ga('send', 'pageview');
-	
-	</script>
 </html>

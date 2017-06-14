@@ -84,6 +84,7 @@ public class HTMLParsingAPI implements Runnable {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						System.out.println("다시 시도!!");
+						Thread.sleep(120000);
 					}
 				}
 				
@@ -96,6 +97,10 @@ public class HTMLParsingAPI implements Runnable {
 				
 				//int totalCnt = 
 				Elements bTag = span_element.getElementsByTag("b");
+				
+				if( bTag.size() < 2 ){
+					continue;
+				}
 				
 				totalCnt = Integer.parseInt(((Element)bTag.get(1)).text());
 				
@@ -143,7 +148,7 @@ public class HTMLParsingAPI implements Runnable {
 		while(true){
 			try {
 				sumEtherScanTran();
-				Thread.sleep(60000);
+				Thread.sleep(120000);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
