@@ -16,7 +16,7 @@ public class TickManager implements Runnable {
 	//
 	static{
 		CoinoneAPI.init();	// WS Socket init
-		KorbitAPI.init();	// Web scrapping init
+		//KorbitAPI.init();	// Web scrapping init
 		HTMLParsingAPI.init();	
 	}
 	
