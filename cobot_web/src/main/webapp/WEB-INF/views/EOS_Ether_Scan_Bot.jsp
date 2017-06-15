@@ -82,7 +82,7 @@ body{
 <table style="width:90%;margin-left:5%;">
 	
 	<tr>
-		<td class="td_col">최종 집계 일시</td>
+		<td class="td_col">최종 작업시간</td>
 		<td><%=HTMLParsingAPI.LAST_DTTM %></td>
 	</tr>
 	<tr>
