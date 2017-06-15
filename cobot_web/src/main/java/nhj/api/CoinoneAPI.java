@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.omg.CORBA.PERSIST_STORE;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +16,7 @@ import io.socket.client.IO;
 import io.socket.client.IO.Options;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable{
@@ -113,11 +112,8 @@ public class CoinoneAPI implements Runnable{
 				coin_info = COIN_INFO.get(currency);
 			}
 			
-			if( arrTitle.length == 2 ){
-				coin_info.put("price", value);
-			}else{
-				coin_info.put("yesterday_price", value);
-			}
+			coin_info.put(title.replaceAll(arrTitle[0]+"_", ""), value);
+			
 		}
 		
 		//System.out.println("[WS_COIN_INFO] : "+WS_COIN_INFO);

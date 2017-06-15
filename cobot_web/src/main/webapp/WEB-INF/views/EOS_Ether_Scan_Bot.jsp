@@ -45,17 +45,27 @@ td{
 	border:1px solid !important;
 	align:center !important;
 	text-align:center !important;
-	color:white;
+	color:blue;
 	font-weight:bold !important;
 }
+.td_col{
+	text-align:center;
+	background-color:#008299 !important;
+	color:white;
+	width:30vw;
+}
+.td_data{
+	
+}
 body{
-	color:white !important;
+	color:black !important;
 	font-size:2.0em !important;
 	font-weight:bold !important;
-	background:url('/img/main.png') no-repeat !important ;
+	
 	background-size: 100% 100% !important;
 
 }
+/* background:url('/img/main.png') no-repeat !important ; */
 </style>
 <script>
 	window.onload=function(){
@@ -66,19 +76,20 @@ body{
 </script>	
 </head>
 <body>
-■ ICO 스캐너(EOS)
 
-<table>
+
+<table style="width:90%;">
+	
 	<tr>
-		<td>최종 집계 일시</td>
+		<td class="td_col">최종 집계 일시</td>
 		<td><%=HTMLParsingAPI.LAST_DTTM %></td>
 	</tr>
 	<tr>
-		<td>페이지 수</td>
+		<td class="td_col">페이지 수</td>
 		<td><%=HTMLParsingAPI.TOTAL_PAGE %></td>
 	</tr>
 	<tr>
-		<td>이더리움 합산 </td>
+		<td class="td_col">합계 </td>
 		<% 
 			System.out.println(HTMLParsingAPI.TOTAL_ETHER);
 		%>
@@ -86,7 +97,7 @@ body{
 		<td><%=StringUtil.addComma(String.valueOf(HTMLParsingAPI.TOTAL_ETHER)) %></td>
 	</tr>
 	<tr>
-		<td>작업소요시간</td>
+		<td class="td_col">작업소요시간</td>
 		<td><%=HTMLParsingAPI.LAP_TM / 1000  %>초</td>
 	</tr>
 </table>

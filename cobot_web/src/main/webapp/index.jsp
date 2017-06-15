@@ -360,10 +360,11 @@
 								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
 									<a href="javascript:;" onclick="doHideNShow(document.getElementById('c_img'), 'coinRank_bak');">
 									<div id="btn_wrapp_coinRank" style="text-align:right;" >
-										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >코인 전체 내역(Click Me)</span>
+										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;코인 전체 내역(Click Me!)</span>
 										<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
 										&nbsp;&nbsp;&nbsp;
 										<img src="/img/btn/close.png" width="16px" height="16px"/>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</div>
 									</a>
 									<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
@@ -385,6 +386,13 @@
 				<section id="secUtil" class="three">
 					<div class="container">
 						<div id="util_import" style="display:none;">
+							<div id="btn_wrapp_coinRank" style="text-align:right;" >
+								<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >ICO Scanner(Click Me!)</span>
+								<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
+								&nbsp;&nbsp;&nbsp;
+								<img src="/img/btn/close.png" width="16px" height="16px"/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</div>
 							<iframe id="util_iframe" src="" style="width:100%;height:350px;display:block"></iframe>
 						</div>
 					</div>
