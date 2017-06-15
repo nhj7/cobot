@@ -47,6 +47,7 @@ td{
 	text-align:center !important;
 	color:blue;
 	font-weight:bold !important;
+	font-size:0.8em !important;
 }
 .td_col{
 	text-align:center;
@@ -78,7 +79,7 @@ body{
 <body>
 
 
-<table style="width:90%;">
+<table style="width:90%;margin-left:5%;">
 	
 	<tr>
 		<td class="td_col">최종 집계 일시</td>
@@ -101,8 +102,7 @@ body{
 		<td><%=HTMLParsingAPI.LAP_TM / 1000  %>초</td>
 	</tr>
 </table>
-- 집계에는 평균 3~5분 소요됩니다.
-- 5분 후 자동재조회 됩니다.
+
 </body>
 
 </html>
