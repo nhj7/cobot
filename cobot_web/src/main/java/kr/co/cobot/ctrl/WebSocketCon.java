@@ -127,7 +127,7 @@ public class WebSocketCon {
 			
 			
 			StringBuilder rtnJsonStr = new StringBuilder("[");
-			if( ja != null ){
+			if( ja == null ){
 				rtnJsonStr.append("{ \"cmd\" : \"tick\" , \"value\" : "+DATA.COIN_INFO_STR+" }" );
 			}else{
 				
