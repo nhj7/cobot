@@ -97,7 +97,7 @@ function addRequest(json){
 
 function removeRequest(json){
 	for(var i = 0; i < cmd.length;i++){
-		if( cmd[i] == json ){
+		if( cmd[i].cmd == json.cmd ){
 			cmd.splice(i, 1);
 			return;
 		}
