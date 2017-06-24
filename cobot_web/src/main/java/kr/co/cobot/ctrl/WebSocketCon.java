@@ -122,7 +122,15 @@ public class WebSocketCon {
 		
 		try {
 			
+			
+				
+			
+			
 			StringBuilder rtnJsonStr = new StringBuilder("[");
+			if( ja != null ){
+				rtnJsonStr.append("{ \"cmd\" : \"tick\" , \"value\" : "+DATA.COIN_INFO_STR+" }" );
+			}else{
+				
 			
 			for(Iterator it = ja.iterator(); it.hasNext();){
 				
@@ -151,8 +159,8 @@ public class WebSocketCon {
 					}
 					
 				}
-			}
-			
+			} // for end
+			} // else end
 			rtnJsonStr.append( "]" );
 			final Basic basic = session.getBasicRemote();
 			basic.sendText( rtnJsonStr.toString() );
