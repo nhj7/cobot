@@ -1671,7 +1671,7 @@
 	}
 
 	p, ul, ol, dl, table {
-		margin-bottom: 2em;
+		margin-bottom: 1em;
 	}
 
 	br.clear {
@@ -1681,7 +1681,7 @@
 /* Sections/Article */
 
 	section, article {
-		margin-bottom: 3em;
+		margin-bottom: 0.5em;
 	}
 
 		section > :last-child,
@@ -1936,7 +1936,7 @@
 
 	.item {
 		box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.05);
-		margin-bottom: 1em;
+		margin-bottom: 0.5em;
 	}
 
 		.item header {
@@ -2260,7 +2260,7 @@
 		/* Item */
 
 			.item {
-				margin-bottom: 20px;
+				margin-bottom: 0.5em;
 			}
 
 		/* Header */
@@ -2333,7 +2333,7 @@
 		/* Item */
 
 			.item {
-				margin-bottom: 15px;
+				margin-bottom: 0.5em;
 			}
 
 		/* List */

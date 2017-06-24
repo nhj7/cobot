@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
+import kr.co.cobot.ctrl.WebSocketCon;
 import nhj.api.BithumbAPI;
 import nhj.api.CoinoneAPI;
 import nhj.api.HTMLParsingAPI;
 import nhj.api.KorbitAPI;
 import nhj.api.PoloniexAPI;
-import nhj.util.PrintUtil;
+import nhj.util.JsonUtil;
 
 public class TickManager implements Runnable {
 
@@ -63,7 +66,10 @@ public class TickManager implements Runnable {
 					m.put("per_krw" , per_krw);
 				}
 				
-				DATA.setCoinInfo(m);				
+				DATA.setCoinInfo(m);
+				
+				DATA.COIN_INFO_STR = JsonUtil.getJsonFromMap(DATA.getCoinInfo()).toString();
+				
 				Thread.sleep( 3000 );
 				
 			} catch (Throwable e) {

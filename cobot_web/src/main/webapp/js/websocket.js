@@ -19,38 +19,37 @@ function openSocket() {
 		// For reasons I can't determine, onopen gets called twice
 		// and the first time event.data is undefined.
 		// Leave a comment if you know the answer.
+		send();
+		
 		if (event.data === undefined)
 			return;
 		
 		var jo = JSON.parse(event.data);
 		if( jo.cmd == "status" ){
 			writeStatus( jo.value );
-			send();
+			
 		}else{
 			//writeResponse(event.data);
 		}
+		
 		
 		
 	};
 
 	webSocket.onmessage = function(event) {
 		var jo = JSON.parse(event.data);
-		if( jo.cmd == "status" ){
-			writeStatus( jo.value );
-			send();
-		}else{
-			//alert( jo.value.eid_1 );
-			//writeResponse( event.data );
+		
+		for(var i = 0 ; i < jo.length;i++){
 			
-			//$("#coinRank div[data-cd=data]").css("background-color","white");
-			//$("#coinRank_bak div[data-cd=data]").css("background-color","white");
+			if( jo[i].cmd  == "tick" ){
+				setTick(jo[i]);
+			} else if( jo[i].cmd  == "chart" ){
+				setChart(jo[i]);
+			}
 			
-			per_krw = jo.value.per_krw;
-			//alert(per_krw);
-			$("#per_krw").text( comma(per_krw) );
-			
-			regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_1)  );
 		}
+		
+		
 	};
 
 	webSocket.onclose = function(event) {
@@ -58,12 +57,51 @@ function openSocket() {
 	};
 }
 
+function setChart(jo){
+	drawChart("chart_div",jo);
+}
+
+function setTick(jo){
+	per_krw = jo.value.per_krw;
+	//alert(per_krw);
+	$("#per_krw").text( comma(per_krw) );
+	
+	regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_1)  );
+}
+
 /**
  * Sends the value of the text input to the server
  */
+var cmd = [{"cmd":"tick"}];
 function send() {
-	var text = document.getElementById("input_txt").value;
-	webSocket.send(text);
+	if( webSocket.readyState !== WebSocket.CLOSED ){
+		webSocket.send(JSON.stringify(cmd));
+	}else{
+		openSocket();
+	}
+	
+}
+
+function addRequest(json){
+	
+	for(var i = 0; i < cmd.length;i++){
+		if( cmd[i].cmd == json.cmd ){
+			cmd[i] = json;
+			send();
+			return;
+		}
+	}
+	cmd.push(json);
+	send();
+}
+
+function removeRequest(json){
+	for(var i = 0; i < cmd.length;i++){
+		if( cmd[i] == json ){
+			cmd.splice(i, 1);
+			return;
+		}
+	}
 }
 
 function closeSocket() {
@@ -96,8 +134,6 @@ function regCoins( coins ){
 	
 	var cData = $.cookie("kr.co.cobot.activeCoins");
 	
-	
-	
 	if( cData == undefined ){
 		activeCoins = 
 		{		
@@ -118,10 +154,6 @@ function regCoins( coins ){
 			BitCoin = coins[i]; 
 		} 
 	}
-	
-	
-	
-	
 	// for loop coins. 
 	for(var i = 0; i < coins.length;i++){
 		if( 
@@ -168,16 +200,6 @@ function regCoins( coins ){
 			
 			$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
 			
-			/*
-			try{
-				$("#coinRank_bak").append($(this).clone());
-			}catch(e){
-				alert(e);
-			}
-			
-			$(this).remove();
-			*/
-			
 		});
 		
 		var ch = exactRound( coins[i].per_ch * 100 , 2 );
@@ -192,17 +214,21 @@ function regCoins( coins ){
 			even_class = "down_bg";
 		}
 		
-		var str_html = '<span class="rCell col_ex '+ even_class +' ">'
-		 + '<a href="javascript:;" onclick="$(this.parentNode.parentNode).dblclick();"><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
+		var str_html = '<span class="rCell col_ex '+ even_class +' " onclick="$(this.parentNode).dblclick();" >'
+		 + '<a href="javascript:;" ><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
 		
-		str_html += '<span class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
+		var viewChartClick = 'onclick="viewChart(\''+coins[i].eid+'\',\''+ coins[i].ccd +'\', \''+1+'\');"';
+		
+		str_html += '<span '+viewChartClick+' class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
 		
 		var price = coins[i].price;
 		if( coins[i].unit_cid == "9999" || coins[i].unit_cid == "9998" ){
 			price = "-";
 		}
 		
-		str_html += '<span class="rCell col_btc '+ even_class +'">'+ price +'</span>';
+		
+		
+		str_html += '<span '+viewChartClick+' class="rCell col_btc '+ even_class +'">'+ price +'</span>';
 		
 		var usd = "";
 		if( coins[i].unit_cid == "9999" ){
@@ -234,17 +260,17 @@ function regCoins( coins ){
 		if( coins[i].unit_cid == "9998" ){
 			krw = coins[i].price;
 			
-			usd = krw / 1120 / per_usdt;
+			usd = krw / per_krw / per_usdt;
 		}
 		
 		usd = formatValue(usd);
 		krw = formatValue(krw);
 		
-		str_html += '<span class="rCell col_usd '+ even_class +'">' + comma(usd) + '</span>';
-		str_html += '<span class="rCell col_krw '+ even_class +'">' + comma(krw) + '</span>';
+		str_html += '<span '+viewChartClick+' class="rCell col_usd '+ even_class +'">' + comma(usd) + '</span>';
+		str_html += '<span '+viewChartClick+' class="rCell col_krw '+ even_class +'">' + comma(krw) + '</span>';
 		
 		
-		str_html += '<span class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
+		str_html += '<span '+viewChartClick+' class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
 		rankRow.innerHTML = str_html;
 		
 		if( activeCoins["eid_" + coins[i].eid] == null ){
@@ -293,6 +319,8 @@ function regCoins( coins ){
 		
 	} // end for coins
 	
+	calcKrPrimeum( $(arrCoinRank.concat(arrCoinRank_bak)) ); // 김치 프리미엄 계산
+	
 	// sort coins
 	//cfg_order = {"colId":colId , "orderBy" : orderBy};
 	if( cfg_order.colId == undefined ){
@@ -306,9 +334,50 @@ function regCoins( coins ){
 	$("#coinRank_bak").append( arrCoinRank_bak);
 	
 	
+	
 	flashCoins();
 	//var arrCoinRank = new Array();
 	//var arrCoinRank_bak = new Array(); // coinRank_bak
+}
+
+function calcKrPrimeum(arr_coinDiv){
+	//var arr_coinDiv = $("div[data-cd=data]");
+	
+	var arr_plnxDiv = arr_coinDiv.filter("div[data-eid=1]");
+	
+	var arr_kr_eid = [2,3,4];
+	
+	
+	
+	for( var i = 0; i < arr_kr_eid.length;i++){
+		
+		var arr_krDiv = arr_coinDiv.filter("div[data-eid="+arr_kr_eid[i]+"]");
+		
+		for(var j = 0; j < arr_krDiv.length;j++){
+			
+			var krDiv = $(arr_krDiv[j]);
+			var plnxDiv = $(arr_plnxDiv.filter("div[data-ccd="+krDiv.attr("data-ccd")+"]")[0]);
+			
+			//alert("eid : " + arr_kr_eid[i] + ", ccd : " + krDiv.attr("data-ccd") + ", usdt : " + krDiv.attr("data-usdt") + ", plnx-usdt : " + plnxDiv.attr("data-usdt"));
+			
+			var kr_col_btc = $(krDiv.children().filter(".col_btc")[0])
+			kr_col_btc.css("color","green");
+			try{
+				var kr_pr = ( parseFloat(krDiv.attr("data-usdt")) / parseFloat(plnxDiv.attr("data-usdt")) - 1 ) * 100;
+				var kr_pr_per = exactRound(kr_pr, 2);
+				krDiv.attr("data-btc", kr_pr_per);
+				kr_col_btc.text(  kr_pr_per + "%"  );
+			}catch(e){
+				
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	
 }
 
 function flashCoins(){
@@ -331,13 +400,9 @@ function flashCoins(){
 			//alert(cmdStr);
 			setTimeout(cmdStr ,500);
 		}
-		
 	}
-	
-	
-	
-	
 }
+
 
 function formatValue( value ){
 	var tmpValue = exactRound(value, 0);
@@ -355,5 +420,56 @@ function formatValue( value ){
 	return value;
 }
 
+function viewChart( eid, ccd, unit_cid ){
+	
+	if( eid != "1" || ccd == "BTC"){
+		alert("비트코인과 국내거래소 차트는 준비중입니다.");
+		return;
+	}
+	
+	//alert(eid + ", " + ccd);
+	var chart_div = $("#chart_div");
+	var key = eid + "_" + unit_cid + "_" + ccd;
+	var chart_import = $("#chart_import");
+	
+	//alert(chart_div.attr("id"));
+	
+	// 차트가 없으면 생성
+	if( chart_div.attr("id") == undefined ){
+		
+		var div = createChart("chart_div");
+		div.setAttribute("data-eid", eid);
+		div.setAttribute("data-unit_cid", unit_cid);
+		div.setAttribute("data-ccd", ccd);
+		div.setAttribute("data-key", key );
+		
+		chart_import.append(div);
+		chart_import.css("display","block");
+		
+		var request = {"cmd":"chart", "eid" : eid, "ccd" : ccd , "unit_cid" : unit_cid};
+		addRequest(request);
+	}else{
+		
+		if ( chart_div.attr("data-key") == key ){
+			
+			var request = {"cmd":"chart", "eid" : eid, "ccd" : ccd , "unit_cid" : unit_cid};
+			removeRequest(request);
+			chart_import.css("display","none");
+			chart_div.attr("data-key", "" );
+		}else{
+			
+			chart_div.attr("data-eid", eid);
+			chart_div.attr("data-unit_cid", unit_cid);
+			chart_div.attr("data-ccd", ccd);
+			chart_div.attr("data-key", key );
+			
+			var request = {"cmd":"chart", "eid" : eid, "ccd" : ccd , "unit_cid" : unit_cid};
+			addRequest(request);
+			
+			chart_import.css("display","block");
+			
+		}
 
+	}
+}
 

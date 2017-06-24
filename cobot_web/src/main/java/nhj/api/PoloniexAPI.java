@@ -1,6 +1,7 @@
 package nhj.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,11 +33,17 @@ import nhj.util.URLUtil;
 
 public class PoloniexAPI {
 	
-	
+	private static void log(String log){
+		// log(log);
+	}
 	
 	private String apiKey;
 	private String apiSecret;
 	private String tradeUrl = "https://poloniex.com/tradingApi";
+	
+	public PoloniexAPI(){
+		
+	}
 	
 	public PoloniexAPI(String key, String secret){
 		apiKey = key;
@@ -108,7 +115,7 @@ public class PoloniexAPI {
 	    JsonParser jp = new JsonParser();
 	    JsonObject jo = jp.parse(( jsonStr )).getAsJsonObject();
 	    
-	    //System.out.println("jo : " + jo);
+	    //log("jo : " + jo);
 	    
 	    Iterator it = jo.entrySet().iterator();	    
 	    List li = new ArrayList();
@@ -149,15 +156,36 @@ public class PoloniexAPI {
 		
 		//Map rtnMap = api.buy("BCN", new BigDecimal( "0.00000141") , new BigDecimal(5000) );
 		
-		//System.out.println("rtnMap : "+rtnMap);
+		//log("rtnMap : "+rtnMap);
 		
 		//Map m = api.returnBalances();
 		
 		PoloniexAPI api = new PoloniexAPI("", "");
 		
-		List poloList = api.returnTicker();
+		//List poloList = api.returnTicker();
 		
-		System.out.println(poloList);
+		String currencyPair = "BTC_ETC";
+		String _start = String.valueOf( System.currentTimeMillis() - ( 60000 * 60 * 6 ) );
+		String start = _start.substring(0, _start.length() - 3 );
+		//String end = String.valueOf( System.currentTimeMillis() );
+		String end = "9999999999";
+		String period = "900";
+		
+		JsonArray poloList = api.returnChartData(currencyPair, start, end, period);
+		
+		
+		
+		for(int i = 0; i < poloList.size();i++){
+			
+			Date d = new Date();
+			d.setTime( Long.parseLong( ((JsonObject) poloList.get(i)).get("date").toString() + "000") );
+			log("date : " + d);
+			
+			//log(new Date(  ((JsonObject) poloList.get(i)).get("date").toString()+"000" )      );
+			
+			
+			
+		}
 	}
 	
 	
@@ -167,7 +195,7 @@ public class PoloniexAPI {
 	    String queryArgs = "command=returnDepositAddresses&nonce=" + nonce;
 
 	    String jsonStr = request(queryArgs);
-	    //System.out.println(response.getStatusLine());
+	    //log(response.getStatusLine());
 	    
 	    JsonParser jp = new JsonParser();
 	    JsonObject jo = jp.parse(( jsonStr )).getAsJsonObject();
@@ -234,7 +262,7 @@ public class PoloniexAPI {
 		
 		String json_str = URLUtil.htmlToString("https://poloniex.com/public?command=returnTicker");
 		
-		//System.out.println(html);
+		//log(html);
 		
 		Gson gson = new Gson();
 		
@@ -253,7 +281,7 @@ public class PoloniexAPI {
 			
 			
 			
-			//System.out.println("title : " + title);
+			//log("title : " + title);
 			
 			
 			String[] arrTitle = title.split("_");
@@ -289,9 +317,9 @@ public class PoloniexAPI {
 			//tickMap.put("high24hr", get(tickJo, "high24hr"));
 			//tickMap.put("low24hr", get(tickJo, "low24hr"));
 			
-			//System.out.println("tickMap : " + tickMap);
-			//System.out.println("tickJo : " + tickJo);
-			//System.out.println(arrTitle[1]);
+			//log("tickMap : " + tickMap);
+			//log("tickJo : " + tickJo);
+			//log(arrTitle[1]);
 			
 			
 			//String serialized = gson.toJson(tickMap);
@@ -299,6 +327,29 @@ public class PoloniexAPI {
 			li.add( tickMap );
 		}
 		return li;
+	}
+	
+	
+	
+	public static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+		
+		String paramStr = "currencyPair=" + currencyPair + "&start=" 
+				+ start + "&end=" + end + "&period=" + period;
+		String apiUrl = "https://poloniex.com/public?command=returnChartData&" + paramStr;
+		System.out.println("apiUrl : "+ apiUrl);
+		String json_str = URLUtil.htmlToString(apiUrl);
+		
+		log(json_str);
+		
+		Gson gson = new Gson();
+		
+		
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(json_str);
+		
+		log("je.size : " + je.getAsJsonArray().size());
+		
+		return je.getAsJsonArray();
 	}
 
 	private String get( JsonObject jo, String key ){

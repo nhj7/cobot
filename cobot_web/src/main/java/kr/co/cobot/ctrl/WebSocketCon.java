@@ -1,7 +1,7 @@
 package kr.co.cobot.ctrl;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Iterator;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -15,11 +15,13 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import kr.co.cobot.bot.ChartManager;
 import kr.co.cobot.bot.DATA;
 import kr.co.cobot.conf.GetHttpSessionConfigurator;
-import nhj.util.JsonUtil;
 
 @Controller("WebSocketController")
 @RequestMapping(value = "Test")
@@ -96,7 +98,9 @@ public class WebSocketCon {
 	}
 	
 	
-	
+	private String get( JsonObject jo, String key ){
+		return jo.get(key).toString().replaceAll("\"", "");
+	}
 
 	
 	/**
@@ -106,23 +110,52 @@ public class WebSocketCon {
 	 * @throws Throwable 
 	 */
 	@OnMessage
-	public void onMessage(String message, Session session, EndpointConfig config) {
+	public void onMessage(String message, Session session, EndpointConfig config) throws Throwable {
 		//System.out.println("session.getUserProperties() : " + session.getUserProperties());
-		System.out.println("[Websocket] Message from [" + session.getId() + "] : " + message + " : " + session.getUserProperties().get("ip"));
+		
+		
+		
+		System.out.println("[MSG]["+sessions.size()+"] Message from [" + session.getId() + "] : " + message + " : " + session.getUserProperties().get("ip"));
+		
+		Gson gson = new Gson();
+		JsonArray ja = gson.fromJson(message, JsonArray.class);
+		
 		try {
+			
+			StringBuilder rtnJsonStr = new StringBuilder("[");
+			
+			for(Iterator it = ja.iterator(); it.hasNext();){
+				
+				JsonObject jo = (JsonObject)it.next();
+				String cmd = get(jo, "cmd");
+				if( cmd.equals("tick")){
+					
+					rtnJsonStr.append("{ \"cmd\" : \"tick\" , \"value\" : "+DATA.COIN_INFO_STR+" }" );
+					
+					
+				}else if( cmd.equals("chart")){
+					
+					String eid = get(jo, "eid");
+					String unit_ccd = get(jo, "unit_cid");
+					String ccd = get(jo, "ccd");
+					String chartData = ChartManager.getChartData(eid, unit_ccd, ccd);
+					
+					try {
+						rtnJsonStr.append( " , { \"cmd\" : \"chart\", \"title\":\""+ccd+"/BTC\", \"tick\":"+ChartManager.getTickData(eid, unit_ccd, ccd)+" , \"value\" : "+ chartData +" }" );
+						
+						
+					} catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						continue;
+					}
+					
+				}
+			}
+			
+			rtnJsonStr.append( "]" );
 			final Basic basic = session.getBasicRemote();
-			JsonObject jo = new JsonObject();
-			jo.addProperty("cmd", "coin_info");
-			jo.addProperty("activeUser", sessions.size());
-			Map m = DATA.getCoinInfo();
-			
-			jo.add("value", JsonUtil.getJsonFromMap(DATA.getCoinInfo()) );
-			
-			
-			//System.out.println("jo.getAsString() : " + jo.toString());
-			
-			basic.sendText( jo.toString() );
-			
+			basic.sendText( rtnJsonStr.toString() );
 			
 			//basic.sendText("to : " + message);
 		} catch (IOException ex) {

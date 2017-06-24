@@ -15,8 +15,8 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>코봇-거래소 정보 모아보자</title>
-		<meta name=”description=” Content=”코봇에서는 모든 거래소의 시세정보를 모아서 볼수 있게 하려는 모토로 개발이 진행 되고 있습니다. 추가적인 기능으로 잔고정산, 채팅, 암호화화폐 정보 검색 등의 기능이 추가될 예정이오니 많은 관심 바랍니다.”>
+		<title>코봇-모든 코인 정보를 한눈에 </title>
+		<meta name=”description=” Content=”코봇에서는 모든 거래소의 시세정보 한꺼번에 볼수 있도록 개발이 진행 되고 있습니다. 추가적인 기능으로 잔고정산, 채팅, 암호화화폐 정보 검색 등의 기능이 추가될 예정이오니 많은 관심 바랍니다.”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -177,7 +177,7 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover" style="margin:0 0 0 0;padding:10 0 0 0 ;">
 						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
-							<span style="position:relative;float: right;left:-0%;width:100%"><input type="text" placeholder="Cobot v1.0.0   " class="search_txt"  /></span> 
+							<span style="position:relative;float: right;left:-0%;width:100%"><input type="text" placeholder="EOS Scanner 오픈 예정   " class="search_txt"  /></span> 
 							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
 						
@@ -250,14 +250,28 @@
 					</style>
 					
 					<script>
+						function changeDisplay(id){
+							var obj = $("#"+id);
+							if( obj.css("display") == "none" ){
+								obj.css("display", "block");
+							} else{
+								obj.css("display", "none");
+							}
+						}
 		
-						function doHideNShow(imgObj, id ){
-							if( $(imgObj).attr("src").indexOf("hide") > -1 ){
+						function doHideNShow(img, id ){
+							var imgObj;
+							if(  typeof img == "string"){
+								imgObj = $("#"+img);
+							}else{
+								imgObj = img;
+							}
+							if( imgObj.attr("src").indexOf("hide") > -1 ){
 								$("#" + id).css("display","none");
-								$(imgObj).attr("src", "/img/btn/show.png");
+								imgObj.attr("src", "/img/btn/show.png");
 							}else{
 								$("#" + id).css("display","block");
-								$(imgObj).attr("src", "/img/btn/hide.png");
+								imgObj.attr("src", "/img/btn/hide.png");
 							}
 						}
 			
@@ -312,6 +326,8 @@
 										aVal = parseFloat(aVal);
 										bVal = parseFloat(bVal);
 										
+										//console.log("colId : " + colId + ", aVal : " + aVal + ", bVal : " + bVal);
+										
 										return orderBy == "asc" ? aVal - bVal : bVal - aVal;
 									}
 									if( aVal > bVal ) return orderBy == "asc" ? 1 : -1 ;
@@ -351,6 +367,12 @@
 											</div>
 										</div>
 									</article>
+									<!-- Util Section -->
+									<article id="articleChart" style="padding-bottom:0px;margin-bottom:0px;">
+										<div id="chart_import" class="container none">
+											
+										</div>
+									</article>
 									<article  class="item">
 										<div id="chat_import" style="display:none;">
 											<iframe id="chat_iframe" src="" style="width:100%;height:350px;display:block"></iframe>
@@ -358,9 +380,9 @@
 									</article>
 								</div>
 								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
-									<a href="javascript:;" onclick="doHideNShow(document.getElementById('c_img'), 'coinRank_bak');">
+									<a href="javascript:;" onclick="doHideNShow('c_img', 'coinRank_bak');">
 									<div id="btn_wrapp_coinRank" style="text-align:right;" >
-										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;코인 전체 내역(Click Me!)</span>
+										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;All Coins</span>
 										<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
 										&nbsp;&nbsp;&nbsp;
 										<!-- 
@@ -384,12 +406,16 @@
 						</div>
 					</section>
 
+				
+				
+				
 				<!-- Util Section -->
-				<section id="secUtil" class="three">
-					<div class="container">
+				<section id="secUtil" class="four">
+					<div class="container" style="float:left;">
+					
 						<div id="util_import" style="display:none;">
 							<div id="btn_wrapp_coinRank" style="text-align:right;" >
-								<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;ICO Scanner(EOS)</span>
+								<span style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;ICO Scanner(EOS)</span>
 								<!-- 
 								<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
 								&nbsp;&nbsp;&nbsp;
@@ -399,37 +425,90 @@
 							</div>
 							<iframe id="util_iframe" src="" style="width:100%;height:180px;display:block"></iframe>
 						</div>
+						
+						<div id="link_div" style="display:block;padding-bottom:10px;">
+							<a href="javascript:;" onclick="doHideNShow('l_img','div_links');">
+							<div id="btn_wrapp_links"  style="text-align:right;width:100%;" >
+								<span  style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Links</span>
+								
+								<img id="l_img" src="/img/btn/show.png" width="16px" height="16px" />
+								&nbsp;&nbsp;&nbsp;
+								<!-- 
+								<img src="/img/btn/close.png" width="16px" height="16px"/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								 -->
+							</div>
+							</a>
+							
+							<div id="div_links" class="none" style="font-size:0.8em !important;">
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								<div style="width:100%;float:left;"><a href="https://steemit.com/created/coinkorea" target="_blank"><span style="color:blue;"><img align="left" width="30%" src="/img/links/coinkorea.png">Steemit CoinKorea<br />steemit.com/created/coinkorea</span></a></div>
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								<div style="width:100%;float:left;">
+									<a href="http://coinmarketcap.com" target="_blank">
+										<span style="color:blue;">
+											<img align="left" width="30%" src="/img/links/coinmarketcap.jpg">
+											Ranks And Market Capitalization
+											<br />coinmarketcap.com
+											</span>
+									</a>
+								</div>
+								
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								<div style="width:100%;float:left;">
+									<a href="https://poloniex.com/exchange" target="_blank">
+										<span style="color:blue;">
+											<img align="left" width="30%" src="/img/links/poloniex.jpg">
+											CryptoCurrency Exchange
+											<br />poloniex.com
+											</span>
+									</a>
+								</div>
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								<div style="width:100%;float:left;">
+									<a href="https://coinone.co.kr" target="_blank">
+										<span style="color:blue;">
+											<img align="left" width="30%" src="/img/links/coinone.png">
+											Korea CryptoCurrency Exchange
+											<br />coinone.co.kr / <a target="_blank" href="https://coinone.co.kr/chart/?site=Coinone&unit_time=15m">Chart</a> / <a target="_blank" href="https://coinone.co.kr/chat/">Chat</a>
+											
+											</span>
+									</a>
+								</div>
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								<div style="width:100%;float:left;">
+									<a href="https://www.bithumb.com" target="_blank">
+										<span style="color:blue;">
+											<img align="left" width="30%" src="/img/links/bithumb.png">
+											Korea CryptoCurrency Exchange
+											<br />bithumb.com
+											</span>
+									</a>
+								</div>
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								<div style="width:100%;float:left;">
+									<a href="https://www.korbit.co.kr" target="_blank">
+										<span style="color:blue;">
+											<img align="left" width="30%" src="/img/links/korbit.png">
+											Korea CryptoCurrency Exchange
+											<br />korbit.co.kr
+											</span>
+									</a>
+								</div>
+								<div style="width:100%;float:left;"><hr style="color:black;" /></div>
+								
+								
+							</div>
+						</div>
+						
 					</div>
 				</section>
-
-				<!-- Contact -->
-					<!-- section id="contact" class="four">
-						<div class="container">
-
-							<header>
-								<h2>Contact</h2>
-							</header>
-
-							<p>Elementum sem parturient nulla quam placerat viverra
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
-
-							<form method="post" action="#">
-								<div class="row">
-									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
-									<div class="12u$">
-										<textarea name="message" placeholder="Message"></textarea>
-									</div>
-									<div class="12u$">
-										<input type="submit" value="Send Message" />
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</section-->
+				
 
 			</div>
 		<!-- div>
@@ -462,17 +541,16 @@
 				</ul-->
 				
 				<ul class="copyright">
-					<li>현재 사이트 개발 중에 있으며 모바일 버전으로 먼저 개발하고 있습니다.</li>
 					<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
 					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
 					
 				</ul>
-				<ul class="copyright">
+				<!-- ul class="copyright">
 					<li>BTC : 1Hi3zc7sSxd9ovG2kwZ62yVbaPM4dXrJK<br /></li>
 					<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
 					<li></li>
 					
-				</ul>
+				</ul-->
 				<ul class="copyright">
 					<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
 					<li>&copy; Cobot. All rights reserved.</li>

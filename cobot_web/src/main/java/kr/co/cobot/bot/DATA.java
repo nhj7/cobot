@@ -8,7 +8,10 @@ import com.google.gson.JsonObject;
 
 public class DATA {
 	private static Map<String, JsonObject> EXCH_INFO = new HashMap();	// 거래소 리스트
+	
 	private static Map<String, Object> COIN_INFO = new HashMap(); // 거래소별 코인 리스트
+	public static String COIN_INFO_STR = "";
+	
 	
 	public static <EXCH_INFO> void setCoinInfo( Map NEW_COIN_INFO ){
 		synchronized (EXCH_INFO) {
