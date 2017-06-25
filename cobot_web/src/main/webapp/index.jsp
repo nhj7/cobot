@@ -16,8 +16,15 @@
 <html>
 	<head>
 		<title>코봇-모든 코인 정보를 한눈에 </title>
-		<meta name=”description=” Content=”코봇에서는 모든 거래소의 시세정보 한꺼번에 볼수 있도록 개발이 진행 되고 있습니다. 추가적인 기능으로 잔고정산, 채팅, 암호화화폐 정보 검색 등의 기능이 추가될 예정이오니 많은 관심 바랍니다.”>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="코봇-모든 코인정보를 한눈에">
+		<meta property="og:description" content="거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
+		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
+		<meta property="og:url" content="https://cobot.co.kr">
+
+		<meta name=”description=” Content=거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
+		<meta name="naver-site-verification" content="86d2526132fddcd53c61ca15bbac868cf54fc7ab"/>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="mobile-web-app-capable" content="yes">
@@ -56,9 +63,12 @@
 			}
 			
 		</style>
+		<script>
+			var TOUCH_FLAG = 0;
+		</script>
 		<%@ include file="/footer.jsp"  %>
 	</head>
-	<body >	
+	<body ontouchstart="TOUCH_FLAG = 1;" ontouchend="TOUCH_FLAG = 0;">	
 		<!-- Header -->
 		<div id="header">
 			<div class="top">
