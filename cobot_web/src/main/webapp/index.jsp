@@ -21,7 +21,7 @@
 		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
 		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
 		<meta property="og:url" content="https://cobot.co.kr">
-		<meta name=”description” Content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.”>
+		<meta name=”description” content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.”>
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta name="naver-site-verification" content="86d2526132fddcd53c61ca15bbac868cf54fc7ab"/>
 		<meta charset="utf-8" />
