@@ -37,20 +37,20 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
 		<!-- To support Android -->
-		<link rel="icon" sizes="196×196″ href="/img/ico/favicon_196_196.png">
-		<link rel="icon" sizes="192×192″ href="/img/ico/favicon_192_192.png">
-		<link rel="icon" sizes="180×180″ href="/img/ico/favicon_180_180.png">
-		<link rel="icon" sizes="152×152″ href="/img/ico/favicon_152_152.png">
-		<link rel="icon" sizes="144×144″ href="/img/ico/favicon_144_144.png">
-		<link rel="icon" sizes="128×128″ href="/img/ico/favicon_128_128.png">
-		<link rel="icon" sizes="114×114″ href="/img/ico/favicon_114_114.png">
-		<link rel="icon" sizes="96×96″ href="/img/ico/favicon_96_96.png">
-		<link rel="icon" sizes="76×76″ href="/img/ico/favicon_76_76.png">
-		<link rel="icon" sizes="72×72″ href="/img/ico/favicon_72_72.png">
-		<link rel="icon" sizes="60×60″ href="/img/ico/favicon_60_60.png">
-		<link rel="icon" sizes="57×57″ href="/img/ico/favicon_57_57.png">
-		<link rel="icon" sizes="32×32″ href="/img/ico/favicon_32_32.png">
-		<link rel="icon" sizes="16×16″ href="/img/ico/favicon_16_16.png">
+		<link rel="icon" sizes="196×196" href="/img/ico/favicon_196_196.png">
+		<link rel="icon" sizes="192×192" href="/img/ico/favicon_192_192.png">
+		<link rel="icon" sizes="180×180" href="/img/ico/favicon_180_180.png">
+		<link rel="icon" sizes="152×152" href="/img/ico/favicon_152_152.png">
+		<link rel="icon" sizes="144×144" href="/img/ico/favicon_144_144.png">
+		<link rel="icon" sizes="128×128" href="/img/ico/favicon_128_128.png">
+		<link rel="icon" sizes="114×114" href="/img/ico/favicon_114_114.png">
+		<link rel="icon" sizes="96×96" href="/img/ico/favicon_96_96.png">
+		<link rel="icon" sizes="76×76" href="/img/ico/favicon_76_76.png">
+		<link rel="icon" sizes="72×72" href="/img/ico/favicon_72_72.png">
+		<link rel="icon" sizes="60×60" href="/img/ico/favicon_60_60.png">
+		<link rel="icon" sizes="57×57" href="/img/ico/favicon_57_57.png">
+		<link rel="icon" sizes="32×32" href="/img/ico/favicon_32_32.png">
+		<link rel="icon" sizes="16×16" href="/img/ico/favicon_16_16.png">
 		<link rel="shortcut icon" href="/img/ico/favicon_128_128.ico" />
 		<meta name="msapplication-TileColor" content="#194386">
 		<meta name="theme-color" content="black">
