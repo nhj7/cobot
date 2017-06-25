@@ -227,19 +227,23 @@ public class BithumbAPI implements Runnable{
 	@Override
 	public synchronized void run() {
 		// TODO Auto-generated method stub
-		try {
-			setPrivateTick();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
+		
+		while(true){
 			try {
-				Thread.sleep(30000);
-			} catch (InterruptedException e1) {
+				setPrivateTick();
+			} catch (Throwable e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
+				
+				try {
+					Thread.sleep(30000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
+		
 	}
 
 	public static void init() {
