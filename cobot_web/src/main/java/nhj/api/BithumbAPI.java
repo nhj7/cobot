@@ -231,6 +231,7 @@ public class BithumbAPI implements Runnable{
 		while(true){
 			try {
 				setPrivateTick();
+				Thread.sleep(3000);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
