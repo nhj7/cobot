@@ -18,6 +18,7 @@ public class TickManager implements Runnable {
 	static{
 		CoinoneAPI.init();	// WS Socket init
 		KorbitAPI.init();	// Web scrapping init
+		BithumbAPI.init();
 		HTMLParsingAPI.init();	
 	}
 	
@@ -40,12 +41,7 @@ public class TickManager implements Runnable {
 				// BithumbAPI
 				{
 					try{
-						BithumbAPI bithumb = new BithumbAPI(); 
-						List bitList = bithumb.returnTicker();
-						
-						//PrintUtil.printList(bitList);
-						
-						m.put("eid_" + 2, bitList);
+						m.put("eid_" + 2, DATA.getBitthumb_LIST());
 					}catch(Throwable e){
 						e.printStackTrace();
 						m.put("eid_" + 2, new ArrayList());

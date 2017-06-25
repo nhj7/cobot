@@ -18,8 +18,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class BithumbAPI {
+import kr.co.cobot.bot.DATA;
+
+public class BithumbAPI implements Runnable{
 	
+	private List tickList;
+	
+	private BithumbAPI() {
+		
+	}
+
 	public static void log( String log ){
 		//System.out.println(log);
 	}
@@ -100,9 +108,8 @@ public class BithumbAPI {
 	    
 	}
 	
-
-	public static List returnTicker() throws Throwable {
-
+	
+	private void setPrivateTick(  ) throws Throwable{
 		Date d = new Date();
 		long time = d.getTime();
 
@@ -114,7 +121,6 @@ public class BithumbAPI {
 		JsonParser jp = new JsonParser();
 		
 		List list = new ArrayList();
-		
 		{
 			JsonObject btc_jo = jp.parse(( btc_json )).getAsJsonObject();
 		    JsonObject btc_info = btc_jo.get("data").getAsJsonObject();
@@ -165,25 +171,19 @@ public class BithumbAPI {
 				
 				log( title + " : " + tickJo);
 				
-				Map newCoin = transMap( title, tickJo );
-				
-				//System.out.println( title + " : " + newCoin );
-				
+				Map newCoin = transMap( title, tickJo );				
 				list.add( newCoin );
-				
-				
 			}
 			
 		}
 		
 		switchPrice = switchPrice ? false : true;
 		
-		return list;
-		
-		
-		//System.out.println("html : " + btc_json + ", " + etc_str );
-		
+		DATA.setBitthumb_LIST(list);
 	}
+	
+
+	
 
 	public static String reqToStringForBithumb( String url ) throws Throwable, Throwable {
 
@@ -221,6 +221,29 @@ public class BithumbAPI {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		System.out.println(returnTicker());
+		//System.out.println(returnTicker());
+	}
+
+	@Override
+	public synchronized void run() {
+		// TODO Auto-generated method stub
+		try {
+			setPrivateTick();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			try {
+				Thread.sleep(30000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	public static void init() {
+		// TODO Auto-generated method stub
+		new Thread(new BithumbAPI()).start();
 	}
 }

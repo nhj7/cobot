@@ -1,5 +1,6 @@
 package kr.co.cobot.bot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,15 @@ public class DATA {
 	private static Map<String, Object> COIN_INFO = new HashMap(); // 거래소별 코인 리스트
 	public static String COIN_INFO_STR = "";
 	
+	private static List Bitthumb_LIST = new ArrayList();
+	
+	public synchronized static void setBitthumb_LIST( List list ){
+		Bitthumb_LIST = list;
+	}
+	
+	public static List getBitthumb_LIST(){
+		return Bitthumb_LIST;
+	}
 	
 	public static <EXCH_INFO> void setCoinInfo( Map NEW_COIN_INFO ){
 		synchronized (EXCH_INFO) {
