@@ -1,12 +1,10 @@
 package kr.co.cobot.bot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.JsonObject;
-
-import kr.co.cobot.ctrl.WebSocketCon;
 import nhj.api.BithumbAPI;
 import nhj.api.CoinoneAPI;
 import nhj.api.HTMLParsingAPI;
@@ -41,12 +39,19 @@ public class TickManager implements Runnable {
 				
 				// BithumbAPI
 				{
-					BithumbAPI bithumb = new BithumbAPI(); 
-					List bitList = bithumb.returnTicker();
+					try{
+						BithumbAPI bithumb = new BithumbAPI(); 
+						List bitList = bithumb.returnTicker();
+						
+						//PrintUtil.printList(bitList);
+						
+						m.put("eid_" + 2, bitList);
+					}catch(Throwable e){
+						e.printStackTrace();
+						m.put("eid_" + 2, new ArrayList());
+						
+					}
 					
-					//PrintUtil.printList(bitList);
-					
-					m.put("eid_" + 2, bitList);
 				}
 				
 				// CoinoneAPI
