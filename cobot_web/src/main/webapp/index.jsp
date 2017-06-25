@@ -16,6 +16,7 @@
 <html>
 	<head>
 		<title>코봇-모든 코인 정보를 한눈에 </title>
+		<link rel="canonical" href="https://cobot.co.kr">
 		<meta property="og:type" content="website">
 		<meta property="og:title" content="코봇-모든 코인정보를 한눈에">
 		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
