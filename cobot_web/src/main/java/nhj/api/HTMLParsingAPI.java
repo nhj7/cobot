@@ -73,7 +73,7 @@ public class HTMLParsingAPI implements Runnable {
 				
 				long loop_cur = System.currentTimeMillis();
 				
-				String url = "https://etherscan.io/txs?a=0xBbc79794599b19274850492394004087cBf89710&p=" + curPage;
+				String url = "https://etherscan.io/txs?a=0xd0a6e6c54dbc68db5db3a091b171a77407ff7ccf&p=" + curPage;
 				String html = "";
 				boolean loopFlag = true;
 				while(loopFlag){
