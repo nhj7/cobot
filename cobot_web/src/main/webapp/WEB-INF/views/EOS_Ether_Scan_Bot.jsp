@@ -71,7 +71,7 @@ body{
 <script>
 	window.onload=function(){
 		
-		setTimeout("document.location.reload();", 300000);
+		setTimeout("document.location.reload();", 10000);
 		
 	}
 </script>	
@@ -90,7 +90,7 @@ body{
 		<td><%=HTMLParsingAPI.TOTAL_PAGE %></td>
 	</tr>
 	<tr>
-		<td class="td_col">합계 </td>
+		<td class="td_col">합계(Ether) </td>
 		<% 
 			System.out.println(HTMLParsingAPI.TOTAL_ETHER);
 		%>
