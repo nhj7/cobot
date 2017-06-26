@@ -71,7 +71,7 @@ body{
 <script>
 	window.onload=function(){
 		
-		setTimeout("document.location.reload();", 10000);
+		setTimeout("document.location.reload();", 60000);
 		
 	}
 </script>	
