@@ -2,6 +2,7 @@ package kr.co.cobot.ctrl;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -38,8 +39,10 @@ public class WebSocketCon {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("webSocket.do")
-	public String testView() {
+	@RequestMapping("/refresh")
+	public String refresh() {
+		String msg = "[{'cmd':'refresh'}]";
+		sendAllSessionToMessage(msg);
 		return "common/testWebSocket";
 	}
 	
@@ -55,12 +58,6 @@ public class WebSocketCon {
 	public void onOpen(Session session , EndpointConfig config) {
 		String ip = (String )config.getUserProperties().get("ip");
 		System.out.println("[WebSocket] Open session id : " + session.getId() + " : ip : " + ip );
-		
-		
-		System.out.println("[WebSocket] Open session id : " + session.getId());
-		
-		
-		
 		try {
 			final Basic basic = session.getBasicRemote();
 			
@@ -86,11 +83,10 @@ public class WebSocketCon {
 	 * @param self
 	 * @param message
 	 */
-	private void sendAllSessionToMessage(Session self, String message) {
+	private void sendAllSessionToMessage(String message) {
 		try {
 			for (Session session : WebSocketCon.sessions) {
-				if (!self.getId().equals(session.getId()))
-					session.getBasicRemote().sendText("All : " + message);
+				session.getBasicRemote().sendText(message);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -45,6 +45,8 @@ function openSocket() {
 				setTick(jo[i]);
 			} else if( jo[i].cmd  == "chart" ){
 				setChart(jo[i]);
+			} else if( jo[i].cmd  == "refresh" ){
+				document.location.href.reload();
 			}
 			
 		}
