@@ -137,6 +137,12 @@ public class CoinoneAPI implements Runnable{
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try {
+					Thread.sleep(60000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		

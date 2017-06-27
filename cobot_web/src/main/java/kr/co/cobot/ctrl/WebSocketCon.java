@@ -25,7 +25,6 @@ import kr.co.cobot.bot.DATA;
 import kr.co.cobot.conf.GetHttpSessionConfigurator;
 
 @Controller("WebSocketController")
-@RequestMapping(value = "Test")
 @ServerEndpoint(value = "/echo"
 , configurator=GetHttpSessionConfigurator.class
 )
@@ -41,7 +40,7 @@ public class WebSocketCon {
 	 */
 	@RequestMapping("/refresh")
 	public String refresh() {
-		String msg = "[{'cmd':'refresh'}]";
+		String msg = "[{\"cmd\":\"refresh\"}]";
 		sendAllSessionToMessage(msg);
 		return "common/testWebSocket";
 	}
