@@ -62,7 +62,10 @@ function setChart(jo){
 }
 
 function setTick(jo){
-	per_krw = jo.value.per_krw;
+	if( jo.value.per_krw != "" ){
+		per_krw = jo.value.per_krw;
+	}
+	
 	//alert(per_krw);
 	$("#per_krw").text( comma(per_krw) );
 	
@@ -74,6 +77,9 @@ function setTick(jo){
  */
 var cmd = [{"cmd":"tick"}];
 function send() {
+	
+	if( TOUCH_FLAG == 1) return;
+	
 	if( webSocket.readyState !== WebSocket.CLOSED ){
 		webSocket.send(JSON.stringify(cmd));
 	}else{
@@ -124,7 +130,18 @@ var activeCoins;
 var arrCoinRank = new Array();
 var arrCoinRank_bak = new Array(); // coinRank_bak
 var per_usdt = 1.01;
-var per_krw = 1120;
+var per_krw = 1130;
+
+function getObjStr(obj){
+	var objStr;
+	for(var e in obj ){
+		objStr += ( "obj["+e+"]  :" + obj[e] + "\n");
+	}
+	console.log(objStr);
+	return objStr;
+}
+
+
 
 function regCoins( coins ){
 	
@@ -180,7 +197,8 @@ function regCoins( coins ){
 		
 		rankRow.setAttribute("data-eid", coins[i].eid);
 		rankRow.setAttribute("data-ccd", coins[i].ccd );
-				
+		
+		var jq_rankRow = $(rankRow);
 		$(rankRow).on('dblclick', function() {
 			
 			if( this.parentNode.id == "coinRank" ){
@@ -383,7 +401,7 @@ function calcKrPrimeum(arr_coinDiv){
 function flashCoins(){
 	
 	//return;
-	
+	var isFlash = false;
 	for(var i = 0; i < arrCoinRank.length;i++){
 		if( arrCoinRank[i].getAttribute( "data-ch-cd" ) != "" ){
 			//arrCoinRank[i].onFlash();
@@ -399,8 +417,18 @@ function flashCoins(){
 			var cmdStr = "$('#"+arrCoinRank[i].getAttribute("id") + " .rCell').removeClass('"+flash_class+"');";
 			//alert(cmdStr);
 			setTimeout(cmdStr ,500);
+			
+			isFlash = true;
 		}
 	}
+	if(isFlash){
+		//var ranColor = getRandomColor();
+		//alert(ranColor);
+		//$("#brandTxt").css("color",ranColor);
+		//setTimeout('$("#brandTxt").css("color","white");',150);
+	}
+	
+	
 }
 
 
@@ -473,3 +501,84 @@ function viewChart( eid, ccd, unit_cid ){
 	}
 }
 
+
+var timeout,longtouch, pressTimer;
+
+function setDragNDrop(id){
+	
+	/*
+	jq_rankRow		
+	.on('touchstart', function() {
+		console.log("touchstart : " + $(this).attr("id") );
+		var cmd = 'pressTimer = window.setTimeout(function() { setDragNDrop( "' + $(this).attr("id") + '" ); },1000);';
+		eval(cmd);
+		
+	})
+	.bind('touchend', function() {
+		   clearTimeout(pressTimer);
+	 });
+	*/
+	
+	/*
+	jq_rankRow.draggable(
+			{ 
+				scroll : true
+				, opacity: 0.8
+				, containment: "window"
+				, revert: "invalid"
+				, cursor: 'move'
+				, connectToSortable: ".coinRank"
+						
+			}
+	);
+	*/
+	//alert();
+	console.log("setDragNDrop : "+id);
+	
+	
+	$(".coinRank").sortable({
+        revert: true
+        , update : function( e, ui ){
+        	var draggableId = $(ui.item).attr("id");
+        	var droppableId = $(this).attr("id");
+        	console.log("update : draggableId : "+draggableId + ", droppableId : "+droppableId);
+        	
+        	var strDraggableId = draggableId.split("_");
+        	
+        	var tmpCoins = activeCoins["eid_" + strDraggableId[1] ];
+        	
+        	if( droppableId == "coinRank" ){
+        		activeCoins["eid_" + strDraggableId[1] ].push( strDraggableId[2] );
+        	}else if( droppableId == "coinRank_bak" ){
+        		tmpCoins.splice( tmpCoins.indexOf( strDraggableId[2] ), 1 );	
+        	}
+        	
+        	$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
+        	
+        }
+        
+    });
+	// getObjStr
+	$(".coinRank").droppable({
+		
+        drop: function(e, ui ){
+        	var draggableId = $(ui.draggable).attr("id");
+        	var droppableId = $(this).attr("id");
+        	//console.log("draggableId : "+draggableId + ", droppableId : "+droppableId);
+        }
+		, tolerance: "touch"
+    });
+	
+	$("#"+id).draggable(
+			{ 
+				scroll : true
+				, opacity: 0.8
+				, containment: "window"
+				, revert: "invalid"
+				, cursor: 'move'
+				, connectToSortable: ".coinRank"
+						
+			}
+	);
+	
+}

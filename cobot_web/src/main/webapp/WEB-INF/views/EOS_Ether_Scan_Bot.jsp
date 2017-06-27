@@ -117,13 +117,13 @@ body{
 	<%
 		// 1 EOS 가격 
 		List l = ( List )DATA.getCoinInfo().get("eid_3");
-		System.out.println(l);
+		//System.out.println(l);
 		
 		BigDecimal ether_price = BigDecimal.ONE;
 		for(int i = 0; i < l.size();i++){
 			Map coin = (Map)l.get(i);
 			if( "ETH".equals( coin.get("ccd")) ){
-				System.out.println("coin price : " + coin.get("price"));
+				//System.out.println("coin price : " + coin.get("price"));
 				ether_price = (BigDecimal) coin.get("price");
 			}
 		}
