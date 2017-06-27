@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ page import="nhj.api.*" %>
 <%@ page import="nhj.util.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.math.*" %>
+<%@ page import="kr.co.cobot.bot.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,7 +48,7 @@ td{
 	border:1px solid !important;
 	align:center !important;
 	text-align:center !important;
-	color:blue;
+	color:#424242;
 	font-weight:bold !important;
 	font-size:0.8em !important;
 }
@@ -53,7 +56,7 @@ td{
 	text-align:center;
 	background-color:#008299 !important;
 	color:white;
-	width:30vw;
+	width:40vw;
 }
 .td_data{
 	
@@ -97,9 +100,52 @@ body{
 		
 		<td><%=StringUtil.addComma(String.valueOf(HTMLParsingAPI.TOTAL_ETHER)) %></td>
 	</tr>
+	<%
+		BigDecimal firstDistTrg = new BigDecimal("200000000");
+		BigDecimal firstDist = BigDecimal.ZERO;
+		if( firstDistTrg.compareTo(BigDecimal.ZERO) > 0 && HTMLParsingAPI.TOTAL_ETHER.compareTo(BigDecimal.ZERO) > 0 ){
+			firstDist = firstDistTrg.divide(HTMLParsingAPI.TOTAL_ETHER, 8, BigDecimal.ROUND_DOWN);	
+		}
+		
+		
+	%>
 	<tr>
-		<td class="td_col">작업소요시간</td>
-		<td><%=HTMLParsingAPI.LAP_TM / 1000  %>초</td>
+		<td class="td_col">1 Ether 당 배분 수 </td>
+		<td><%=StringUtil.addComma(String.valueOf(firstDist)) %></td>
+	</tr>
+	
+	<%
+		// 1 EOS 가격 
+		List l = ( List )DATA.getCoinInfo().get("eid_3");
+		System.out.println(l);
+		
+		BigDecimal ether_price = BigDecimal.ONE;
+		for(int i = 0; i < l.size();i++){
+			Map coin = (Map)l.get(i);
+			if( "ETH".equals( coin.get("ccd")) ){
+				System.out.println("coin price : " + coin.get("price"));
+				ether_price = (BigDecimal) coin.get("price");
+			}
+		}
+		BigDecimal eos_price = BigDecimal.ZERO;
+		
+		if( firstDist.compareTo(BigDecimal.ZERO) > 0  ){
+			eos_price = ether_price.divide(firstDist, 0, BigDecimal.ROUND_DOWN);	
+		}
+		
+	%>
+	
+	<tr>
+		<td class="td_col"> EOS/Ether (KRW)</td>
+		<td><%=StringUtil.addComma(String.valueOf(eos_price)) %> / <%=StringUtil.addComma(String.valueOf(ether_price.intValue())) %> </td>
+	</tr>
+	<%
+		BigDecimal total_dist = new BigDecimal("1000000000");
+		BigDecimal total_gap = eos_price.multiply(new BigDecimal(10) );
+	%>
+	<tr>
+		<td class="td_col"> EOS 시총 </td>
+		<td>약 <%=StringUtil.addComma(String.valueOf(total_gap.intValue())) %>억</td>
 	</tr>
 </table>
 

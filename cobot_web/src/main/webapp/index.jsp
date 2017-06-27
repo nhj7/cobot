@@ -181,9 +181,12 @@
 			<div id="main">
 
 				<!-- Intro -->
-					<section id="top" class="one dark cover" style="margin:0 0 0 0;padding:10 0 0 0 ;">
+					<section id="top" class="one dark cover" style="padding:0 0 0 0 ;margin: 0 0 0 0;">
 						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
-							<span style="position:relative;float: right;left:-0%;width:100%"><input type="text" placeholder="EOS Scanner 오픈 예정   " class="search_txt"  /></span> 
+							<span id="brandTxt" style="position:relative;float: right;left:-0%;width:100%;background-color:black;color:white;margin: 0 0 0 0;padding:9px 0 9px 0;font-size:1.2em;">
+								<!-- input type="text" placeholder="아이디어는 언제나 환영   " class="search_txt"  /-->
+								Cobot
+							</span> 
 							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
 						
@@ -386,15 +389,10 @@
 									</article>
 								</div>
 								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
-									<a href="javascript:;" onclick="doHideNShow('c_img', 'coinRank_bak');">
-									<div id="btn_wrapp_coinRank" style="text-align:right;" >
-										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;All Coins</span>
-										<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
-										&nbsp;&nbsp;&nbsp;
-										<!-- 
-										<img src="/img/btn/close.png" width="16px" height="16px"/>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										-->
+									<a href="javascript:;" onclick="changeDisplay('coinRank_bak');">
+									<div id="btn_wrapp_coinRank" style="text-align:left;width:100%;" >
+										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="color:black;font-size:0.8em;font-weight:bold;;width:100%;" >&nbsp;&nbsp;&nbsp;All Coins</span>
+										
 									</div>
 									</a>
 									<div class="coinRank none" id="coinRank_bak" style="font-weight:bold;width:100%;" >
@@ -420,8 +418,8 @@
 					<div class="container" style="float:left;">
 					
 						<div id="util_import" style="display:none;">
-							<div id="btn_wrapp_coinRank" style="text-align:right;" >
-								<span style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;ICO Scanner(EOS)</span>
+							<div id="btn_wrapp_coinRank" style=";text-align:left !important;" onclick="changeDisplay('util_iframe');" >
+								<div style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;ICO Scanner(<img width="16px" height="16px" src="/img/coin/eos.png">)</div>
 								<!-- 
 								<img id="c_img" src="/img/btn/show.png" width="16px" height="16px" />
 								&nbsp;&nbsp;&nbsp;
@@ -429,20 +427,13 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								 -->
 							</div>
-							<iframe id="util_iframe" src="" style="width:100%;height:180px;display:block"></iframe>
+							<iframe id="util_iframe" src="" style="width:100%;height:180px;display:block;" scrolling="no"></iframe>
 						</div>
 						
 						<div id="link_div" style="display:block;padding-bottom:10px;">
-							<a href="javascript:;" onclick="doHideNShow('l_img','div_links');">
-							<div id="btn_wrapp_links"  style="text-align:right;width:100%;" >
-								<span  style="float:left;color:blue;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Links</span>
-								
-								<img id="l_img" src="/img/btn/show.png" width="16px" height="16px" />
-								&nbsp;&nbsp;&nbsp;
-								<!-- 
-								<img src="/img/btn/close.png" width="16px" height="16px"/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								 -->
+							<a href="javascript:;" onclick="changeDisplay('div_links');">
+							<div id="btn_wrapp_links"  style="width:100%;text-align:left !important;" >
+								<span  style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Links</span>
 							</div>
 							</a>
 							
