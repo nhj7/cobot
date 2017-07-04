@@ -543,7 +543,7 @@
 				
 				<ul class="copyright">
 					<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
-					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
+					<li> <a href="mailto:admin@cobot.co.kr">nhj12311@gmail.com</a><br /></li>
 					
 				</ul>
 				<!-- ul class="copyright">
