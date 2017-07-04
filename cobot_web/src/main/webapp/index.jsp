@@ -114,6 +114,9 @@
 								$("#util_import").show();
 							}	
 						}
+						function help(){
+							
+						}
 					</script>
 					<style>
 						.nav_detail{
@@ -125,8 +128,8 @@
 					<nav id="nav">
 						<ul>
 							<li>
-								<a href="javascript:;" id="top-link" class="skel-layers-ignoreHref nav_detail" >
-									Ticker &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/stock.png" />
+								<a href="http://blog.naver.com/nhj7/221041556926" target="_blank" id="top-link" class="skel-layers-ignoreHref nav_detail" >
+									How to use &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/question.png" />
 								</a>
 							</li>
 							<li>
