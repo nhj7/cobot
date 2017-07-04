@@ -100,7 +100,8 @@
 						
 						var etherScanUrl = "/EOS_SCAN";
 						function utilPageImport( target ){
-							
+							alert("EOS 일자별 조회는 준비 중입니다.");
+							return;
 							var util_iframe = $("#util_iframe");
 							if( target == util_iframe.attr("data-target") ){
 								util_iframe.attr("src", "");
