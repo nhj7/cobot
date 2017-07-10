@@ -15,26 +15,18 @@
 	});
 
 	$(function() {
-		
-		
-
 		var	$window = $(window),
 			$body = $('body');
-
 		// Disable animations/transitions until the page has loaded.
 			$body.addClass('is-loading');
-
 			$window.on('load', function() {
 				$body.removeClass('is-loading');
 			});
-
 		// CSS polyfills (IE<9).
 			if (skel.vars.IEVersion < 9)
 				$(':last-child').addClass('last-child');
-
 		// Fix: Placeholder polyfill.
 			$('form').placeholder();
-
 		// Prioritize "important" elements on mobile.
 			skel.on('+mobile -mobile', function() {
 				$.prioritize(
@@ -45,10 +37,8 @@
 
 		// Scrolly links.
 			$('.scrolly').scrolly();
-
 		// Nav.
 			var $nav_a = $('#nav a');
-
 			// Scrolly-fy links.
 				$nav_a
 					.scrolly()
@@ -56,38 +46,26 @@
 
 						var t = $(this),
 							href = t.attr('href');
-
 						if (href[0] != '#')
 							return;
-
 						e.preventDefault();
-
 						// Clear active and lock scrollzer until scrolling has stopped
 							$nav_a
 								.removeClass('active')
 								.addClass('scrollzer-locked');
-
 						// Set this link to active
 							t.addClass('active');
-
 					});
 
 			// Initialize scrollzer.
 				var ids = [];
-
 				$nav_a.each(function() {
-
 					var href = $(this).attr('href');
-
 					if (href[0] != '#')
 						return;
-
 					ids.push(href.substring(1));
-
 				});
-
 				$.scrollzer(ids, { pad: 200, lastHack: true });
-
 		// Header (narrower + mobile).
 
 			// Toggle.
@@ -117,8 +95,6 @@
 					.css('transition', 'none');
 					alert("");
 				}
-					
-
 	});
 	
 	
@@ -162,10 +138,8 @@ function initCoins(){
 	
 	if (webSocket !== undefined
 			&& webSocket.readyState !== WebSocket.CLOSED) {
-		//alert(WebSocket.CLOSED);
 		send();
 	}else{
-		//alert(11);
 		openSocket();
 	}
 	
@@ -180,4 +154,25 @@ function exactRound(num, decimals) {
 	if (decimals<0)decimals=0;
     var sign = num >= 0 ? 1 : -1;
     return (Math.round((num * Math.pow(10, decimals)) + (sign * 0.001)) / Math.pow(10, decimals)).toFixed(decimals);
+}
+
+function reqJson( url, param, funcSuc, funcDone, funcFail ){
+	$.post(
+			url
+			, param
+			, funcSuc ? funcSuc : function(res){
+				console.log( "res : " + JSON.stringify(res) );
+			}, 'json'
+	)
+	.done( 
+		funcDone ? funcDone : function (){
+			console.log( "done" );
+		}
+	)
+	.fail( 
+		funcFail ? funcFail : function(jqxhr, textStatus, error ) { 
+			var err = textStatus + ", " + error;
+			alert( "서비스 실패 : " + err ); 
+		}
+	) ;
 }

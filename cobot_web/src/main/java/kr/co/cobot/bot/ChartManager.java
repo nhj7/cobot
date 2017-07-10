@@ -6,12 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import nhj.api.CoinoneAPI;
 import nhj.api.PoloniexAPI;
 
 public class ChartManager implements Runnable {
@@ -22,9 +21,18 @@ public class ChartManager implements Runnable {
 	
 	public static void main(String[] args) throws Throwable {
 		
-		String out = ChartManager.getChartData("1", "1", "ETH");
-		log("out : " + out);
+		CoinoneAPI.init();
 		
+		
+		//getChartDataStr();
+		
+		
+		String out = ChartManager.getChartData("3", "1", "XRP");
+		System.out.println("out : " + out);
+		
+		
+		
+		/*
 		
 		String str = "{'date' : 123 , 'data' : [ 0.00009239, (0.00009139),(0.00009339), (0.00009039), 'tooltip!!', (0.00009839), (0.00009739), (0.00009850), (0.00009830),'$600K in our first year!', (0.00009239), (0.00009139),(0.00009339), (0.00009039), 'tooltip!!', (0.00009839),(0.00009739), (0.00009850), (0.00009830),'$600K in our first year!'] }";
 		
@@ -34,6 +42,7 @@ public class ChartManager implements Runnable {
 		JsonElement je = gson.fromJson(str, JsonElement.class);
 		
 		log(je.getAsJsonObject().get("date"));
+		*/
 		
 	}
 	
@@ -85,7 +94,13 @@ public class ChartManager implements Runnable {
 		this.unit_cid = unit_ccd;
 		this.ccd = ccd.toUpperCase();
 		this.key = eid + "_" + unit_ccd + "_" + ccd;
-		this.CHART_STR = getChartDataStr( this );		
+		
+		try{
+			this.CHART_STR = getChartDataStr( this );
+		}catch(Throwable e){
+			e.printStackTrace();
+		}
+				
 		
 		new Thread(this).start();
 	}
@@ -98,20 +113,39 @@ public class ChartManager implements Runnable {
 		
 		String currencyPair = unit_ccd  + "_" + ccd;
 		
-		String _start = String.valueOf( System.currentTimeMillis() - ( 60000 * 61 * 6 ) );
+		String _start = String.valueOf( System.currentTimeMillis() - ( 60000 * 60 * 6 ) );
 		String start = _start.substring(0, _start.length() - 3 );
 		
 		String period = "900";
 		
-		JsonArray poloList = PoloniexAPI.returnChartData(currencyPair, start, end, period); 
-		int size = poloList.size();
+		JsonArray chartList = null;
 		
-		if( size < 24){
+		// 폴로닉스
+		if( "1".equals(cm.eid) ){
+			chartList = PoloniexAPI.returnChartData(currencyPair, start, end, period);
+		}
+		// 코인원
+		
+		else if( "3".equals(cm.eid) ){
+			chartList = CoinoneAPI.returnChartData(ccd, start, end, period);
+		}
+		
+		int setScale = 8;
+		float setBuff = 0.1f;
+		if( !"1".equals(cm.eid) ){
+			setScale = 0;
+			setBuff = 0.2f;
+		}
+		
+		 
+		int size = chartList.size();
+		
+		if( size < 24 || size > 24 ){
 			
 			System.out.println("-----------------------------------------------------------");
-			System.out.println("size is short! : " + cm.key + ", size : " + poloList.size());
+			System.out.println("size is short! : " + cm.key + ", size : " + chartList.size());
 			
-			System.out.println(poloList);
+			System.out.println(chartList);
 			
 			System.out.println("-----------------------------------------------------------");
 			
@@ -129,14 +163,14 @@ public class ChartManager implements Runnable {
 		
 		for(int i = 0; i < size;i++){
 			
-			JsonObject jo = poloList.get(i).getAsJsonObject();		
+			JsonObject jo = chartList.get(i).getAsJsonObject();		
 			
-			BigDecimal newHigh = new BigDecimal(jo.get("high").toString()).setScale(8);
-			BigDecimal newLow = new BigDecimal(jo.get("low").toString()).setScale(8);
+			BigDecimal newHigh = new BigDecimal(jo.get("high").toString()).setScale(setScale);
+			BigDecimal newLow = new BigDecimal(jo.get("low").toString()).setScale(setScale);
 			if( i == 0 ) { minLow = newLow; }
 			
-			BigDecimal open = new BigDecimal(jo.get("open").toString()).setScale(8);
-			BigDecimal close = new BigDecimal(jo.get("close").toString()).setScale(8);
+			BigDecimal open = new BigDecimal(jo.get("open").toString()).setScale(setScale);
+			BigDecimal close = new BigDecimal(jo.get("close").toString()).setScale(setScale);
 			groupData.add(newLow);
 			groupData.add(open);
 			groupData.add(close);
@@ -146,11 +180,13 @@ public class ChartManager implements Runnable {
 			maxHigh = maxHigh.compareTo( newHigh ) == -1  ? newHigh : maxHigh;
 			minLow = minLow.compareTo(newLow) == -1 ? minLow : newLow;
 			
-			Date d = new Date( Long.parseLong(jo.get("date").toString() + "000") );
+			String date = jo.get("date").toString();
+			
+			Date d = new Date( Long.parseLong( date + (date.length() < 12 ? "000" : "" )) );
 			
 			if( i != 0 && (i+1) % groupSize == 0 ){
-				
-				groupJo.addProperty("date", ((JsonObject) poloList.get(i-1)).get("date").toString() );
+				String yd = ((JsonObject) chartList.get(i-1)).get("date").toString();
+				groupJo.addProperty("date", yd + (yd.length() < 12 ? "000" : "" ) );
 				groupJo.add("data", groupData);
 				
 				chartArray.add(groupJo);
@@ -164,19 +200,20 @@ public class ChartManager implements Runnable {
 		}
 		
 		BigDecimal diff = maxHigh.subtract(minLow);
-		BigDecimal buff = diff.multiply(new BigDecimal(0.1));
+		BigDecimal buff = diff.multiply(new BigDecimal( setBuff ));
+		
+		int stnrKrw = 0;
 		
 		maxHigh = maxHigh.add(buff);
-		maxHigh = maxHigh.setScale(8, BigDecimal.ROUND_DOWN);
+		maxHigh = maxHigh.setScale(setScale, BigDecimal.ROUND_DOWN);
+		
 		
 		minLow = minLow.subtract(buff);
-		minLow = minLow.setScale(8, BigDecimal.ROUND_DOWN);
+		minLow = minLow.setScale(setScale, BigDecimal.ROUND_DOWN);
 		
 		diff = maxHigh.subtract(minLow);
 		
-		
-		
-		BigDecimal term = diff.divide(new BigDecimal(5), 8, BigDecimal.ROUND_DOWN);
+		BigDecimal term = diff.divide(new BigDecimal(5), setScale, BigDecimal.ROUND_DOWN);
 		
 		
 		
@@ -196,8 +233,11 @@ public class ChartManager implements Runnable {
 		tickJa.add(term1);
 		tickJa.add(term2);
 		tickJa.add(term3);
-		tickJa.add(term4);
+		tickJa.add(term4);		
 		tickJa.add(term5);
+		if( term5.compareTo(maxHigh) == -1 ){
+			tickJa.add(term5.add(term));
+		}
 		
 		if( cm.mainData == null ){
 			cm.mainData = new JsonObject();
@@ -206,12 +246,8 @@ public class ChartManager implements Runnable {
 		cm.mainData.add("chartArray", chartArray);
 		cm.mainData.add("tick", tickJa);
 		
-		//log("t1 : " + minLow );
-		//log("t2 : " + minLow.add(term) );
-		//log("t3 : " + minLow.add(term).add(term) );
-		//log("t4 : " + minLow.add(term).add(term).add(term) );
-		//log("t5 : " + minLow.add(term).add(term).add(term).add(term) );
-		//log("t6 : " + maxHigh );
+		log("tickJa : " + tickJa );
+		
 		
 		//log("chartArray :" + chartArray );
 		cm.CHART_STR = chartArray.toString();
@@ -231,7 +267,8 @@ public class ChartManager implements Runnable {
 		int CHART_DATA_UPDATE_INTERVAL = 1000 * 60 * 1;
 		int CAL_INTERVAL = 0;
 		
-		int CHART_BOT_DOWN_TERM = 1000 * 60;	// 1분간 요청이 없는 쓰레드는 종료한다.
+		int CHART_BOT_DOWN_TERM = 1000 * 120;	// 1분간 요청이 없는 쓰레드는 종료한다.
+		int ERROR_SLEEP_TM = 1000 * 60;
 		while(true){
 			
 			try {
@@ -243,7 +280,7 @@ public class ChartManager implements Runnable {
 				
 				List eidList = (List)DATA.getCoinInfo().get("eid_" + this.eid );
 				
-				log("[eidList] : "+eidList);
+				//log("[eidList] : "+eidList);
 				int size = eidList.size();
 				for(int i = 0; i < size;i++){
 					Map coinMap = (Map)eidList.get(i);
@@ -260,7 +297,7 @@ public class ChartManager implements Runnable {
 						
 						BigDecimal price = new BigDecimal(coinMap.get("price").toString());
 						
-						log("[chart data(before)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
+						//log("[chart data(before)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
 						
 						close = price;
 						if( newHigh.compareTo(price) < 0){
@@ -277,7 +314,7 @@ public class ChartManager implements Runnable {
 						chartLast.set(cSize - 5, new JsonPrimitive(newMin));
 						
 							
-						log("[chart data(after)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
+						//log("[chart data(after)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
 						
 						this.CHART_STR = chartArray.toString();
 					}
@@ -295,23 +332,18 @@ public class ChartManager implements Runnable {
 						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", curren update data : " + this.key);
 						getChartDataStr(this);
 					}
-					
-					
-					
 				}
-				
-			} catch (InterruptedException e) {
+			}  catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					Thread.sleep(ERROR_SLEEP_TM);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				CHART_DATA.remove(key);
 			}
-			
-			
-			
-			
-			
 		}
 	}
 

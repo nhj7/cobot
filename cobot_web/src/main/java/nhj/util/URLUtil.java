@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.net.HttpURLConnection;
@@ -23,7 +24,10 @@ public class URLUtil {
 	public static boolean isHTML = false;
 	public static String BR_STR = "<br />";
 
-	public static String htmlToString(String url) throws Throwable, Throwable {
+	
+	
+	
+	public static String htmlToString(String url) throws Throwable {
 
 		HttpURLConnection huc = (HttpURLConnection) new URL(url).openConnection();
 		huc.setRequestMethod("GET");
@@ -33,8 +37,21 @@ public class URLUtil {
 		huc.addRequestProperty("User-Agent",
 				"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
 		huc.connect();
+		
+		//String cookie = huc.getHeaderField("Set-Cookie");
+		
+		//System.out.println("111huc.getResponseCode() : "+huc.getResponseCode());
+		
+		InputStream in = null;
+		
+		
+		if( huc.getResponseCode() != 200 ){
+			in = huc.getErrorStream();
+		}else{
+			in = huc.getInputStream();
+		}
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "UTF-8"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(  in , "UTF-8"));
 
 		// Map m = huc.getHeaderFields();
 		//
@@ -63,6 +80,63 @@ public class URLUtil {
 
 	}
 
+	public static String htmlToString(String url, String encoding) throws Throwable {
+
+		HttpURLConnection huc = (HttpURLConnection) new URL(url).openConnection();
+		huc.setRequestMethod("GET");
+		huc.setRequestProperty("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+
+		huc.addRequestProperty("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+		huc.connect();
+		
+		//String cookie = huc.getHeaderField("Set-Cookie");
+		
+		//System.out.println("111huc.getResponseCode() : "+huc.getResponseCode());
+		
+		InputStream in = null;
+		
+		
+		if( huc.getResponseCode() != 200 ){
+			in = huc.getErrorStream();
+		}else{
+			in = huc.getInputStream();
+		}
+		
+		if ("gzip".equals(huc.getContentEncoding())) {
+			in = new GZIPInputStream(in);
+		}
+		
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(  in , encoding));
+
+		// Map m = huc.getHeaderFields();
+		//
+		//
+		// String cookie = "";
+		// if(m.containsKey(GET)) {
+		// Collection c =(Collection)m.get(GET);
+		// for(Iterator i = c.iterator(); i.hasNext(); ) {
+		// cookie = (String)i.next();
+		// }
+		// print("server response cookie:" + cookie);
+		// }
+		String line = null;
+
+		StringBuilder sb = new StringBuilder();
+
+		while ((line = br.readLine()) != null) {
+
+			// print(line);
+			sb.append(line);
+		}
+
+		br.close();
+
+		return sb.toString();
+
+	}
 	
 
 	public static String compress(String str) throws IOException {

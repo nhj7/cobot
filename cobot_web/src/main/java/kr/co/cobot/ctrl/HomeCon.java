@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import kr.co.cobot.conf.HibernateCfg;
-import kr.co.cobot.entity.TbExchange;
 import kr.co.cobot.svc.HomeSvc;
+import nhj.util.PrintUtil;
 
 /**
  * Handles requests for the application home page.
@@ -34,19 +36,21 @@ public class HomeCon {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = { "/home" })
-	public String home(Model model, @RequestParam Map ioMap, ServletRequest req) {
+	@RequestMapping(value = { "/exam" } )
+	public @ResponseBody Object exam(Model model, @RequestParam Map ioMap, ServletRequest req) {
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
 
-		String formattedDate = dateFormat.format(date);
-
-		homeService.printTmp(model);
+		String formattedDate = dateFormat.format(date);		
 
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("ioMap", ioMap);
 		
+		System.out.println("ioMap : "+ioMap);
+		
+		PrintUtil.printMap(ioMap);
+		 
 		Transaction tx = null;
 		try {
 			
@@ -81,8 +85,9 @@ public class HomeCon {
 		}finally{
 			HibernateCfg.closeSession();
 		}
-
-		return "home";
+		Gson gson = new Gson();
+		
+		return (ioMap);
 	}
 	
 	@RequestMapping(value = { "/EOS_SCAN" })

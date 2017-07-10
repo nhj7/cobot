@@ -452,8 +452,13 @@ function formatValue( value ){
 
 function viewChart( eid, ccd, unit_cid ){
 	
-	if( eid != "1" || ccd == "BTC"){
-		alert("비트코인과 국내거래소 차트는 준비중입니다.");
+	if( eid == "2" || eid == "4" ){
+		alert("빗썸과 코빗 거래소 차트는 준비중입니다.");
+		return;
+	}
+	
+	if( eid == "1" && ccd == "BTC"  ){
+		alert("폴로닉스 비트코인은 준비중입니다.");
 		return;
 	}
 	

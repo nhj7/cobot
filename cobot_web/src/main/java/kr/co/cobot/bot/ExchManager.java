@@ -12,10 +12,16 @@ import kr.co.cobot.conf.HibernateCfg;
 import kr.co.cobot.entity.TbExchange;
 
 public class ExchManager implements Runnable {
+	
+	public static void main(String[] args) {
+		new Thread( new ExchManager() ).start();
+		
+	}
 
 	@Override 
 	public void run() {
 		
+		//Session session = HibernateCfg.getCurrentSession();
 		Session session = HibernateCfg.getCurrentSession();
 		
 		boolean flag = true;
@@ -24,38 +30,26 @@ public class ExchManager implements Runnable {
 			try {
 				
 				// 트랜잭션 시작
-				/*
+				
 				List exchList = session.createQuery("from TbExchange").list();
 				
 				Map<String, Map> NEW_EXCH_INFO = new HashMap();
 				for(int i = 0; i < exchList.size() ; i++){
-					
 					TbExchange te = (TbExchange) exchList.get(i);
 					ObjectMapper oMapper = new ObjectMapper();
-					
 					// object -> Map
 			        Map map = oMapper.convertValue(te, Map.class);
-			        
-			        //System.out.println(map);
-			        
+			        System.out.println("Exchange : " + map);
 			        NEW_EXCH_INFO.put( map.get("eid").toString(),  map );
-					
 				}
 				
-				
-				
 				DATA.setExchs(NEW_EXCH_INFO);
-				*/
-				Thread.sleep( 60000 );
-				
+				Thread.sleep( 1000 * 60 * 30 );
 				// DBIO_Cubrid_Test.main(null);
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				
 				e.printStackTrace();
 			}
 		}
-		
 		HibernateCfg.closeSession();
 		
 		

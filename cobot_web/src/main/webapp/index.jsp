@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="nhj.util.*" %>
 <%
-	System.out.println( "["+DateUtil.getCurDate("yyyy-MM-dd kk:mm:ss") + "] index.jsp call : " + request.getRemoteAddr());
-	
-	if(true){
-		//throw new Exception("123123");
-	}
-	
-	System.out.println("request.getRemoteAddr() : " + request.getRemoteAddr());
-	
+	System.out.println("["+DateUtil.getCurDate("yyyy-MM-dd kk:mm:ss") + "] Connect Remote Addr : " + request.getRemoteAddr());	
 	session.setAttribute("ip", request.getRemoteAddr());
 %>
 <!DOCTYPE HTML>
@@ -18,8 +11,8 @@
 		<title>코봇-모든 코인 정보를 한눈에 </title>
 		<link rel="canonical" href="https://cobot.co.kr">
 		<meta property="og:type" content="website">
-		<meta property="og:title" content="코봇-모든 코인정보를 한눈에">
-		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
+		<meta property="og:title" content="코봇-모든 거래소 코인정보를 한눈에">
+		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 차트, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
 		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
 		<meta property="og:url" content="https://cobot.co.kr">
 		<meta name="description" content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.">
@@ -84,7 +77,6 @@
 						var coinoneUrl = "https://coinone.co.kr/chat/";
 						var steemUrl = "https://steemit.chat/channel/korea";
 						function chatOnOff( target ){
-							
 							var chat_iframe = $("#chat_iframe");
 							if( target == chat_iframe.attr("data-target") ){
 								chat_iframe.attr("src", "");
@@ -95,6 +87,18 @@
 								chat_iframe.attr("data-target", target)
 								chat_iframe.attr("src", ( target=="coinone" ? coinoneUrl : steemUrl ));
 								$("#chat_import").show();
+							}	
+						}
+						
+						var alarmUrl = "/Alarm";
+						function alarmOnOff( target ){
+							var alarm_iframe = $("#alarm_iframe");
+							if( $("#alarm_import").css("display") == "none" ){
+								alarm_iframe.attr("src", alarmUrl );
+								$("#alarm_import").show();
+							}else{
+								alarm_iframe.attr("src", "" );
+								$("#alarm_import").hide();
 							}	
 						}
 						
@@ -130,6 +134,11 @@
 							<li>
 								<a href="http://blog.naver.com/nhj7/221041556926" target="_blank" id="top-link" class="skel-layers-ignoreHref nav_detail" >
 									How to use &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/question.png" />
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" onclick="alarmOnOff();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
+									Alarm &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/alarm.png" />
 								</a>
 							</li>
 							<li>
@@ -188,8 +197,10 @@
 					<section id="top" class="one dark cover" style="padding:0 0 0 0 ;margin: 0 0 0 0;">
 						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
 							<span id="brandTxt" style="position:relative;float: right;left:-0%;width:100%;background-color:black;color:white;margin: 0 0 0 0;padding:9px 0 9px 0;font-size:1.2em;">
-								<!-- input type="text" placeholder="아이디어는 언제나 환영   " class="search_txt"  /-->
-								Cobot
+								<a href="javascript:;">Cobot</a>
+								<script>
+								
+								</script>
 							</span> 
 							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
@@ -432,6 +443,13 @@
 								 -->
 							</div>
 							<iframe id="util_iframe" src="" style="width:100%;height:180px;display:block;" scrolling="no"></iframe>
+						</div>
+						
+						<div id="alarm_import" style="display:none;">
+							<div id="" style=";text-align:left !important;" onclick="changeDisplay('alarm_iframe');" >
+								<div style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Alarm Setting</div>
+							</div>
+							<iframe id="alarm_iframe" src="" style="width:100%;height:400px;display:block;" scrolling="no"></iframe>
 						</div>
 						
 						<div id="link_div" style="display:block;padding-bottom:10px;">

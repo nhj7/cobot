@@ -92,7 +92,7 @@ function drawChart(id, data) {
 	
 	var rowData = [];
 	for(var i = 0; i < data.value.length;i++){
-		rowData[i] = [ new Date(  parseInt(data.value[i].date+"000") ) ];
+		rowData[i] = [ new Date(  parseInt(data.value[i].date) ) ];
 		
 		for(var j = 0; j < data.value[i].data.length;j++){
 			
