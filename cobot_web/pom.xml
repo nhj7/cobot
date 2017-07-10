@@ -289,11 +289,18 @@
 			<artifactId>web-push</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>9.0.0.M17</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.corundumstudio.socketio/netty-socketio -->
 		<!-- dependency> <groupId>com.corundumstudio.socketio</groupId> <artifactId>netty-socketio</artifactId> 
 			<version>1.7.12</version> </dependency -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
-		
+
 	</dependencies>
 	<build>
 		<plugins>
