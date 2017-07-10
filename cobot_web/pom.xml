@@ -292,7 +292,8 @@
 		<!-- https://mvnrepository.com/artifact/com.corundumstudio.socketio/netty-socketio -->
 		<!-- dependency> <groupId>com.corundumstudio.socketio</groupId> <artifactId>netty-socketio</artifactId> 
 			<version>1.7.12</version> </dependency -->
-
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+		
 	</dependencies>
 	<build>
 		<plugins>
