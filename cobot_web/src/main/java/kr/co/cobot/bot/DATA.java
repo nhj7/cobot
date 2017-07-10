@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonObject;
-
+@SuppressWarnings("unchecked")
 public class DATA {
 	private static Map<String, JsonObject> EXCH_INFO = new HashMap();	// 거래소 리스트
 	
