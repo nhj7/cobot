@@ -201,7 +201,7 @@ public class CoinoneAPI implements Runnable {
 		{
 			
 			try {
-				org.apache.log4j.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(org.apache.log4j.Level.FATAL);
+				//org.apache.log4j.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(org.apache.log4j.Level.FATAL);
 				
 				
 				System.out.println("[CoinoneAPI]Please wait 20 seconds to pass CloudFlare DDOS Check...");		
