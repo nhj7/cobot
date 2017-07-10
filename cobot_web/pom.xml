@@ -318,7 +318,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<compilerArgument>-Xlint:all</compilerArgument>
+					<compilerArgument>-Xlint:rawtypes</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 					<encoding>UTF-8</encoding>
