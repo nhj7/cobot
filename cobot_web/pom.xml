@@ -324,8 +324,7 @@
 				<version>2.5.1</version>
 				<configuration>
 					<source>1.8</source>
-					<target>1.8</target>
-					<compilerArgument>-Xlint:all</compilerArgument>
+					<target>1.8</target>					
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 					<encoding>UTF-8</encoding>
