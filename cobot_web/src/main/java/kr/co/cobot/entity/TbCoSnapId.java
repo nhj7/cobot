@@ -13,7 +13,7 @@ public class TbCoSnapId implements java.io.Serializable {
 
 	private Date srchDttm;
 	private int eid;
-	private int unitCid;
+	private int unitCid; 
 	private int cid;
 
 	public TbCoSnapId() {

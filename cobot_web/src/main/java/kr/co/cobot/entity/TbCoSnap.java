@@ -29,7 +29,7 @@ public class TbCoSnap implements java.io.Serializable {
 	private BigDecimal high24hr;
 	private BigDecimal low24hr;
 	private Date regDttm;
-	private Date modDttm;
+	private Date modDttm; 
 
 	public TbCoSnap() {
 	}
