@@ -38,8 +38,7 @@ public class CobotContextListener extends ContextLoaderListener{
 				field = ac.getClass().getDeclaredField("context");
 				field.setAccessible(true);
 				StandardContext standardContext = (StandardContext) field.get(ac);
-				SecurityConstraint security = new SecurityConstraint();
-				 
+				SecurityConstraint security = new SecurityConstraint();				 
 				boolean flag = !NetUtil.isMyLocal();
 				SecurityConstraint[] arrSecurity = standardContext.findConstraints();
 				
