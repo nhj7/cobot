@@ -85,15 +85,15 @@ public class WebPushAPI {
         // Base64 string server public/private key
         
         byte[] jsonBytes = jsonObject.toString().getBytes("utf-8");
-        System.out.println("jsonBytes : "+jsonBytes);
+        //System.out.println("jsonBytes : "+jsonBytes);
         // Construct notification
         Notification notification = new Notification(endpoint, userPublicKey, userAuth, jsonBytes);
         // Construct push service
         // Send notification!
         HttpResponse httpResponse = PUSH_SVC_CHROME.send(notification);
         
-        System.out.println(httpResponse.getStatusLine().getStatusCode());
-        System.out.println(IOUtils.toString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8));
+        //System.out.println(httpResponse.getStatusLine().getStatusCode());
+        //System.out.println(IOUtils.toString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8));
         
     }
 	
@@ -121,8 +121,8 @@ public class WebPushAPI {
         // Send notification!
         HttpResponse httpResponse = pushService.send(notification);
 
-        System.out.println(httpResponse.getStatusLine().getStatusCode());
-        System.out.println(IOUtils.toString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8));
+        //System.out.println(httpResponse.getStatusLine().getStatusCode());
+        //System.out.println(IOUtils.toString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8));
     }
 	
 	/**

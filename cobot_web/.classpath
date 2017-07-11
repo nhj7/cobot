@@ -35,44 +35,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.datatools.connectivity.jdt.DRIVERLIBRARY/Cobot - MariaDB"/>
-	<classpathentry kind="lib" path="C:/Users/nhj7/.m2/repository/io/socket/socket.io-client/0.8.3/socket.io-client-0.8.3.jar" sourcepath="C:/Users/nhj7/.m2/repository/io/socket/socket.io-client/0.8.3/socket.io-client-0.8.3-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="io.socket"/>
-			<attribute name="maven.artifactId" value="socket.io-client"/>
-			<attribute name="maven.version" value="0.8.3"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/nhj7/.m2/repository/org/seleniumhq/selenium/selenium-api/3.4.0/selenium-api-3.4.0.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="selenium-api-3.4.0.jar"/>
-			<attribute name="maven.groupId" value="org.seleniumhq.selenium"/>
-			<attribute name="maven.artifactId" value="selenium-api"/>
-			<attribute name="maven.version" value="3.4.0"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/nhj7/.m2/repository/org/mozilla/rhino/1.7.7.1/rhino-1.7.7.1.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="rhino-1.7.7.1.jar"/>
-			<attribute name="maven.groupId" value="org.mozilla"/>
-			<attribute name="maven.artifactId" value="rhino"/>
-			<attribute name="maven.version" value="1.7.7.1"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/nhj7/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/9.0.0.M17/tomcat-embed-core-9.0.0.M17.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="org.eclipse.jst.component.archivename" value="tomcat-embed-core-9.0.0.M17.jar"/>
-			<attribute name="maven.groupId" value="org.apache.tomcat.embed"/>
-			<attribute name="maven.artifactId" value="tomcat-embed-core"/>
-			<attribute name="maven.version" value="9.0.0.M17"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

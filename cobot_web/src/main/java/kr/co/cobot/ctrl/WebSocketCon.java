@@ -70,7 +70,7 @@ public class WebSocketCon {
 		} catch (IOException e) {
 			
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}
 
 		sessions.add(session);
