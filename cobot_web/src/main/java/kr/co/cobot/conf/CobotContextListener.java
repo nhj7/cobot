@@ -30,23 +30,26 @@ public class CobotContextListener extends ContextLoaderListener{
 		super.contextInitialized(event);
 		
 		try {
-			
-			Object source = event.getSource();
-			Field field = source.getClass().getDeclaredField("context");
-			field.setAccessible(true);
-			ApplicationContext ac = (ApplicationContext) field.get(source);
-			field = ac.getClass().getDeclaredField("context");
-			field.setAccessible(true);
-			StandardContext standardContext = (StandardContext) field.get(ac);
-			SecurityConstraint security = new SecurityConstraint();
-			 
-			boolean flag = !NetUtil.isMyLocal();
-			
-			security.setAuthConstraint( flag );
-			standardContext.addConstraint(security);
-			
-			System.out.println("Set Tomcat AuthConstraint : "+flag);
-			
+			if( NetUtil.isMyLocal() ){
+				Object source = event.getSource();
+				Field field = source.getClass().getDeclaredField("context");
+				field.setAccessible(true);
+				ApplicationContext ac = (ApplicationContext) field.get(source);
+				field = ac.getClass().getDeclaredField("context");
+				field.setAccessible(true);
+				StandardContext standardContext = (StandardContext) field.get(ac);
+				SecurityConstraint security = new SecurityConstraint();
+				 
+				boolean flag = !NetUtil.isMyLocal();
+				SecurityConstraint[] arrSecurity = standardContext.findConstraints();
+				
+				for(int i = 0 ; i < arrSecurity.length;i++){
+					arrSecurity[i].setAuthConstraint(false);
+					standardContext.removeConstraint(arrSecurity[i]);
+				}
+				
+				System.out.println("Set Tomcat AuthConstraint : "+flag);
+			}
 			
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
