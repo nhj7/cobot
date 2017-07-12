@@ -1,6 +1,8 @@
 package nhj.api;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +32,17 @@ public class coinoneTest {
     
     public static void main(String[] args) throws Throwable {
 		
-    	//HttpResponse hrs = getPage("https://coinone.co.kr", null);
+    	Hashtable t = new Hashtable();
+    	t.put("1", "1");
+    	t.put("1", "2");
     	
+    	System.out.println(t);
+    	
+    	HashMap t2 = new HashMap();
+    	t2.put("1", "1");
+    	t2.put("1", "2");
+    	
+    	System.out.println(t2);
 	}
     
     

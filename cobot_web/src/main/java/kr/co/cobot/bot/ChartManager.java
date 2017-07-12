@@ -2,7 +2,7 @@ package kr.co.cobot.bot;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +46,7 @@ public class ChartManager implements Runnable {
 		
 	}
 	
-	private static Map<String, ChartManager> CHART_DATA = new HashMap();
+	private static Map<String, ChartManager> CHART_DATA = new Hashtable();
 	
 	
 	private String eid;
@@ -334,6 +334,7 @@ public class ChartManager implements Runnable {
 					}
 				}
 			}  catch (Throwable e) {
+				CHART_DATA.remove(key);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
@@ -342,7 +343,7 @@ public class ChartManager implements Runnable {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				CHART_DATA.remove(key);
+				
 			}
 		}
 	}
