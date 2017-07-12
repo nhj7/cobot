@@ -325,11 +325,11 @@ public class ChartManager implements Runnable {
 					CAL_INTERVAL = 0;
 					
 					if( System.currentTimeMillis() - this.LAST_CALL_TM > CHART_BOT_DOWN_TERM ){
-						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", Curren Thread Close : " + this.key);
+						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", Curren Thread Close : " + this.key + " " + this);
 						CHART_DATA.remove(key);
 						break;
 					}else{
-						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", curren update data : " + this.key);
+						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", curren update data : " + this.key + " " + this);
 						getChartDataStr(this);
 					}
 				}
@@ -346,6 +346,12 @@ public class ChartManager implements Runnable {
 				
 			}
 		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("[ChartMaanager] finalize() : " + CHART_DATA.size() + ", curren update data : " + this.key + " " + this);
+		super.finalize();
 	}
 
 }

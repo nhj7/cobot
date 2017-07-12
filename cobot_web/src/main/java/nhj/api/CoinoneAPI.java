@@ -38,28 +38,14 @@ public class CoinoneAPI implements Runnable {
 	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
 	
 	private static WebClient webClient = new WebClient(BrowserVersion.CHROME);
-	private static WebConnectionWrapper wc = new WebConnectionWrapper(webClient) {
-        public WebResponse getResponse(WebRequest request) throws IOException {
-            WebResponse response = super.getResponse(request);
-            /*
-            if (request.getUrl().toExternalForm().startsWith("https://coinone.co.kr/chart/olhc/")) {
-                String content = response.getContentAsString();
-
-                //change content
-
-                WebResponseData data = new WebResponseData(content.getBytes(),
-                        response.getStatusCode(), response.getStatusMessage(), response.getResponseHeaders());
-                response = new WebResponse(data, request, response.getLoadTime());
-            }
-            */
-            
-            return response;
-        }
-    };
+	private static WebConnectionWrapper wc;
     
     private static boolean COINONE_CHART_IS_READY = false;
     
     public static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+    	if( !COINONE_CHART_IS_READY ){
+			initChart();
+		}
     	
     	if( COINONE_CHART_IS_READY ){
     		currencyPair = currencyPair.toLowerCase();
@@ -199,8 +185,27 @@ public class CoinoneAPI implements Runnable {
 	private static void initChart(){
 		// Chart Init
 		{
-			
 			try {
+				
+				wc = new WebConnectionWrapper(webClient) {
+			        public WebResponse getResponse(WebRequest request) throws IOException {
+			            WebResponse response = super.getResponse(request);
+			            /*
+			            if (request.getUrl().toExternalForm().startsWith("https://coinone.co.kr/chart/olhc/")) {
+			                String content = response.getContentAsString();
+
+			                //change content
+
+			                WebResponseData data = new WebResponseData(content.getBytes(),
+			                        response.getStatusCode(), response.getStatusMessage(), response.getResponseHeaders());
+			                response = new WebResponse(data, request, response.getLoadTime());
+			            }
+			            */
+			            
+			            return response;
+			        }
+			    };
+			    
 				org.apache.log4j.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(org.apache.log4j.Level.FATAL);
 				
 				
@@ -317,9 +322,7 @@ public class CoinoneAPI implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		if( !COINONE_CHART_IS_READY ){
-			initChart();
-		}
+		
 
 		while (true) {
 
