@@ -55,17 +55,16 @@ public class WebSocketCon {
 	 */
 	@OnOpen
 	public void onOpen(Session session , EndpointConfig config) {
-		String ip = (String )config.getUserProperties().get("ip");
+		String ip = "";
+		if( config != null && config.getUserProperties() != null ){
+			ip = (String )config.getUserProperties().get("ip");
+		}		
 		System.out.println("[WebSocket] Open session id : " + session.getId() + " : ip : " + ip );
 		try {
 			final Basic basic = session.getBasicRemote();
-			
 			JsonObject jo = new JsonObject();
 			jo.addProperty("cmd", "status");
 			jo.addProperty("value", "Connection onOpen!!!");
-			
-			//System.out.println("onOpen : jo.getAsString() : " + jo.toString());
-			
 			basic.sendText( jo.toString() );
 		} catch (IOException e) {
 			
