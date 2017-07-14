@@ -331,7 +331,7 @@ public class PoloniexAPI {
 	
 	
 	
-	public static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+	public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
 		
 		String paramStr = "currencyPair=" + currencyPair + "&start=" 
 				+ start + "&end=" + end + "&period=" + period;

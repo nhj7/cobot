@@ -42,7 +42,7 @@ public class CoinoneAPI implements Runnable {
     
     private static boolean COINONE_CHART_IS_READY = false;
     
-    public static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+    public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
     	if( !COINONE_CHART_IS_READY ){
 			initChart();
 		}

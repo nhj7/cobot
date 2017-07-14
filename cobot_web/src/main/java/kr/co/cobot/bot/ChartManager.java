@@ -149,7 +149,7 @@ public class ChartManager implements Runnable {
 			
 			System.out.println("-----------------------------------------------------------");
 			
-			throw new Exception("Error!!");
+			return cm.CHART_STR;
 		}
 		
 		BigDecimal maxHigh = BigDecimal.ZERO;
@@ -321,6 +321,7 @@ public class ChartManager implements Runnable {
 					
 				}
 				
+				/*
 				if( CAL_INTERVAL > CHART_DATA_UPDATE_INTERVAL ){
 					CAL_INTERVAL = 0;
 					
@@ -333,6 +334,8 @@ public class ChartManager implements Runnable {
 						getChartDataStr(this);
 					}
 				}
+				*/
+				
 			}  catch (Throwable e) {
 				CHART_DATA.remove(key);
 				// TODO Auto-generated catch block
