@@ -321,20 +321,25 @@ public class ChartManager implements Runnable {
 					
 				}
 				
-				/*
+				
 				if( CAL_INTERVAL > CHART_DATA_UPDATE_INTERVAL ){
 					CAL_INTERVAL = 0;
 					
+					/*
 					if( System.currentTimeMillis() - this.LAST_CALL_TM > CHART_BOT_DOWN_TERM ){
 						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", Curren Thread Close : " + this.key + " " + this);
 						CHART_DATA.remove(key);
 						break;
-					}else{
+					}
+					*/
+					
+					
+					{
 						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", curren update data : " + this.key + " " + this);
 						getChartDataStr(this);
 					}
 				}
-				*/
+				
 				
 			}  catch (Throwable e) {
 				CHART_DATA.remove(key);
