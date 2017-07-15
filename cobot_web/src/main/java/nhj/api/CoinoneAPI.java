@@ -35,17 +35,21 @@ import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable {
+	
 	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
 	
 	private static WebClient webClient = new WebClient(BrowserVersion.CHROME);
 	private static WebConnectionWrapper wc;
     
     private static boolean COINONE_CHART_IS_READY = false;
-    
-    public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
-    	if( !COINONE_CHART_IS_READY ){
+    static{
+		if( !COINONE_CHART_IS_READY ){
 			initChart();
 		}
+	}
+    
+    public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+    	
     	
     	if( COINONE_CHART_IS_READY ){
     		currencyPair = currencyPair.toLowerCase();
