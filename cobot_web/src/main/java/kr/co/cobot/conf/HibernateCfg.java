@@ -35,8 +35,10 @@ public class HibernateCfg {
 			Configuration config = new Configuration()
 					.setProperty("hibernate.connection.driver_class", "org.mariadb.jdbc.Driver")
 					.setProperty("hibernate.connection.url", url).setProperty("hibernate.connection.username", "cobot")
-					.setProperty("hibernate.connection.password", "cobot1234");
-
+					.setProperty("hibernate.connection.password", "cobot1234")
+					.setProperty("hibernate.connection.timeout", "0")
+					.setProperty("hibernate.connection.autoRecoonect", "true")
+					;
 			List<Class> classes = new ArrayList<Class>();
 
 			ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(

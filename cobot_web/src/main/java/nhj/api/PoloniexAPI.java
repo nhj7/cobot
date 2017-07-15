@@ -329,9 +329,18 @@ public class PoloniexAPI {
 		return li;
 	}
 	
-	
+	private static long LAST_CALL_RETURN_CHART_DATA_TM = 0;
+    private static long TERM_CALL_RETURN_CHART_DATA_TM = 3000;
+    
 	
 	public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
+		
+		long term = System.currentTimeMillis() - LAST_CALL_RETURN_CHART_DATA_TM;
+		if(  term < TERM_CALL_RETURN_CHART_DATA_TM ){
+			long waitTm = TERM_CALL_RETURN_CHART_DATA_TM - term;
+			System.out.println("[PoloniexAPI.returnChartData] "+currencyPair+" 연속된 호출 대기 : " + waitTm);
+			Thread.sleep(waitTm);
+		}
 		
 		String paramStr = "currencyPair=" + currencyPair + "&start=" 
 				+ start + "&end=" + end + "&period=" + period;
@@ -348,6 +357,8 @@ public class PoloniexAPI {
 		JsonElement je = jp.parse(json_str);
 		
 		log("je.size : " + je.getAsJsonArray().size());
+		
+		LAST_CALL_RETURN_CHART_DATA_TM = System.currentTimeMillis();
 		
 		return je.getAsJsonArray();
 	}

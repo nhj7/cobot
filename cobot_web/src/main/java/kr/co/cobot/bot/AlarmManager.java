@@ -86,14 +86,22 @@ public class AlarmManager implements Runnable {
 			Element article = arrayElement.get(i);
 			
 			Elements arrayTitle = article.select(".PostSummary__header.show-for-small-only");
+			Element titleElement = arrayTitle.get(0);
+			String postUrl = titleElement.select("a").attr("href");
+			String postTitle = titleElement.text();			
+			
 			//System.out.println("arrayTitle : " + arrayTitle + ", size : " + arrayTitle.size() );
+			
+			Elements arrayBody = article.select(".PostSummary__body.entry-content");
+			Element bodyElement = arrayBody.get(0);
+			String postBodyUrl = bodyElement.select("a").attr("href");
+			String postBody = bodyElement.text();
+			
 			
 			Elements arrayImage = article.select(".PostSummary__image");
 			
 			
-			Element titleElement = arrayTitle.get(0);
-			String postUrl = titleElement.select("a").attr("href");
-			String postTitle = titleElement.text();			
+			
 			//System.out.println("postUrl : " + postUrl );
 			//System.out.println("postTitle : " + postTitle );
 			
@@ -139,7 +147,8 @@ public class AlarmManager implements Runnable {
 				for(int pushIdx = 0; pushIdx < webPushList.size();pushIdx++){
 					TbWebPushM pushM = (TbWebPushM) webPushList.get(pushIdx);
 					JsonObject jsonObject = new JsonObject();
-			        jsonObject.addProperty("body", "Coinkorea -" + post.getPostTitle() );
+					jsonObject.addProperty("title", id.getSiteDvcd() + "-" + id.getCategoryDvcd() );
+			        jsonObject.addProperty("body", post.getPostTitle() + "\n" + postBody );
 			        jsonObject.addProperty("url", "https://steemit.com" + post.getId().getPostUrl());
 			        jsonObject.addProperty("img", post.getPostImgUrl());
 					WebPushAPI.PushChrome(pushM.getEndPoint(), pushM.getPublicKey(), pushM.getAuth(), jsonObject);
