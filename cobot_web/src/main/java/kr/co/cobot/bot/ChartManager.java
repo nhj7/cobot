@@ -46,7 +46,7 @@ public class ChartManager implements Runnable {
 		
 	}
 	
-	private static Map<String, ChartManager> CHART_DATA = new Hashtable();
+	public static Map<String, ChartManager> CHART_DATA = new Hashtable();
 	
 	
 	private String eid;
@@ -60,11 +60,9 @@ public class ChartManager implements Runnable {
 		return CHART_DATA.get(key).TICK_STR;
 	}
 	
-	public static String getChartData( String eid, String unit_ccd, String ccd ) throws Throwable{
+	public synchronized static String getChartData( String eid, String unit_ccd, String ccd ) throws Throwable{
 		
 		String key = eid + "_" + unit_ccd + "_" + ccd;
-		
-		
 		
 		if( CHART_DATA.containsKey(key) ){
 			CHART_DATA.get(key).LAST_CALL_TM = System.currentTimeMillis();
@@ -145,7 +143,7 @@ public class ChartManager implements Runnable {
 			System.out.println("-----------------------------------------------------------");
 			System.out.println("size is short! : " + cm.key + ", size : " + chartList.size());
 			
-			System.out.println(chartList);
+			//System.out.println(chartList);
 			
 			System.out.println("-----------------------------------------------------------");
 			
@@ -360,6 +358,10 @@ public class ChartManager implements Runnable {
 	protected void finalize() throws Throwable {
 		System.out.println("[ChartMaanager] finalize() : " + CHART_DATA.size() + ", curren update data : " + this.key + " " + this);
 		super.finalize();
+	}
+	
+	public String toString(){
+		return hashCode() + " : " + key + " , lastTm : " + LAST_CALL_TM;
 	}
 
 }
