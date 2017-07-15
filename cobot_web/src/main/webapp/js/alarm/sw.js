@@ -1,6 +1,8 @@
 /**
  * 
  */
+try{
+	
 
 console.log('Started', self);
 self.addEventListener('install', function(event) {
@@ -20,7 +22,7 @@ self.addEventListener('push', function(event) {
 	  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 	  
 	  var data = event.data.json();
-	  const title = 'Cobot';
+	  const title = data.title ? data.title : 'Cobot';
 	  const options = {
 	    body: data.body,
 	    icon: data.img ? data.img : '/img/alarm/cobot_192_192.png',
@@ -42,3 +44,6 @@ self.addEventListener('notificationclick', function(event) {
 	    clients.openWindow(url)
 	  );
 	});
+} catch(e){
+	alert("SW.js 등록중 에러 : "+ e);
+}

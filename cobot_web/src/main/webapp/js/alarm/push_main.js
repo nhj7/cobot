@@ -173,22 +173,26 @@ function updateBtn() {
 	  pushButton.disabled = false;
 	}
 
+try{
+	if ('serviceWorker' in navigator && 'PushManager' in window) {
+		  console.log('Service Worker and Push is supported');
 
-if ('serviceWorker' in navigator && 'PushManager' in window) {
-	  console.log('Service Worker and Push is supported');
+		  navigator.serviceWorker.register('/js/alarm/sw.js')
+		  .then(function(swReg) {
+		    console.log('Service Worker is registered', swReg);
 
-	  navigator.serviceWorker.register('/js/alarm/sw.js')
-	  .then(function(swReg) {
-	    console.log('Service Worker is registered', swReg);
-
-	    swRegistration = swReg;
-	    initialiseUI();
-	  })
-	  .catch(function(error) {
-	    console.error('Service Worker Error', error);
-	  });
-	} else {
-	  console.warn('Push messaging is not supported');
-	  pushButton.textContent = 'Push Not Supported';
-	}
+		    swRegistration = swReg;
+		    initialiseUI();
+		  })
+		  .catch(function(error) {
+		    console.error('Service Worker Error', error);
+		  });
+		} else {
+		  console.warn('Push messaging is not supported');
+		  pushButton.textContent = 'Push Not Supported';
+		}
+}
+catch(e){
+	alert("알람 기능 체크 중 오류 : " + e);
+}
 

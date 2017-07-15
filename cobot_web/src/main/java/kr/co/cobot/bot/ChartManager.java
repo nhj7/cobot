@@ -60,7 +60,7 @@ public class ChartManager implements Runnable {
 		return CHART_DATA.get(key).TICK_STR;
 	}
 	
-	public synchronized static String getChartData( String eid, String unit_ccd, String ccd ) throws Throwable{
+	public static String getChartData( String eid, String unit_ccd, String ccd ) throws Throwable{
 		
 		String key = eid + "_" + unit_ccd + "_" + ccd;
 		
@@ -273,6 +273,8 @@ public class ChartManager implements Runnable {
 				Thread.sleep( LAST_DATA_UPDATE_INTERVAL );// 2초 쉬어간다.
 				
 				CAL_INTERVAL += LAST_DATA_UPDATE_INTERVAL;
+				
+				if( mainData.get("chartArray") == null ) continue;
 				
 				JsonArray chartArray = mainData.get("chartArray").getAsJsonArray();
 				
