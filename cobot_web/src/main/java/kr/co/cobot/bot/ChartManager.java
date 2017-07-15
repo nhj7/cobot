@@ -111,7 +111,7 @@ public class ChartManager implements Runnable {
 		
 		String currencyPair = unit_ccd  + "_" + ccd;
 		
-		String _start = String.valueOf( System.currentTimeMillis() - ( 60000 * 60 * 6 ) );
+		String _start = String.valueOf( System.currentTimeMillis() - ( 60000 * 60 * 7 ) );
 		String start = _start.substring(0, _start.length() - 3 );
 		
 		String period = "900";
