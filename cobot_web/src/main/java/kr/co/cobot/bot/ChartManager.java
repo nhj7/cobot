@@ -138,7 +138,7 @@ public class ChartManager implements Runnable {
 		 
 		int size = chartList.size();
 		
-		if( size < 24 || size > 24 ){
+		if( size < 24 ){
 			
 			System.out.println("-----------------------------------------------------------");
 			System.out.println("size is short! : " + cm.key + ", size : " + chartList.size());
