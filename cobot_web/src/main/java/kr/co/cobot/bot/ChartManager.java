@@ -265,7 +265,7 @@ public class ChartManager implements Runnable {
 		int CHART_DATA_UPDATE_INTERVAL = 1000 * 60 * 1;
 		int CAL_INTERVAL = 0;
 		
-		int CHART_BOT_DOWN_TERM = 1000 * 120;	// 1분간 요청이 없는 쓰레드는 종료한다.
+		int CHART_BOT_DOWN_TERM = 1000 * 120;	// 2분간 요청이 없는 쓰레드는 종료한다.
 		int ERROR_SLEEP_TM = 1000 * 60;
 		while(true){
 			
@@ -325,13 +325,13 @@ public class ChartManager implements Runnable {
 				if( CAL_INTERVAL > CHART_DATA_UPDATE_INTERVAL ){
 					CAL_INTERVAL = 0;
 					
-					/*
+					
 					if( System.currentTimeMillis() - this.LAST_CALL_TM > CHART_BOT_DOWN_TERM ){
 						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", Curren Thread Close : " + this.key + " " + this);
 						CHART_DATA.remove(key);
 						break;
 					}
-					*/
+					
 					
 					
 					{
