@@ -20,8 +20,6 @@
 
 /* eslint-env browser, es6 */
 
-'use strict';
-
 const applicationServerPublicKey = 'BLjkJUY4Padux-qoYj_qT5FgPM5YW9p19Y8JyWeN0zeAA2ESySpuHcaDImzEJBlxzkcXMa9FOZsKLP0WZ9O6AK4';
 
 const pushButton = document.querySelector('.js-push-btn');
@@ -127,7 +125,7 @@ function updateSubscriptionOnServer(subscription) {
 			
 			var steemDvcd = parent.$("#alarm_iframe").contents().find("input:radio[name=steemDvcd]:checked").val();;
 			
-			//subscription["steemDvcd"] = steemDvcd;
+			// subscription["steemDvcd"] = steemDvcd;
 			var data = JSON.stringify(subscription);
 			var json = JSON.parse(data);
 			json.steemDvcd = steemDvcd;
@@ -147,7 +145,7 @@ function updateSubscriptionOnServer(subscription) {
 	}
 
 function alarmRegSuc( res ){
-	//alert(res.alarmID);
+	// alert(res.alarmID);
 	parent.$.cookie("kr.co.cobot.alarmID", res.alarmID, { expires: 3650 } );
 	
 }
