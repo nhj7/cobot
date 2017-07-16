@@ -1,0 +1,12 @@
+{  
+  "name": "name",  
+  "short_name": "sname",  
+  "icons": [{  
+        "src": "/img/icon-192x192.png",  
+        "sizes": "192x192",
+        "type": "image/png"
+      }],  
+  "start_url": "/index.html?homescreen=1",  
+  "display": "standalone",  
+  "gcm_sender_id": "<Your Sender ID Here>"
+}
