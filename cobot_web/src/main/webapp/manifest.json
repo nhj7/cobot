@@ -2,11 +2,11 @@
   "name": "name",  
   "short_name": "sname",  
   "icons": [{  
-        "src": "/img/icon-192x192.png",  
+        "src": "/img/alarm/cobot_192_192.png",  
         "sizes": "192x192",
         "type": "image/png"
       }],  
   "start_url": "/index.html?homescreen=1",  
   "display": "standalone",  
-  "gcm_sender_id": "<Your Sender ID Here>"
+  "gcm_sender_id": "BLjkJUY4Padux-qoYj_qT5FgPM5YW9p19Y8JyWeN0zeAA2ESySpuHcaDImzEJBlxzkcXMa9FOZsKLP0WZ9O6AK4"
 }
