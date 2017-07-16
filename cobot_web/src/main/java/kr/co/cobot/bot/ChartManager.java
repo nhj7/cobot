@@ -274,7 +274,7 @@ public class ChartManager implements Runnable {
 				
 				CAL_INTERVAL += LAST_DATA_UPDATE_INTERVAL;
 				
-				if( mainData.get("chartArray") == null ) continue;
+				if( mainData == null || mainData.get("chartArray") == null ) continue;
 				
 				JsonArray chartArray = mainData.get("chartArray").getAsJsonArray();
 				

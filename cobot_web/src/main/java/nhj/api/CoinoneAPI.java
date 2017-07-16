@@ -127,7 +127,7 @@ public class CoinoneAPI implements Runnable {
 	}
 
 	private static void log(Object log) {
-		System.out.println(log);
+		System.out.println("[CoinoneAPI.log]"+log);
 	}
 
 	
@@ -464,6 +464,17 @@ public class CoinoneAPI implements Runnable {
 		CoinoneAPI api = new CoinoneAPI();
 		api.init();
 		new Thread(api).start();
+		
+		while(true){
+			JsonArray ja = api.returnChartData("", "", "", "");
+			
+			System.out.println("ja : " + ja);
+			
+			Thread.sleep(3000);
+		}
+		
+		
+		
 		
 	}
 
