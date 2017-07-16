@@ -8,14 +8,14 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>코봇-모든 코인 정보를 한눈에 </title>
+		<title>Cobot-모든 코인 정보를 한눈에 </title>
 		<link rel="canonical" href="https://cobot.co.kr">
 		<meta property="og:type" content="website">
-		<meta property="og:title" content="코봇-모든 거래소 코인정보를 한눈에">
+		<meta property="og:title" content="Cobot-모든 거래소 코인정보를 한눈에">
 		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 차트, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
 		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
 		<meta property="og:url" content="https://cobot.co.kr">
-		<meta name="description" content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.">
+		<meta name="description" content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 Cobot입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.">
 		
 		
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
@@ -157,6 +157,7 @@
 								</a>
 							</li>
 							
+							<!-- li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
@@ -165,8 +166,7 @@
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
-							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
-							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
+							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li-->
 						</ul>
 					</nav>
 			</div>
@@ -197,16 +197,11 @@
 					<section id="top" class="one dark cover" style="padding:0 0 0 0 ;margin: 0 0 0 0;">
 						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
 							<span id="brandTxt" style="position:relative;float: right;left:-0%;width:100%;background-color:black;color:white;margin: 0 0 0 0;padding:9px 0 9px 0;font-size:1.2em;">
-								<a href="javascript:;">Cobot</a>
-								<script>
-								
-								</script>
+								Cobot
 							</span> 
 							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
-						
 					</section>
-					
 					<style>
 					.search_txt{
 						width:50%;
@@ -561,15 +556,9 @@
 				
 				<ul class="copyright">
 					<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
-					<li> <a href="mailto:admin@cobot.co.kr">nhj12311@gmail.com</a><br /></li>
+					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
 					
 				</ul>
-				<!-- ul class="copyright">
-					<li>BTC : 1Hi3zc7sSxd9ovG2kwZ62yVbaPM4dXrJK<br /></li>
-					<li>ETH : 0xf3c8f49f41e2a9a4e8a7106918c327f1bc9d8a25<br /></li>
-					<li></li>
-					
-				</ul-->
 				<ul class="copyright">
 					<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
 					<li>&copy; Cobot. All rights reserved.</li>

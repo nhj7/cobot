@@ -177,7 +177,7 @@ try{
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
 		  console.log('Service Worker and Push is supported');
 
-		  navigator.serviceWorker.register('/js/alarm/sw.js')
+		  navigator.serviceWorker.register('/js/alarm/sw.js',  {scope: '/js/alarm/'} )
 		  .then(function(swReg) {
 		    console.log('Service Worker is registered', swReg);
 
