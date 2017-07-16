@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/css/alarm/material.indigo-pink.min.css">
   <script defer src="/js/alarm/material.min.js" charset="UTF-8"></script>
   <link rel="stylesheet" href="/css/push_css.css" charset="UTF-8">
+  <link rel="manifest" href="/manifest.json">
   <script>
   
 	  function updateAlarm(value){
