@@ -255,6 +255,52 @@ public class ChartManager implements Runnable {
 	
 	private JsonObject mainData;
 	
+	private void setCurrentCurrucy(){
+		JsonArray chartArray = mainData.get("chartArray").getAsJsonArray();
+		
+		List eidList = (List)DATA.getCoinInfo().get("eid_" + this.eid );
+		
+		//log("[eidList] : "+eidList);
+		int size = eidList.size();
+		for(int i = 0; i < size;i++){
+			Map coinMap = (Map)eidList.get(i);
+			if( coinMap.get("unit_cid").toString().equals(this.unit_cid) && this.ccd.equals(coinMap.get("ccd").toString())) {
+				JsonArray chartLast = chartArray.get(chartArray.size()-1).getAsJsonObject().get("data").getAsJsonArray();
+				
+				
+				int cSize = chartLast.size();
+				
+				BigDecimal newHigh = chartLast.get( cSize - 2 ).getAsBigDecimal();
+				BigDecimal close = chartLast.get( cSize - 3 ).getAsBigDecimal();
+				BigDecimal open = chartLast.get( cSize - 4 ).getAsBigDecimal();
+				BigDecimal newMin = chartLast.get( cSize - 5 ).getAsBigDecimal();
+				
+				BigDecimal price = new BigDecimal(coinMap.get("price").toString());
+				
+				//log("[chart data(before)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
+				
+				close = price;
+				if( newHigh.compareTo(price) < 0){
+					newHigh = price;
+				}
+				
+				if( newMin.compareTo(price) > 0 ){
+					newMin = price;
+				}
+				
+				chartLast.set(cSize - 1, new JsonPrimitive("Open : " + open + "\nLow : " + newMin + "\nHigh : " + newHigh + "\nClose : " + close) );
+				chartLast.set(cSize - 2, new JsonPrimitive(newHigh));
+				chartLast.set(cSize - 3, new JsonPrimitive(close));
+				chartLast.set(cSize - 5, new JsonPrimitive(newMin));
+				
+					
+				//log("[chart data(after)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
+				
+				this.CHART_STR = chartArray.toString();
+			}
+			
+		}
+	}
 	
 	@Override
 	public void run() {
@@ -274,52 +320,13 @@ public class ChartManager implements Runnable {
 				
 				CAL_INTERVAL += LAST_DATA_UPDATE_INTERVAL;
 				
-				if( mainData == null || mainData.get("chartArray") == null ) continue;
-				
-				JsonArray chartArray = mainData.get("chartArray").getAsJsonArray();
-				
-				List eidList = (List)DATA.getCoinInfo().get("eid_" + this.eid );
-				
-				//log("[eidList] : "+eidList);
-				int size = eidList.size();
-				for(int i = 0; i < size;i++){
-					Map coinMap = (Map)eidList.get(i);
-					if( coinMap.get("unit_cid").toString().equals(this.unit_cid) && this.ccd.equals(coinMap.get("ccd").toString())) {
-						JsonArray chartLast = chartArray.get(chartArray.size()-1).getAsJsonObject().get("data").getAsJsonArray();
-						
-						
-						int cSize = chartLast.size();
-						
-						BigDecimal newHigh = chartLast.get( cSize - 2 ).getAsBigDecimal();
-						BigDecimal close = chartLast.get( cSize - 3 ).getAsBigDecimal();
-						BigDecimal open = chartLast.get( cSize - 4 ).getAsBigDecimal();
-						BigDecimal newMin = chartLast.get( cSize - 5 ).getAsBigDecimal();
-						
-						BigDecimal price = new BigDecimal(coinMap.get("price").toString());
-						
-						//log("[chart data(before)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
-						
-						close = price;
-						if( newHigh.compareTo(price) < 0){
-							newHigh = price;
-						}
-						
-						if( newMin.compareTo(price) > 0 ){
-							newMin = price;
-						}
-						
-						chartLast.set(cSize - 1, new JsonPrimitive("Open : " + open + "\nLow : " + newMin + "\nHigh : " + newHigh + "\nClose : " + close) );
-						chartLast.set(cSize - 2, new JsonPrimitive(newHigh));
-						chartLast.set(cSize - 3, new JsonPrimitive(close));
-						chartLast.set(cSize - 5, new JsonPrimitive(newMin));
-						
-							
-						//log("[chart data(after)] : open" + open + ", newMin : " + newMin + " , newHigh : " + newHigh + ", close : " + close + ", cur_price : " +  coinMap.get("price") );
-						
-						this.CHART_STR = chartArray.toString();
-					}
+				if( mainData == null || mainData.get("chartArray") == null ){					
 					
+				}else{
+					setCurrentCurrucy();
 				}
+				
+				
 				
 				
 				if( CAL_INTERVAL > CHART_DATA_UPDATE_INTERVAL ){
@@ -331,8 +338,6 @@ public class ChartManager implements Runnable {
 						CHART_DATA.remove(key);
 						break;
 					}
-					
-					
 					
 					{
 						System.out.println("[ChartMaanager] Threads : " + CHART_DATA.size() + ", curren update data : " + this.key + " " + this);
