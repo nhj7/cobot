@@ -38,7 +38,7 @@ public class CoinoneAPI implements Runnable {
 	
 	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
 	
-	private static WebClient webClient = new WebClient(BrowserVersion.CHROME);
+	private static WebClient webClient;
 	private static WebConnectionWrapper wc;
     
     private static boolean COINONE_CHART_IS_READY = false;
@@ -203,7 +203,7 @@ public class CoinoneAPI implements Runnable {
 		// Chart Init
 		{
 			try {
-				
+				webClient = new WebClient(BrowserVersion.CHROME);
 				wc = new WebConnectionWrapper(webClient) {
 			        public WebResponse getResponse(WebRequest request) throws IOException {
 			            WebResponse response = super.getResponse(request);
