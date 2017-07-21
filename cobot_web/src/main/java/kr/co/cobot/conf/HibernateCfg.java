@@ -24,11 +24,11 @@ public class HibernateCfg {
 	
 	public static void init(){
 		try {
-			String jdbcParam = "?autoReconnect=true&useUnicode=true&characterEncoding=utf8mb4&connectionCollation=utf8mb4_unicode_ci";
-			String url = "jdbc:mariadb://localhost:33067" + jdbcParam;
+			String jdbcParam = "?sessionVariables=character_set_client=utf8mb4,character_set_results=utf8mb4,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci";
+			String url = "jdbc:mariadb://localhost:33067/cobot" + jdbcParam;
 
 			if ( NetUtil.isMyLocal() ) {
-				url = "jdbc:mariadb://220.230.118.187:33067" + jdbcParam;
+				url = "jdbc:mariadb://220.230.118.187:33067/cobot" + jdbcParam;
 			}
 
 			// Create the SessionFactory from hibernate.cfg.xml
