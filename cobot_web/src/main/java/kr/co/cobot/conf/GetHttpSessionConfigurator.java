@@ -34,7 +34,7 @@ public class GetHttpSessionConfigurator extends ServerEndpointConfig.Configurato
 		System.out.println("httpSession : " + httpSession);
 		
 		//System.out.println("config.getUserProperties() : "+config.getUserProperties() + ", session : " + httpSession);
-		if( httpSession != null ){
+		if( httpSession != null && config.getUserProperties() != null ){
 			config.getUserProperties().put("ip", httpSession.getAttribute("ip"));
 		}
 		

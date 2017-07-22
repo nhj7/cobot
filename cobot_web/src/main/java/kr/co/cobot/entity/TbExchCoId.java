@@ -1,5 +1,5 @@
 package kr.co.cobot.entity;
-// Generated 2017. 7. 11 ���� 1:11:18 by Hibernate Tools 5.2.3.Final
+// Generated 2017. 7. 19 ���� 1:12:19 by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

@@ -1,5 +1,7 @@
 
 
+
+
 /*
  * 
  * Push Notifications codelab Copyright 2015 Google Inc. All rights reserved.
@@ -114,34 +116,38 @@ function unsubscribeUser() {
 function updateSubscriptionOnServer(subscription) {
 	// TODO: Send subscription to application server
 	// console.log("updateSubscriptionOnServer.subscription : " + subscription);
-		
+	
 	  const subscriptionJson = document.querySelector('.js-subscription-json');
 	  const subscriptionDetails =
 	    document.querySelector('.js-subscription-details');
-
-	  if (subscription) {
-		var alarmID = parent.$.cookie("kr.co.cobot.alarmID");
-		if( alarmID == undefined || alarmID == "" ){
-			
-			var steemDvcd = parent.$("#alarm_iframe").contents().find("input:radio[name=steemDvcd]:checked").val();;
-			
-			// subscription["steemDvcd"] = steemDvcd;
-			var data = JSON.stringify(subscription);
-			var json = JSON.parse(data);
-			json.steemDvcd = steemDvcd;
-			parent.reqJson("/Alarm/Reg", json, alarmRegSuc );
-		}	
-		
-	    // subscriptionJson.textContent = JSON.stringify(subscription);
-	    // subscriptionDetails.classList.remove('is-invisible');
-	  } else {
-		  
-		  var alarmID = parent.$.cookie("kr.co.cobot.alarmID");
-		  if( alarmID != undefined && alarmID != "" ){
-				var data = JSON.stringify(subscription);
-				parent.reqJson("/Alarm/Del", {alarmID : alarmID}, alarmDelSuc );
-			}	
-	  }
+	  
+	  try{
+		  if (subscription) {
+				var alarmID = parent.$.cookie("kr.co.cobot.alarmID");
+				if( alarmID == undefined || alarmID == "" ){
+					// subscription["steemDvcd"] = steemDvcd;
+					var data = JSON.stringify(subscription);
+					var subJson = JSON.parse(data);
+					var alarmJson = getAlarmInfo();
+					var json = new Object();
+					parent.$.extend(json, alarmJson, subJson  );
+					console.log( "json : " + JSON.stringify(json) );
+					
+					parent.reqJson("/Alarm/Reg", json, alarmRegSuc );
+				}	
+				
+			    // subscriptionJson.textContent = JSON.stringify(subscription);
+			    // subscriptionDetails.classList.remove('is-invisible');
+			  } else {
+				  
+				  var alarmID = parent.$.cookie("kr.co.cobot.alarmID");
+				  if( alarmID != undefined && alarmID != "" ){
+						var data = JSON.stringify(subscription);
+						parent.reqJson("/Alarm/Del", {alarmID : alarmID}, alarmDelSuc );
+					}	
+			  }
+	  }catch(e){alert(e);}
+	  
 	}
 
 function alarmRegSuc( res ){
@@ -165,13 +171,13 @@ function updateBtn() {
 	  if (isSubscribed) {
 	    pushButton.textContent = 'Cobot 알람 중지';
 	  } else {
+		
 	    pushButton.textContent = 'Cobot 알람 받기';
 	  }
-
 	  pushButton.disabled = false;
 	}
-
 try{
+	
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
 		  console.log('Service Worker and Push is supported');
 

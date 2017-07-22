@@ -4,7 +4,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 	  
     , type: "popup"
 	, width : 480
-	, height : 720
+	, height : 650
 	
   }, function(win) {
     // win represents the Window object from windows API

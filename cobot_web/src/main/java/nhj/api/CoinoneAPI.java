@@ -43,9 +43,7 @@ public class CoinoneAPI implements Runnable {
     
     private static boolean COINONE_CHART_IS_READY = false;
     static{
-		if( !COINONE_CHART_IS_READY ){
-			initChart();
-		}
+		
 	}
     
     private static long LAST_CALL_RETURN_CHART_DATA_TM = 0;
@@ -337,9 +335,9 @@ public class CoinoneAPI implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
-		
+		if( !COINONE_CHART_IS_READY ){
+			initChart();
+		}
 
 		while (true) {
 

@@ -97,8 +97,9 @@
 								alarm_iframe.attr("src", alarmUrl );
 								$("#alarm_import").show();
 							}else{
-								alarm_iframe.attr("src", "" );
 								$("#alarm_import").hide();
+								alarm_iframe.attr("src", "" );
+								alarm_iframe.show();
 							}	
 						}
 						
@@ -439,12 +440,20 @@
 							</div>
 							<iframe id="util_iframe" src="" style="width:100%;height:180px;display:block;" scrolling="no"></iframe>
 						</div>
-						
+						<script>
+							function autoResize(i)
+							{
+							    var iframeHeight=
+							    (i).contentWindow.document.body.scrollHeight;
+							    //alert("iframeHeight : "+iframeHeight);
+							    (i).height=iframeHeight+20;
+							}
+						</script>
 						<div id="alarm_import" style="display:none;">
 							<div id="" style=";text-align:left !important;" onclick="changeDisplay('alarm_iframe');" >
 								<div style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Alarm Setting</div>
 							</div>
-							<iframe id="alarm_iframe" src="" style="width:100%;height:400px;display:block;" scrolling="no"></iframe>
+							<iframe id="alarm_iframe" onload="autoResize(this)" onunload="this.height=0;" src="" style="width:100%;display:block;" scrolling="no"></iframe>
 						</div>
 						
 						<div id="link_div" style="display:block;padding-bottom:10px;">

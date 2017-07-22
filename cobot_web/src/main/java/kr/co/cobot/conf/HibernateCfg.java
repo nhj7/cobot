@@ -24,7 +24,7 @@ public class HibernateCfg {
 	
 	public static void init(){
 		try {
-			String jdbcParam = "?sessionVariables=character_set_client=utf8mb4,character_set_results=utf8mb4,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci";
+			String jdbcParam = "?autoReconnect=true&sessionVariables=character_set_client=utf8mb4,character_set_results=utf8mb4,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci";
 			String url = "jdbc:mariadb://localhost:33067/cobot" + jdbcParam;
 
 			if ( NetUtil.isMyLocal() ) {
@@ -38,6 +38,10 @@ public class HibernateCfg {
 					.setProperty("hibernate.connection.password", "cobot1234")
 					.setProperty("hibernate.connection.timeout", "0")
 					.setProperty("hibernate.connection.autoRecoonect", "true")
+					.setProperty("connection.autoReconnect", "true")
+					.setProperty("connection.autoReconnectForPools", "true") 
+					.setProperty("connection.is-connection-validation-required", "true")    
+					    
 					//.setProperty("hibernate.connection.pool_size", "10")
 					//.setProperty("show_sql", "true")
 					;

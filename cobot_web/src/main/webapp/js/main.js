@@ -157,13 +157,16 @@ function exactRound(num, decimals) {
 }
 
 function reqJson( url, param, funcSuc, funcDone, funcFail ){
-	$.post(
-			url
-			, param
-			, funcSuc ? funcSuc : function(res){
+	$.ajax({
+			url : url
+			, data : JSON.stringify(param) //param 
+			, success : funcSuc ? funcSuc : function(res){
 				console.log( "res : " + JSON.stringify(res) );
-			}, 'json'
-	)
+			}
+			, dataType : 'json'
+			, method : 'post'
+			, contentType : "application/json; charset=UTF-8"				
+	})
 	.done( 
 		funcDone ? funcDone : function (){
 			console.log( "done" );

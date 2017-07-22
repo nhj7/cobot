@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 public class JsonUtil {
 	
 	public static String get(JsonObject jo, String memberName){
+		if( jo.get(memberName) == null ) return "";
 		return jo.get(memberName).toString().replaceAll("\"", "");
 	}
 	

@@ -12,6 +12,7 @@
 		<class>kr.co.cobot.entity.TbExchCo</class>
 		<class>kr.co.cobot.entity.TbExchCoId</class>
 		<class>kr.co.cobot.entity.TbExchange</class>
+		<class>kr.co.cobot.entity.TbPostInfo</class>
 		<class>kr.co.cobot.entity.TbWebPushM</class>
 		<class>kr.co.cobot.entity.TbWebPushPost</class>
 		<class>kr.co.cobot.entity.TbWebPushPostId</class>
