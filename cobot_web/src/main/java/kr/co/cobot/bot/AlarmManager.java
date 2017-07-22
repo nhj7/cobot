@@ -220,10 +220,12 @@ public class AlarmManager implements Runnable {
 											if( "user".equals( JsonUtil.get(steemit_item,"dvnm") )){
 												if( post.getPostAuthor().equals( JsonUtil.get(steemit_item,"itemValue").toString().replaceAll("@", "")) ){
 													sendAlarm(pushTarget, post, "user");
+													continue;
 												}
 											}else if( "tag".equals( JsonUtil.get(steemit_item,"dvnm")) ){
 												if( post.getArrTagStr().indexOf( JsonUtil.get(steemit_item,"itemValue").toString()) > -1 ){
 													sendAlarm(pushTarget, post, "tag");
+													continue;
 												}
 											}
 										}
