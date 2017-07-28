@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cobot - Steem Market </title>  
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/jquery.cookie.1.4.1.js"></script>
+  <script src="./js/jquery.countdown.min.js"></script>
+  <script src="./js/jquery.paging.min.js"></script>
+  <script src="./js/loading/jm.spinner.js"></script>
+  <link href="./css/loading/jm.spinner.css" rel="stylesheet">
+  
+</head>
+<style>
+	:root{
+		--main-width:980px;
+	}
+	main{
+		width:var(--main-width);
+	}
+	.searchDiv{
+		display:table;
+		width:var(--main-width);
+		border:1px solid silver;
+	}
+	.searchRowDiv{
+		display:table-row;
+		border-bottom:1px solid silver;
+	}
+	.searchTitleDiv{
+		display:table-cell;
+		width:15%;
+		background-color:#4078c0;
+		color:white;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px;
+		font-weight:bold;
+	}
+	.searchBodyDiv{
+		display:table-cell;
+		padding-left:20px;
+		padding-right:10px;
+		padding-top:10px;
+		padding-bottom:10px;
+		border-bottom:1px solid silver;
+		
+	}
+	.searchBodyItem{
+		color:#4078c0;
+		cursor:pointer;
+		padding-left:5px;
+		padding-right:5px;
+		margin-right:15px;
+	}
+	.searchBodyItem:active{
+		color:red;
+		
+	}
+	.searchBodyItem:hover{
+		color:black;	
+	}
+	.searchBodyItemOn{
+		background-color:#4078c0;
+		border-radius:5px;
+		color:white;	
+	} 
+	.searchBodyItemOn:hover{
+		color:white;	
+	} 
+	.jquery-paging{		
+		width:var(--main-width);
+		text-align:center;
+		text-decoration: none;
+	}
+	.paging-itemClass{
+		color:#4078c0;
+		margin-right:10px;	
+		margin-left:10px;
+		padding-left:5px;
+		padding-right:5px;
+		text-decoration: none;
+		font-weight:bold;
+	}
+	.paging-itemClass-current{
+		background-color:#4078c0;
+		border-radius:5px;
+		color:white;
+		text-decoration: none;
+	}
+	.paging-side{
+		color:#4078c0;
+		margin-right:10px;	
+		margin-left:10px;
+		padding-left:5px;
+		padding-right:5px;
+		text-decoration: none;
+		font-weight:bold;
+	}
+</style>
+<script>
+	$(function() {
+		$(".searchBodyItem").click(
+			function(obj){
+				var jObj = $(this);
+				if( jObj.hasClass("searchBodyItemOn") ){
+					jObj.removeClass("searchBodyItemOn");
+				}else{
+					$(this).addClass("searchBodyItemOn");	
+				}
+			}		
+		);
+		
+		$(".sortItem").click(
+				function(obj){
+					var jObj = $(this);
+					$(".sortItem").removeClass("sortItemOn")
+					jObj.addClass("sortItemOn");
+				}		
+			);
+		
+		$('[data-countdown]').each(function() {
+			  var $this = $(this), finalDate = $(this).data('countdown');
+			  $this.countdown(finalDate, function(event) {
+			    $this.html(event.strftime('%D일 %H:%M:%S'));
+			  });
+			});
+		$('#paging').paging({
+			format:"{0}"
+			, itemClass:"paging-itemClass"
+			, itemCurrent:"paging-itemClass-current"
+			, prev : "<이전"
+			, next : "다음>"
+			, first : "" 
+			, last : ""
+			, href : "javascript:inqryPage();"
+			, max:57
+			, current:1
+			
+		});
+		
+		$(".searchBodyItem,.sortItem").click(
+			function(e){
+				inqryPage();
+				/*
+				var jObj = $(this);
+				var itemDvcd = jObj.attr("data-item-dvcd");
+				var itemValue = jObj.attr("data-item-value");
+				*/
+				//alert( (jObj.hasClass("searchBodyItemOn")?"true":"false") + " : " + itemDvcd + " : " + itemValue);
+			}		
+		);
+	});
+	
+	var inqryParams = [];
+	
+	function inqryPage(){
+		
+		var curPage = $(".paging-itemClass-current").text();
+		
+		var arrSeller = "";
+		var arrMethod = "";
+		var arrCategory = "";
+		var arrStatus = "";
+		var arrActionDate = "";
+		$(".searchBodyItemOn[data-item-dvcd='seller']").each(
+			function(e){
+				arrSeller += this.getAttribute("data-item-value") + ",";				
+			}		
+		);
+		$(".searchBodyItemOn[data-item-dvcd='method']").each(
+				function(e){
+					arrMethod += this.getAttribute("data-item-value") + ",";				
+				}		
+			);
+		$(".searchBodyItemOn[data-item-dvcd='category']").each(
+				function(e){
+					arrCategory += this.getAttribute("data-item-value") + ",";				
+				}		
+			);
+		$(".searchBodyItemOn[data-item-dvcd='status']").each(
+				function(e){
+					arrStatus += this.getAttribute("data-item-value") + ",";				
+				}		
+			);
+		$(".searchBodyItemOn[data-item-dvcd='actionDate']").each(
+				function(e){
+					arrActionDate += this.getAttribute("data-item-value") + ",";				
+				}		
+			);
+		
+		var sortDvcd = $(".sortItemOn").attr("data-dvcd");
+		
+		console.log("arrSeller : "+arrSeller + "\narrMethod : " + arrMethod + "\narrCategory : " + arrCategory + "\narrStatus : " + arrStatus + "\narrActionDate : " + arrActionDate + "\nsortDvcd : "+ sortDvcd);
+				
+				
+		$("#loadSpinnerWrapper").css("top", $(window).height() / 2 - ( $("#loadSpinnerWrapper").height() ) );
+		$("#loadSpinnerWrapper").css("left", $("main").position().left + $("main").width() / 2 - ( $("#loadSpinnerWrapper").width() / 2 ) );
+		
+		
+		loadingView(true);
+		
+		setTimeout("loadingView(false);", 500 );
+	}
+	
+	function loadingView(flag){
+		if( flag ){ 
+			$("#loadSpinnerWrapper").show();
+		}
+		else{
+			$("#loadSpinnerWrapper").hide();			
+		}
+		if( flag ){
+			$("#loadSpinner").jmspinner();	
+		}else{
+			$("#loadSpinner").jmspinner(false);
+		}
+		
+	}
+	
+	function reqJson( url, param, funcSuc, funcDone, funcFail ){
+		$.ajax({
+				url : url
+				, data : JSON.stringify(param) //param 
+				, success : funcSuc ? funcSuc : function(res){
+					console.log( "res : " + JSON.stringify(res) );
+				}
+				, dataType : 'json'
+				, method : 'post'
+				, contentType : "application/json; charset=UTF-8"				
+		})
+		.done( 
+			funcDone ? funcDone : function (){
+				console.log( "done" );
+			}
+		)
+		.fail( 
+			funcFail ? funcFail : function(jqxhr, textStatus, error ) { 
+				var err = textStatus + ", " + error;
+				alert( "서비스 실패 : " + err ); 
+			}
+		) ;
+	}
+	
+</script>
+<body>
+	
+	
+	<h2>Steem Market</h2>
+	<main style="margin-left:20px" >
+		<div id="loadSpinnerWrapper" style="position:fixed;text-align:center;display:none;">
+			<img width="140px" height="140px" src="./img/loading/steemit.png" /><br />
+			<div id="loadSpinner" ></div>
+		</div>
+		<section>
+			<div class="searchDiv" id="searchDiv">
+				<div class="searchRowDiv" id="searchRowDiv1" >
+					<div class="searchTitleDiv" id="searchTitleDiv" style="">
+						판매자
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" style="font-weight:bold;">
+						<span class="searchBodyItem" data-item-dvcd="seller" data-item-value="seller" >@seller</span>
+						<!-- span class="searchBodyItem" onclick="">@jumma</span-->
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</div>
+				<div class="searchRowDiv" id="searchRowDiv2" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						판매방식
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="1">판매</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="2">경매</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="3">이벤트</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="4">SBD대출</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="0">기타</span>
+					</div>
+				</div>
+				
+				<div class="searchRowDiv" id="searchRowDiv3" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						카테고리
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="1">의류</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="2">잡화</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="3">화장품/미용</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="4">디지털/가전</span>						
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="5">식품</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="6">여행/문화</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="7">금융</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="0">기타</span>
+					</div>
+				</div>
+				
+				<div class="searchRowDiv" id="searchRowDiv4" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						상태
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >						
+						<span class="searchBodyItem searchBodyItemOn" data-item-dvcd="status" data-item-value="1">판매중</span>
+						<span class="searchBodyItem" data-item-dvcd="status" data-item-value="8">종료</span>
+						<hr />
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="1">1일전</span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="2">2일전</span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="3">3일전</span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="4">4일전</span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="5">5일전</span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="6">6일전</span>
+						
+						
+					</div>
+				</div>
+				
+				
+			</div>
+		</section>
+		<style>
+		.sortDiv{
+			display:table;
+			width:var(--main-width);
+			border-bottom:1px solid silver;
+			margin-top:15px;
+			font-size:12px;
+			padding-bottom:10px;
+		}
+		.sortItem{
+			color:#4078c0;
+			cursor:pointer;
+			padding-left:5px;
+			padding-right:5px;
+			margin-right:15px;
+		}
+		.sortItemOn{
+			font-weight:bold;
+			font-size:1.2em;
+		}
+		</style>
+		<section>
+			<div class="sortDiv">
+				
+				<span class="sortItem sortItemOn" data-dvcd="descAuctionDate">낙찰일순(낙찰임박)</span>
+				<span class="sortItem" data-dvcd="descRegDate">등록일순(최근)</span>
+				<span class="sortItem" data-dvcd="ascRealAmt">낮은 가격순(실구매가)</span>
+				<span class="sortItem" data-dvcd="descRealAmt">높은 가격순(실구매가)</span>
+				<span class="sortItem" data-dvcd="descReply" >입찰(댓글) 많은 순</span>
+			</div>
+		</section>
+		<style>
+			.itemListDiv{
+				display:table;
+				width:var(--main-width);
+				border-bottom:1px solid silver;
+				margin-top:15px;
+				font-size:12px;
+				padding-bottom:10px;
+			}
+			.itemDiv{
+				display:table-row;
+				// color:#4078c0;
+				color:black;
+				cursor:pointer;
+				padding-left:5px;
+				padding-right:5px;
+				margin-right:15px;
+				border-bottom:1px solid silver;
+			}
+			.itemCell{
+				border-bottom:1px solid silver;
+				padding-bottom:10px;
+				padding-top:10px;
+			}
+			.itemImgDiv{
+				display:table-cell;
+				border:1px solid silver;
+				
+			}
+			.itemInfoDiv{
+				display:table-cell;
+				text-valign:top;
+				vertical-align: top;
+				margin-left:15px;
+			}
+			.itemSellerDiv{
+				display:table-cell;
+				text-align:center;
+				vertical-align: top;
+				font-size:1.3em;
+				font-weight:bold;
+				color:#4078c0;
+			}
+			.itemInfoTitle{
+				font-size:1.3em;
+				font-weight:bold;
+				margin-bottom:15px;
+			}
+			.itemInfoAmt{
+				font-size:1.2em;
+				font-weight:bold;
+				margin-bottom:5px;
+			}
+			
+			.itemInfoReply{
+				display:none;
+			}
+			.itemInfoReply:{
+				display:none;
+			}
+			
+			.itemInfoReplyOn{
+				display:block;
+			}
+			
+			.itemInfoReplyItem{
+				padding-left:20px;
+			}
+		</style>
+		
+		<script>
+			function viewReply(id){
+				var jObj = $("#"+id);
+				var onClassTxt = "itemInfoReplyOn";
+				if( jObj.hasClass( onClassTxt ) ){
+					jObj.removeClass( onClassTxt );
+				}else{
+					jObj.addClass( onClassTxt );
+				}
+			}
+		</script>
+		<section>
+			<div class="itemListDiv">
+			
+				<!-- item start -->
+				<div class="itemDiv">
+					<div class="itemCell itemImgDiv">
+						<img width="140px" height="140px" 
+							src="https://phinf.pstatic.net/shopping/main_1021908/10219087424.4.jpg?type=f133" />
+					</div>
+					<div style="width:10px;">
+					 
+					</div>
+					<div class="itemCell itemInfoDiv">
+						<div class="itemInfoTitle">[경매]45번째 판매글 - 샤오미 보조배터리 10000mAh 3세대 프로 c타입 - 2017.07.26 -</div>
+						<div class="itemInfoAmt itemInfoRealAmt">가격(최종 입찰가의 실제 부담금액) : 11.6 SBD</div>
+						<div class="itemInfoAmt itemInfoOriKrwAmt">-매출원가(원) : 28,000원</div>
+						<div class="itemInfoAmt itemInfoAuctionAmt">-경매시작~최종입찰가 : 16~32 SBD</div>
+						<div class="itemInfoAmt itemInfoCountDown">-경매종료일시 : 17년 7월 29일 21시 남은 시간 : <span data-countdown="2017-07-29 21:00:00"></span></div>
+						<div class="itemInfoAmt itemInfoEndSBDAmt">-보팅금액 : $32.6 참가자 수 : 12 <a href="javascript:;" onclick="viewReply('itemInfoReply1')">▼</a></div>
+						<div class="itemInfoReply" id="itemInfoReply1">
+							<div class="itemInfoReplyItem">
+								1. @sigizzang 32SBD 입찰합니다.<br />
+								2. @gomyh16 19SBD 입찰합니다.<br />
+								3. @kwak 18SBD 입찰합니다.<br />
+								4. @kimsungmin 17SBD 입찰합니다.<br />
+								5. @nunojesus 16SBD 입찰합니다.<br />
+								
+							</div>
+						</div>											
+					</div>
+					<div class="itemCell itemSellerDiv">
+						<img width="140px" height="125px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+						<br />
+						@seller
+					</div>
+				</div>
+				<!-- item end -->
+				
+				<!-- item start -->
+				<div class="itemDiv">
+					<div class="itemCell itemImgDiv">
+						<img width="140px" height="140px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUWwKuRPAaHwQSdcaCNkSiAgGRjEtWBNmUxuEqgxpjLnr/1.JPG" />
+					</div>
+					<div style="width:10px;">
+					 
+					</div>
+					<div class="itemCell itemInfoDiv">
+						<div class="itemInfoTitle">44번째 판매글 - 설화수 여민/윤조 마스크(5매) - 2017.07.25 -</div>
+						<div class="itemInfoAmt itemInfoRealAmt">가격(최종 입찰가의 실제 부담금액) : 14.6 SBD</div>
+						<div class="itemInfoAmt itemInfoOriKrwAmt">-매출원가(원) : 32,500원</div>
+						<div class="itemInfoAmt itemInfoAuctionAmt">-경매시작~최종입찰가 : 16~44 SBD</div>
+						<div class="itemInfoAmt itemInfoCountDown">-경매종료일시 : 17년 8월 1일 00시 남은 시간 : <span data-countdown="2017-08-01 00:00:00"></span></div>
+						<div class="itemInfoAmt itemInfoEndSBDAmt">-보팅금액 : $6.6 참가자 수 : 4 <a href="javascript:;" onclick="viewReply('itemInfoReply2')">▼</a></div>
+						<div class="itemInfoReply" id="itemInfoReply2">
+							<div class="itemInfoReplyItem">
+								1. @sigizzang 32SBD 입찰합니다.<br />
+								2. @gomyh16 19SBD 입찰합니다.<br />
+								3. @kwak 18SBD 입찰합니다.<br />
+								4. @kimsungmin 17SBD 입찰합니다.<br />
+								5. @nunojesus 16SBD 입찰합니다.<br />
+								
+							</div>
+						</div>												
+					</div>
+					<div class="itemCell itemSellerDiv">
+						<img width="140px" height="125px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+						<br />
+						@seller
+					</div>
+				</div>
+				<!-- item end -->
+				
+				<!-- item start -->
+				<div class="itemDiv">
+					<div class="itemCell itemImgDiv">
+						<img width="140px" height="140px" 
+							src="https://phinf.pstatic.net/shopping/main_1021908/10219087424.4.jpg?type=f133" />
+					</div>
+					<div style="width:10px;">
+					 
+					</div>
+					<div class="itemCell itemInfoDiv">
+						<div class="itemInfoTitle">44번째 판매글 - 설화수 여민/윤조 마스크(5매) - 2017.07.25 -</div>
+						<div class="itemInfoAmt itemInfoRealAmt">가격(최종 입찰가의 실제 부담금액) : 14.6 SBD</div>
+						<div class="itemInfoAmt itemInfoOriKrwAmt">-매출원가(원) : 32,500원</div>
+						<div class="itemInfoAmt itemInfoAuctionAmt">-경매시작~최종입찰가 : 16~44 SBD</div>
+						<div class="itemInfoAmt itemInfoCountDown">-경매종료일시 : 17년 8월 1일 00시 남은 시간 : <span data-countdown="2017-08-01 00:00:00"></span></div>
+						<div class="itemInfoAmt itemInfoEndSBDAmt">-보팅금액 : $6.6 참가자 수 : 4 <a href="javascript:;" onclick="viewReply('itemInfoReply2')">▼</a></div>
+						<div class="itemInfoReply" id="itemInfoReply2">
+							<div class="itemInfoReplyItem">
+								1. @sigizzang 32SBD 입찰합니다.<br />
+								2. @gomyh16 19SBD 입찰합니다.<br />
+								3. @kwak 18SBD 입찰합니다.<br />
+								4. @kimsungmin 17SBD 입찰합니다.<br />
+								5. @nunojesus 16SBD 입찰합니다.<br />
+								
+							</div>
+						</div>												
+					</div>
+					<div class="itemCell itemSellerDiv">
+						<img width="140px" height="125px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+						<br />
+						@seller
+					</div>
+				</div>
+				<!-- item end -->
+				
+				<!-- item start -->
+				<div class="itemDiv">
+					<div class="itemCell itemImgDiv">
+						<img width="140px" height="140px" 
+							src="https://phinf.pstatic.net/shopping/main_1021908/10219087424.4.jpg?type=f133" />
+					</div>
+					<div style="width:10px;">
+					 
+					</div>
+					<div class="itemCell itemInfoDiv">
+						<div class="itemInfoTitle">44번째 판매글 - 설화수 여민/윤조 마스크(5매) - 2017.07.25 -</div>
+						<div class="itemInfoAmt itemInfoRealAmt">가격(최종 입찰가의 실제 부담금액) : 14.6 SBD</div>
+						<div class="itemInfoAmt itemInfoOriKrwAmt">-매출원가(원) : 32,500원</div>
+						<div class="itemInfoAmt itemInfoAuctionAmt">-경매시작~최종입찰가 : 16~44 SBD</div>
+						<div class="itemInfoAmt itemInfoCountDown">-경매종료일시 : 17년 8월 1일 00시 남은 시간 : <span data-countdown="2017-08-01 00:00:00"></span></div>
+						<div class="itemInfoAmt itemInfoEndSBDAmt">-보팅금액 : $6.6 참가자 수 : 4 <a href="javascript:;" onclick="viewReply('itemInfoReply2')">▼</a></div>
+						<div class="itemInfoReply" id="itemInfoReply2">
+							<div class="itemInfoReplyItem">
+								1. @sigizzang 32SBD 입찰합니다.<br />
+								2. @gomyh16 19SBD 입찰합니다.<br />
+								3. @kwak 18SBD 입찰합니다.<br />
+								4. @kimsungmin 17SBD 입찰합니다.<br />
+								5. @nunojesus 16SBD 입찰합니다.<br />
+								
+							</div>
+						</div>												
+					</div>
+					<div class="itemCell itemSellerDiv">
+						<img width="140px" height="125px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+						<br />
+						@seller
+					</div>
+				</div>
+				<!-- item end -->
+				
+				<!-- item start -->
+				<div class="itemDiv">
+					<div class="itemCell itemImgDiv">
+						<img width="140px" height="140px" 
+							src="https://phinf.pstatic.net/shopping/main_1021908/10219087424.4.jpg?type=f133" />
+					</div>
+					<div style="width:10px;">
+					 
+					</div>
+					<div class="itemCell itemInfoDiv">
+						<div class="itemInfoTitle">44번째 판매글 - 설화수 여민/윤조 마스크(5매) - 2017.07.25 -</div>
+						<div class="itemInfoAmt itemInfoRealAmt">가격(최종 입찰가의 실제 부담금액) : 14.6 SBD</div>
+						<div class="itemInfoAmt itemInfoOriKrwAmt">-매출원가(원) : 32,500원</div>
+						<div class="itemInfoAmt itemInfoAuctionAmt">-경매시작~최종입찰가 : 16~44 SBD</div>
+						<div class="itemInfoAmt itemInfoCountDown">-경매종료일시 : 17년 8월 1일 00시 남은 시간 : <span data-countdown="2017-08-01 00:00:00"></span></div>
+						<div class="itemInfoAmt itemInfoEndSBDAmt">-보팅금액 : $6.6 참가자 수 : 4 <a href="javascript:;" onclick="viewReply('itemInfoReply2')">▼</a></div>
+						<div class="itemInfoReply" id="itemInfoReply2">
+							<div class="itemInfoReplyItem">
+								1. @sigizzang 32SBD 입찰합니다.<br />
+								2. @gomyh16 19SBD 입찰합니다.<br />
+								3. @kwak 18SBD 입찰합니다.<br />
+								4. @kimsungmin 17SBD 입찰합니다.<br />
+								5. @nunojesus 16SBD 입찰합니다.<br />
+								
+							</div>
+						</div>												
+					</div>
+					<div class="itemCell itemSellerDiv">
+						<img width="140px" height="125px" 
+							src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+						<br />
+						@seller
+					</div>
+				</div>
+				<!-- item end -->
+				
+			</div>
+		</section>
+		<br />
+		<section>
+			<div id="paging" class="jquery-paging">
+			
+			</div>
+		</section>
+		<br /><br />
+	</main>  
+</body>
+</html>
