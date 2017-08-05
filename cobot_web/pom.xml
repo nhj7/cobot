@@ -30,13 +30,8 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
-			<!-- exclusions>
-				
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions-->
+			<!-- exclusions> <exclusion> <groupId>commons-logging</groupId> <artifactId>commons-logging</artifactId> 
+				</exclusion> </exclusions -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -61,27 +56,27 @@
 
 
 		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
-		</dependency>
+		<!-- dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+			<version>${org.slf4j-version}</version> </dependency> <dependency> <groupId>org.slf4j</groupId> 
+			<artifactId>jcl-over-slf4j</artifactId> <version>${org.slf4j-version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-log4j12</artifactId> <version>${org.slf4j-version}</version> 
+			<scope>runtime</scope> </dependency> <dependency> <groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> <version>1.2.17</version> </dependency -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
-			<scope>runtime</scope>
+			<version>1.6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<artifactId>commons-logging</artifactId>
+			<groupId>commons-logging</groupId>
+			<version>1.1.1</version>
 		</dependency>
 
 		<!-- @Inject -->
@@ -133,11 +128,8 @@
 			<version>2.0.3</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
-		<!-- dependency>
-			<groupId>com.googlecode.log4jdbc</groupId>
-			<artifactId>log4jdbc</artifactId>
-			<version>1.2</version>
-		</dependency-->
+		<!-- dependency> <groupId>com.googlecode.log4jdbc</groupId> <artifactId>log4jdbc</artifactId> 
+			<version>1.2</version> </dependency -->
 		<dependency>
 			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
