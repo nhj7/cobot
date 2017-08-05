@@ -19,6 +19,8 @@ public class HibernateCfg {
 	private static SessionFactory sessionFactory;
 
 	static {
+		org.apache.log4j.Logger.getLogger("log4j.logger.org.hibernate").setLevel(org.apache.log4j.Level.INFO);
+		
 		init();
 	}
 	
@@ -49,6 +51,8 @@ public class HibernateCfg {
 				config.setProperty("hibernate.show_sql","true");
 			}else{
 				config.setProperty("hibernate.show_sql","false");
+				//log4j.logger.org.hibernate=info;
+				
 			}
 			
 			List<Class> classes = new ArrayList<Class>();
