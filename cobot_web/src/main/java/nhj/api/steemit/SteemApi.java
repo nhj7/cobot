@@ -1,9 +1,5 @@
 package nhj.api.steemit;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertNotNull;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
