@@ -133,11 +133,11 @@
 			<version>2.0.3</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.log4jdbc/log4jdbc -->
-		<dependency>
+		<!-- dependency>
 			<groupId>com.googlecode.log4jdbc</groupId>
 			<artifactId>log4jdbc</artifactId>
 			<version>1.2</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
