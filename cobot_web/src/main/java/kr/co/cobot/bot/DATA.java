@@ -8,6 +8,11 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 @SuppressWarnings("unchecked")
 public class DATA {
+	
+	public static String PLNX_USD_BITCOIN = "";
+	public static String PLNX_BTC_SBD = "";
+	public static String USD_KRW = "";
+	
 	private static Map<String, JsonObject> EXCH_INFO = new HashMap();	// 거래소 리스트
 	
 	private static Map<String, Object> COIN_INFO = new HashMap(); // 거래소별 코인 리스트

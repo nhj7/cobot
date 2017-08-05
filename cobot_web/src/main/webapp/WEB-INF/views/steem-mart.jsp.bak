@@ -1,0 +1,510 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
+<%
+	request.setCharacterEncoding("utf-8");
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Cobot - Steem Market </title>  
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.cookie.1.4.1.js"></script>
+  <script src="/js/jquery.countdown.min.js"></script>
+  <script src="/js/jquery.paging.min.js"></script>
+  <script src="/js/loading/jm.spinner.js"></script>
+  <link href="/css/loading/jm.spinner.css" rel="stylesheet">
+  
+</head>
+<style>
+	:root{
+		--main-width:980px;
+		--main-color:#4078c0
+	}
+	
+	main{
+		width:var(--main-width);
+	}
+	.searchDiv{
+		display:table;
+		width:var(--main-width);
+		border:1px solid silver;
+	}
+	.searchRowDiv{
+		display:table-row;
+		border-bottom:1px solid silver;
+	}
+	.searchTitleDiv{
+		display:table-cell;
+		width:15%;
+		background-color:var(--main-color);
+		color:white;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px;
+		font-weight:bold;
+	}
+	.searchBodyDiv{
+		display:table-cell;
+		padding-left:20px;
+		padding-right:10px;
+		padding-top:10px;
+		padding-bottom:10px;
+		border-bottom:1px solid silver;
+		
+	}
+	.searchBodyItem{
+		color:var(--main-color);
+		cursor:pointer;
+		padding-left:5px;
+		padding-right:5px;
+		margin-right:15px;
+	}
+	.searchBodyItem:active{
+		color:red;
+		
+	}
+	.searchBodyItem:hover{
+		color:black;	
+	}
+	.searchBodyItemOn{
+		background-color:var(--main-color);
+		border-radius:5px;
+		color:white;	
+	} 
+	.searchBodyItemOn:hover{
+		color:white;	
+	} 
+	.jquery-paging{		
+		width:var(--main-width);
+		text-align:center;
+		text-decoration: none;
+	}
+	.paging-itemClass{
+		color:var(--main-color);
+		margin-right:10px;	
+		margin-left:10px;
+		padding-left:5px;
+		padding-right:5px;
+		text-decoration: none;
+		font-weight:bold;
+	}
+	.paging-itemClass-current{
+		background-color:var(--main-color);
+		border-radius:5px;
+		color:white;
+		text-decoration: none;
+	}
+	.paging-side{
+		color:var(--main-color);
+		margin-right:10px;	
+		margin-left:10px;
+		padding-left:5px;
+		padding-right:5px;
+		text-decoration: none;
+		font-weight:bold;
+	}
+	.searchDivWrapper{
+		z-index:0;
+		font-size:0.8em;
+		text-align:right;
+		position:relative;
+		margin-top:-1.3em;
+	}
+</style>
+<script>
+var agent = navigator.userAgent.toLowerCase();
+var browser = "";
+if (agent.indexOf("chrome") != -1) {
+	browser = "chrome";
+}
+else if (agent.indexOf("safari") != -1) {
+	browser = "safari";
+}
+else if (agent.indexOf("firefox") != -1) {
+	browser = "firefox";
+}
+else if (agent.indexOf("msie") != -1) {
+	browser = "ie";
+}
+var pageSize = 10; 
+var postSize = 10;
+</script>
+<script src="/js/steem/biz.js"></script>
+<script>
+var cachePath = "/extanal/img/";
+
+function addItem(idx, jObj ){
+	//alert();
+	var newItem = $("#itemDummy").clone();
+	newItem.attr("id","item" + idx);
+	newItem.css("display","");
+	
+	var prodImg = newItem.find("#prodImg");	
+	
+	if( jObj.cacheProdImgUrl && jObj.cacheProdImgUrl.length > 0 ){
+		prodImg.attr("src", cachePath + jObj.cacheProdImgUrl );
+	}else{
+		prodImg.attr("src", jObj.prodImgUrl );
+	}
+	
+	
+	
+	var prodName = newItem.find("#prodName");	
+	prodName.text( jObj.prodName );
+	
+	var strAuctionEndDttm = newItem.find("#strAuctionEndDttm");	
+	strAuctionEndDttm.attr("data-countdown", jObj.strAuctionEndDttm );
+	
+	var realAmt = newItem.find("#realAmt");	
+	realAmt.text( jObj.realAmt + "" );
+	
+	var oriAmt = newItem.find("#oriAmt");	
+	oriAmt.text( jObj.oriAmt + "ì" );
+	
+	var sellAmt = newItem.find("#sellAmt");	
+	sellAmt.text( jObj.sellAmt + "" );
+	
+	var lastSellAmt = newItem.find("#lastSellAmt");	
+	lastSellAmt.text( jObj.lastSellAmt + "" );
+	
+	var auctionEndDttm = newItem.find("#auctionEndDttm");	
+	auctionEndDttm.text( jObj.strAuctionEndDttm );
+	
+	var voteAmt = newItem.find("#voteAmt");	
+	voteAmt.text( '$'+jObj.voteAmt);
+	
+	var itemInfoReplyPre = newItem.find("#itemInfoReplyPre");	
+	itemInfoReplyPre.attr("onclick", "viewReply('itemInfoReply"+idx+"')");
+	itemInfoReplyPre.text("ì´ " + jObj.reply.length + "ê±´ì ìì°°ì´ ììµëë¤. ");
+	
+	
+	var itemInfoReply = newItem.find("#itemInfoReply");	
+	itemInfoReply.attr("id", "itemInfoReply" + idx);
+	
+	var itemInfoReplyItem = newItem.find("#itemInfoReplyItem");	
+	itemInfoReplyItem.empty();
+	for(var rIdx = 0; rIdx < jObj.reply.length ; rIdx++){
+		itemInfoReplyItem.append("<div class='replyItemOne'>"+(rIdx+1)+". @"+jObj.reply[rIdx].author+ " : " +jObj.reply[rIdx].comment+"</div>");
+	}
+	
+	var postImgUrl = newItem.find("#postImgUrl");
+	
+	if( jObj.cachePostImgUrl.length > 0 ){
+		postImgUrl.attr("src", cachePath + jObj.cachePostImgUrl );
+	}else{
+		postImgUrl.attr("src", jObj.postImgUrl );
+	}	
+	
+	
+	var seller = newItem.find("#seller");	
+	seller.text( "@"+jObj.author );
+	
+	try{
+		if( jObj.method == "2" ){
+			var dcRatio = newItem.find("#dcRatio");	
+			dcRatio.text( exactRound( (1 - jObj.realAmt / jObj.sellAmt) * 100 , 1)+"%"  );
+		}
+	}catch(e){
+		
+	}
+	
+	$("#itemListDiv").append(newItem);
+	
+}
+
+
+
+</script>
+<body>	
+	<main style="margin: 0 auto;" >
+	  <center><img src="/img/steem/steemmart.png" style="position:relative;z-index:1;"/></center>
+		<div id="loadSpinnerWrapper" style="position:fixed;text-align:center;display:none;">
+			<img width="140px" height="140px" src="/img/loading/steemit.png" /><br />
+			<div id="loadSpinner" ></div>
+		</div>
+		<section>
+		  <div id="searchDivWrapper" class="searchDivWrapper" style="" title="ì´ ë°ì´í°ë Cobot ìì¸ì¡°í ìë¹ì¤ë¥¼ ì¬ì©í©ëë¤.">(í´ë¡ëì¤ ê¸°ì¤ 1SBD : ì½<span id="sbd_txt"></span>ì)</div>
+			<div class="searchDiv" id="searchDiv">
+				<div class="searchRowDiv" id="searchRowDiv1" >
+					<div class="searchTitleDiv" id="searchTitleDiv" style="">
+						íë§¤ì
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" style="font-weight:bold;">
+						<span class="searchBodyItem" data-item-dvcd="seller" data-item-value="seller" >@seller</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jumma" >@jumma</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="greenjuice" >@greenjuice</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jejujinfarm" >@jejujinfarm</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="toktok" >@toktok</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="iieeiieeii" >@iieeiieeii</span>
+					</div>
+				</div>
+				<div class="searchRowDiv" id="searchRowDiv2" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						íë§¤ë°©ì
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="1">íë§¤</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="2">ê²½ë§¤</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="3">ì´ë²¤í¸</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="4">SBDëì¶</span>
+						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="0">ê¸°í</span>
+					</div>
+				</div>
+				
+				<div class="searchRowDiv" id="searchRowDiv3" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						ì¹´íê³ ë¦¬
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="1">ìë¥</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="2">ì¡í</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="3">íì¥í/ë¯¸ì©</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="4">ëì§í¸/ê°ì </span>						
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="5">ìí</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="6">ì¬í/ë¬¸í</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="7">ìí/ê±´ê°</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="99">ê¸ìµ</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="0">ê¸°í</span>
+					</div>
+				</div>
+				
+				<div class="searchRowDiv" id="searchRowDiv4" >
+					<div class="searchTitleDiv" id="searchTitleDiv" >
+						ìí
+					</div>
+					<div class="searchBodyDiv" id="searchBodyDiv" >						
+						<span class="searchBodyItem searchBodyItemOn" data-item-dvcd="status" data-item-value="1">íë§¤ì¤</span>
+						<span class="searchBodyItem" data-item-dvcd="status" data-item-value="8">ì¢ë£</span>
+						
+						<div style="display:none;">
+						<hr />
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="1">1ì¼ì </span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="2">2ì¼ì </span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="3">3ì¼ì </span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="4">4ì¼ì </span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="5">5ì¼ì </span>
+						<span class="searchBodyItem " data-item-dvcd="actionDate" data-item-value="6">6ì¼ì </span>
+						</div>
+						
+					</div>
+				</div>
+				
+				
+			</div>
+		</section>		
+		<style>
+		.sortDiv{
+			display:table;
+			width:var(--main-width);
+			border-bottom:1px solid silver;
+			margin-top:15px;
+			font-size:12px;
+			padding-bottom:10px;
+		}
+		.sortItem{
+			color:#4078c0;
+			cursor:pointer;
+			padding-left:5px;
+			padding-right:5px;
+			margin-right:15px;
+		}
+		.sortItemOn{
+			font-weight:bold;
+			font-size:1.2em;
+		}
+		</style>
+		<section>
+			<div class="sortDiv">
+				
+				<span class="sortItem sortItemOn" data-dvcd="descAuctionDate">ëì°°ì¼ì(ëì°°ìë°)</span>
+				<span class="sortItem" data-dvcd="descRegDate">ë±ë¡ì¼ì(ìµê·¼)</span>
+				<span class="sortItem" data-dvcd="ascRealAmt">ë®ì ê°ê²©ì(ì¤êµ¬ë§¤ê°)</span>
+				<span class="sortItem" data-dvcd="descRealAmt">ëì ê°ê²©ì(ì¤êµ¬ë§¤ê°)</span>
+				<span class="sortItem" data-dvcd="descReply" >ìì°°(ëê¸) ë§ì ì</span>
+			</div>
+		</section>
+		<style>
+			.itemListDiv{
+				display:table;
+				width:var(--main-width);
+				border-bottom:1px solid silver;
+				margin-top:15px;
+				font-size:12px;
+				padding-bottom:10px;
+			}
+			.itemDiv{
+				display:table-row;				
+				// color:#4078c0;
+				color:black;				
+				padding-left:5px;
+				padding-right:5px;
+				margin-right:15px;
+				border-bottom:1px solid silver;
+			}
+			.itemCell{
+				border-bottom:1px solid silver;
+				padding-bottom:15px;
+				padding-top:15px;
+			}
+			.itemImgDiv{
+				display:-webkit-inline-box;
+				border:1px solid silver;
+				height:160px;
+			}
+			.itemInfoRow{
+				display:table-Row;
+				width:90%;
+				text-valign:top;
+				vertical-align: middle;
+				margin-left:15px;
+			}
+			.itemInfoCell{
+				display:table-Cell;
+				text-valign:middle;
+				vertical-align: middle;
+				margin-left:15px;
+				padding:5px;
+				text-align:center;
+				font-size:1.2em;				
+				border:1px solid black;
+
+			}
+			.itemInfoDiv{
+				display:table-cell;				
+				text-valign:top;
+				vertical-align: top;
+				padding-left:15px;
+			}
+			.itemSellerDiv{
+				display:table-cell;
+				text-align:center;
+				vertical-align: top;
+				font-size:1.3em;
+				font-weight:bold;
+				color:#4078c0;
+			}
+			.itemInfoTitle{
+				font-size:1.2em;
+				font-weight:bold;
+				margin-bottom:7px;
+			}
+			.itemInfoAmt{
+			  display:table-cell;
+				font-size:1.2em;
+				font-weight:bold;
+				margin-bottom:5px;
+			}
+			
+			.itemInfoReply{
+				display:none;
+				margin-top:1em;
+			}
+			.itemInfoReply:{
+				display:none;
+			}
+			
+			.itemInfoReplyOn{
+				display:inline;
+			}
+			
+			.itemInfoReplyItem{
+				padding-left:20px;
+				width:80%;
+			}
+			.itemInfoReplyPre{
+				width:90%;border:0.5px solid black;font-weight:bold;margin-top:10px;text-align:center;cursor:pointer;
+			}
+			.replyItemOne{
+				width:100%;
+			}
+		</style>
+		
+		<script>
+			function viewReply(id){
+				var jObj = $("#"+id);
+				var onClassTxt = "itemInfoReplyOn";
+				if( jObj.hasClass( onClassTxt ) ){
+					jObj.removeClass( onClassTxt );
+				}else{
+					jObj.addClass( onClassTxt );
+				}
+			}
+		</script>
+		<section>
+			<div id="itemListDiv" class="itemListDiv">
+			
+				
+				
+				
+				
+			</div>
+		</section>
+		<br />
+		<section>
+			<div id="paging" class="jquery-paging">
+			
+			</div>
+		</section>
+		<br /><br />
+	</main>
+	
+	<!-- Dummy item start -->
+	<div id="itemDummy" class="itemDiv" style="display:none;" >
+		<div onclick="alert(11);" class="itemCell itemImgDiv" style="overflow: hidden;width:200px;">
+			<img id="prodImg" name="prodImg" style="max-width:100%;height:auto;vertical-align: middle;"
+				src="" />
+		</div>
+		<div style="width:10px;">
+		 
+		</div>
+		<div class="itemCell itemInfoDiv">
+			<div id="prodName" class="itemInfoTitle">ì¤ì¤ë¯¸ ë³´ì¡°ë°°í°ë¦¬ 10000mAh 3ì¸ë íë¡ cíì</div>
+			<div class="itemInfoTitle" ><span id="realAmt" style="color:red;">16.5</span>SBD</div>
+			<div class="itemInfoTitle">ë¨ì ìê° : <span id="strAuctionEndDttm" data-countdown="2017-08-04 21:00:00"></span></div>
+			<div class="itemInfoRow">
+			  <div class="itemInfoCell">í ì¸ì¨</div>
+			  <div class="itemInfoCell">ë§¤ì¶ìê°(ì)</div>
+			  <div class="itemInfoCell">ê²½ë§¤ìì</div>
+			  <div class="itemInfoCell">ìµì¢ìì°°ê°</div>
+			  <div class="itemInfoCell">ê²½ë§¤ì¢ë£ì¼ì</div>
+			  <div class="itemInfoCell">ë³´íê¸ì¡</div>
+			</div>
+			<div class="itemInfoRow">
+			  <div id="dcRatio" class="itemInfoCell" style="color:red;"></div>
+			  <div id="oriAmt" class="itemInfoCell"></div>
+			  <div id="sellAmt" class="itemInfoCell"></div>
+			  <div id="lastSellAmt" class="itemInfoCell"></div>
+			  <div id="auctionEndDttm" class="itemInfoCell">
+			    17ë 8ì 2ì¼ 21ì
+			  </div>
+			  <div id="voteAmt" class="itemInfoCell">$32.6</div>
+			</div>			
+			<div id="itemInfoReplyPre" onclick="viewReply('itemInfoReply')" class="itemInfoReplyPre">
+			 	ì´ 12ê±´ì ìì°°ì´ ììµëë¤. 
+			</div>
+			
+			<div class="itemInfoReply" id="itemInfoReply">
+				<div class="itemInfoReplyItem" id="itemInfoReplyItem">
+					<div>1. sigizzang 32SBD ìì°°í©ëë¤.</div>
+					<div>2. gomyh16 19SBD ìì°°í©ëë¤.</div>
+					<div>3. kwak 18SBD ìì°°í©ëë¤.</div>
+					<div>4. kimsungmin 17SBD ìì°°í©ëë¤.</div>
+					<div>5. nunojesus 16SBD ìì°°í©ëë¤.</div>
+					
+				</div>
+			</div>											
+		</div>
+		<div onclick="alert(11);" class="itemCell itemSellerDiv">
+			<img id="postImgUrl" width="160px" height="120px" 
+				src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+			<br />
+			<span id="seller">@seller</span>
+		</div>
+	</div>
+	<!-- item end -->
+	
+</body>
+</html>

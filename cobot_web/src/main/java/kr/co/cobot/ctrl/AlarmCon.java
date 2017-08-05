@@ -180,7 +180,7 @@ public class AlarmCon {
 	
 	
 	/*
-	 *  update alarm
+	 *  Search alarm
 	 */
 	@RequestMapping(value = { "/Alarm/Search" } , produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object alarmSearch(Model model, @RequestBody Map ioMap , ServletRequest req) {

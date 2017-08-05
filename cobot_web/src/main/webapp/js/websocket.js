@@ -131,7 +131,7 @@ function writeResponse(text) {
 var activeCoins;
 var arrCoinRank = new Array();
 var arrCoinRank_bak = new Array(); // coinRank_bak
-var per_usdt = 1.01;
+var per_usdt = 1;
 var per_krw = 1130;
 
 function getObjStr(obj){

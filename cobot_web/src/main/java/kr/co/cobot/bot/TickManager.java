@@ -65,6 +65,8 @@ public class TickManager implements Runnable {
 				{
 					String per_krw = CoinoneAPI.getPerKrw();
 					m.put("per_krw" , per_krw);
+					
+					DATA.USD_KRW = per_krw;
 				}
 				
 				DATA.setCoinInfo(m);

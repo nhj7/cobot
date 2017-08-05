@@ -147,7 +147,7 @@ public class HTMLParsingAPI implements Runnable {
 	public void run() {
 		while(true){
 			try {
-				sumEtherScanTran();
+				//sumEtherScanTran();
 				Thread.sleep(120000);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

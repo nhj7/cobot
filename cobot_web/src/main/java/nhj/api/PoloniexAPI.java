@@ -28,6 +28,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import kr.co.cobot.bot.DATA;
 import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
@@ -309,6 +310,14 @@ public class PoloniexAPI {
 			
 			tickMap.put("price", get(tickJo, "last"));
 			tickMap.put("per_ch", get(tickJo, "percentChange"));
+			
+			if( "9999".equals(unit_cid) && "BTC".equals(arrTitle[1]) ){
+				DATA.PLNX_USD_BITCOIN = get(tickJo, "last");
+			}
+			
+			if( "1".equals(unit_cid) && "SBD".equals(arrTitle[1]) ){
+				DATA.PLNX_BTC_SBD = get(tickJo, "last");
+			}
 			
 			//tickMap.put("base_vol", get(tickJo, "baseVolume"));
 			//tickMap.put("quote_vol", get(tickJo, "quoteVolume"));

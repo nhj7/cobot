@@ -53,12 +53,22 @@ public aspect aspectTmp {
 		if( args != null && args.length > 1 ){
 			//System.out.println("[aspectJ] Controller param : " + args[1]);
 		}
-			
-		
-
-		// System.out.println("point cut : " + sig);
-		
-		
 	}
+	
+	/*
+	@Before("execution(* kr.co.cobot.entity.*.*(..))")
+	public void setEntity(JoinPoint joinPoint) {
+
+		Object[] args = joinPoint.getArgs();
+		//System.out.println("[aspectJ] doConCheck : "+joinPoint.getSignature()); // For testing purposes.
+		if( args != null && args.length > 0 ){
+			System.out.println("[aspectJ] setEntity : " + args[0]);
+		}
+
+	}
+	*/
+	
+	
+	
 
 }

@@ -24,4 +24,26 @@ public class StringUtil {
 		
 	}
 	
+	public static boolean hasStrings(String source, String[] arrString ){
+		return hasStrings(source, arrString, true);
+	}
+
+	public static boolean hasStrings(String source, String[] arrString, boolean ignoreCase ){
+		if( source == null || "".equals(source)) 
+			return false;
+		if( arrString == null || arrString.length == 0 ) 
+			return false;
+		
+		if( ignoreCase )
+			source = source.toLowerCase();		
+		
+		for(String s : arrString){
+			if( ignoreCase ) 
+				s = s.toLowerCase();
+	        if( source.indexOf(s) > -1 ) 
+	        	return true;
+	    }
+		return false;
+	}
+	
 }

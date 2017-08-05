@@ -9,8 +9,9 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
-import kr.co.cobot.bot.AlarmManager;
+import kr.co.cobot.bot.CacheImgManager;
 import kr.co.cobot.bot.ExchManager;
+import kr.co.cobot.bot.SteemitManager;
 import kr.co.cobot.bot.TickManager;
 import nhj.util.NetUtil;
 
@@ -58,9 +59,23 @@ public class CobotContextListener extends ContextLoaderListener{
 		System.out.println("CobotContextListener Start......");
 		System.out.println("mode : " + System.getProperty("mode") );
 		
-		new Thread( new ExchManager()).start();
-		new Thread( new TickManager()).start();
-		AlarmManager.init();
+		try {
+			if( !NetUtil.isMyLocal() ){
+				new Thread( new ExchManager()).start();
+				
+				
+			}
+			
+			SteemitManager.init();
+			
+			new Thread( new TickManager()).start();
+			CacheImgManager.init();
+			
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

@@ -41,10 +41,14 @@ public class HibernateCfg {
 					.setProperty("connection.autoReconnect", "true")
 					.setProperty("connection.autoReconnectForPools", "true") 
 					.setProperty("connection.is-connection-validation-required", "true")    
-					    
+					
 					//.setProperty("hibernate.connection.pool_size", "10")
 					//.setProperty("show_sql", "true")
 					;
+			if ( NetUtil.isMyLocal() ) {
+				config.setProperty("hibernate.show_sql","true");
+			}
+			
 			List<Class> classes = new ArrayList<Class>();
 
 			ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(
@@ -81,7 +85,7 @@ public class HibernateCfg {
 	public static Session getCurrentSession() throws HibernateException {
 		Session s = session.get();
 		// Open a new Session, if this thread has none yet
-		if (s == null) {
+		if (s == null || !s.isConnected() ) {
 			if( sessionFactory.isClosed()){
 				init();
 			}

@@ -152,7 +152,19 @@
 				//alert( (jObj.hasClass("searchBodyItemOn")?"true":"false") + " : " + itemDvcd + " : " + itemValue);
 			}		
 		);
+		
+		
+		// 첫 페이지 조회 call
+		reqJson("/kr-market/Search", { "aa":"bb" } , searchSuc );  
+		
 	});
+	
+	function searchSuc(jObj){
+		//alert(jObj);
+		for(var i = 0; i < jObj.length;i++){
+			alert( JSON.stringify(jObj[i]) );
+		}
+	}
 	
 	var inqryParams = [];
 	

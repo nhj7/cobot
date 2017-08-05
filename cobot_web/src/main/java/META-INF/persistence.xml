@@ -6,6 +6,7 @@
 		<class>kr.co.cobot.entity.TbAn1Id</class>
 		<class>kr.co.cobot.entity.TbBuyReq</class>
 		<class>kr.co.cobot.entity.TbBuyReqId</class>
+		<class>kr.co.cobot.entity.TbCacheImg</class>
 		<class>kr.co.cobot.entity.TbCoSnap</class>
 		<class>kr.co.cobot.entity.TbCoSnapId</class>
 		<class>kr.co.cobot.entity.TbCoin</class>
@@ -13,6 +14,9 @@
 		<class>kr.co.cobot.entity.TbExchCoId</class>
 		<class>kr.co.cobot.entity.TbExchange</class>
 		<class>kr.co.cobot.entity.TbPostInfo</class>
+		<class>kr.co.cobot.entity.TbPostMarketInfo</class>
+		<class>kr.co.cobot.entity.TbPostMarketReply</class>
+		<class>kr.co.cobot.entity.TbPostMarketReplyId</class>
 		<class>kr.co.cobot.entity.TbWebPushM</class>
 		<class>kr.co.cobot.entity.TbWebPushPost</class>
 		<class>kr.co.cobot.entity.TbWebPushPostId</class>
