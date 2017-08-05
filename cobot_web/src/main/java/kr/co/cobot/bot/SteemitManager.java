@@ -676,7 +676,7 @@ public class SteemitManager implements Runnable {
 	}
 	
 	private static void marketRefresh() throws Throwable{
-		List<TbPostMarketInfo> marketList =  session.createQuery( "from TbPostMarketInfo where 1=1 ").list();
+		List<TbPostMarketInfo> marketList =  session.createQuery( "from TbPostMarketInfo where status <> 8 ").list();
 		
 		for( TbPostMarketInfo market : marketList ){
 			String author = market.getAuthor();
