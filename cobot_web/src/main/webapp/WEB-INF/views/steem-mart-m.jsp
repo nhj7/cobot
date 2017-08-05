@@ -198,8 +198,8 @@ function addItem(idx, jObj ){
 	for(var rIdx = 0; rIdx < jObj.reply.length ; rIdx++){
 		var comment = jObj.reply[rIdx].comment;
 		var replyCmt = (rIdx+1)+". "+jObj.reply[rIdx].author+ " : " +comment
-		if( replyCmt.length > 26 ){
-			replyCmt = replyCmt.substring(0, 23 ) + "...";
+		if( replyCmt.length > 29 ){
+			replyCmt = replyCmt.substring(0, 26 ) + "...";
 		}
 		itemInfoReplyItem.append("<div class='replyItemOne'>"+replyCmt+"</div>");
 	}
