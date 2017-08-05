@@ -19,7 +19,7 @@ public class HibernateCfg {
 	private static SessionFactory sessionFactory;
 
 	static {
-		org.apache.log4j.Logger.getLogger("log4j.logger.org.hibernate").setLevel(org.apache.log4j.Level.INFO);
+		org.apache.log4j.Logger.getLogger("org.hibernate").setLevel(org.apache.log4j.Level.INFO);
 		
 		init();
 	}
