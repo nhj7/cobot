@@ -37,9 +37,9 @@
 	<!-- Root Logger -->
 	<root>
 		<priority value="info" />
-		<appender-ref ref="console" >
-			<level value="info" />
-		</appender-ref>
+		<appender-ref ref="console" />
+			
+		
 	</root>
 
 </log4j:configuration>
