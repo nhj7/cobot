@@ -69,14 +69,11 @@ public class CobotContextListener extends ContextLoaderListener{
 		try {
 			if( !NetUtil.isMyLocal() ){
 				new Thread( new ExchManager()).start();
-				
-				
+				SteemitManager.init();
+				new Thread( new TickManager()).start();
+				CacheImgManager.init();
 			}
 			
-			SteemitManager.init();
-			
-			new Thread( new TickManager()).start();
-			CacheImgManager.init();
 			
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block

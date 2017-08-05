@@ -127,12 +127,107 @@
 
 <script src="/js/steem/biz.js"></script>
 <script>
+var pageSize = 5; 
+var postSize = 5;
+var cachePath = "/extanal/img/";
 function addItem(idx, jObj ){
-	var div = $(create("div"));
-	div.attr("id", "item"+idx);
-	div.attr("class", "itemDiv");
+	//alert();
+	var newItem = $("#itemDummy").clone();
+	newItem.attr("id","item" + idx);
+	newItem.css("display","");
+	newItem.attr("data-link", STEEM_URL + jObj.postUrl );
+	
+	var prodImg = newItem.find("#prodImg");	
+	
+	if( jObj.cacheProdImgUrl && jObj.cacheProdImgUrl.length > 0 ){
+		prodImg.attr("src", cachePath + jObj.cacheProdImgUrl );
+	}else{
+		prodImg.attr("src", jObj.prodImgUrl );
+	}
 	
 	
+	
+	var prodName = newItem.find("#prodName");	
+	prodName.text( jObj.prodName );
+	
+	var strAuctionEndDttm = newItem.find("#strAuctionEndDttm");	
+	strAuctionEndDttm.attr("data-countdown", jObj.strAuctionEndDttm );
+	
+	var realAmt = newItem.find("#realAmt");	
+	realAmt.text( jObj.realAmt + " SBD" );
+	try{
+		var sbdKrw = $("#sbd_txt").text().replace(",", "");
+		var realKrwAmt = newItem.find("#realKrwAmt");	
+		realKrwAmt.text( comma( exactRound(jObj.realAmt * sbdKrw, 0) ) + "원"  );
+	}catch(e){
+		
+	}
+	
+	
+	var oriAmt = newItem.find("#oriAmt");	
+	oriAmt.text( comma(jObj.oriAmt) + "원" );
+	
+	var sellAmt = newItem.find("#sellAmt");	
+	sellAmt.text( jObj.sellAmt + "" );
+	
+	var lastSellAmt = newItem.find("#lastSellAmt");	
+	lastSellAmt.text( jObj.lastSellAmt + "" );
+	
+	var auctionEndDttm = newItem.find("#auctionEndDttm");	
+	auctionEndDttm.text( jObj.strAuctionEndDttm );
+	
+	var voteAmt = newItem.find("#voteAmt");	
+	voteAmt.text( '$'+jObj.voteAmt);
+	
+	/*
+	var itemInfoReplyPre = newItem.find("#itemInfoReplyPre");	
+	itemInfoReplyPre.attr("onclick", "viewReply('itemInfoReply"+idx+"')");
+	itemInfoReplyPre.text("총 " + jObj.reply.length + "건의 입찰이 있습니다. ");
+	*/
+	
+	var voteInfo = newItem.find("#voteInfo");
+	voteInfo.css("color","gray");
+	voteInfo.attr("onclick", "viewReply(\'itemInfoReply"+idx+"\')");
+	voteInfo.html("∧"+jObj.reply.length+"");
+	
+	var itemInfoReply = newItem.find("#itemInfoReply");	
+	itemInfoReply.attr("id", "itemInfoReply" + idx);
+	
+	var itemInfoReplyItem = newItem.find("#itemInfoReplyItem");	
+	itemInfoReplyItem.empty();
+	for(var rIdx = 0; rIdx < jObj.reply.length ; rIdx++){
+		var comment = jObj.reply[rIdx].comment;
+		var replyCmt = (rIdx+1)+". "+jObj.reply[rIdx].author+ " : " +comment
+		if( replyCmt.length > 26 ){
+			replyCmt = replyCmt.substring(0, 23 ) + "...";
+		}
+		itemInfoReplyItem.append("<div class='replyItemOne'>"+replyCmt+"</div>");
+	}
+	/*
+	var postImgUrl = newItem.find("#postImgUrl");
+	
+	if( jObj.cachePostImgUrl.length > 0 ){
+		postImgUrl.attr("src", cachePath + jObj.cachePostImgUrl );
+	}else{
+		postImgUrl.attr("src", jObj.postImgUrl );
+	}	
+	
+	
+	var seller = newItem.find("#seller");	
+	seller.text( "@"+jObj.author );
+	*/
+	
+	try{
+		if( jObj.method == "2" ){
+			var dcRatio = newItem.find("#dcRatio");	
+			dcRatio.text( exactRound( (1 - jObj.realAmt / jObj.sellAmt) * 100 , 1)+"%"  );
+		}
+	}catch(e){
+		
+	}
+	
+	
+	$("#itemListDiv").append(newItem);
 	
 }
 
@@ -155,11 +250,13 @@ function addItem(idx, jObj ){
 						판매자
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv" style="font-weight:bold;">
-					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 200%;">
+					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 250%;">
 						<span class="searchBodyItem" data-item-dvcd="seller" data-item-value="seller" >@seller</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jumma" >@jumma</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="greenjuice" >@greenjuice</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jejujinfarm" >@jejujinfarm</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="toktok" >@toktok</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="iieeiieeii" >@iieeiieeii</span>
 					</div>
 					</div>
 				</div>
@@ -168,7 +265,7 @@ function addItem(idx, jObj ){
 						판매방식
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv"  >
-					<div id="searchBodyDivWrapper" class="searchBodyDivWrapper"  style="width: 200%;">
+					<div id="searchBodyDivWrapper" class="searchBodyDivWrapper"  style="width: 170%;">
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="1">판매</span>
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="2">경매</span>
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="3">이벤트</span>
@@ -183,7 +280,7 @@ function addItem(idx, jObj ){
 						카테고리
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv" >
-					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 275%;">
+					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 235%;">
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="1">의류</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="2">잡화</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="3">화장품/미용</span>
@@ -335,6 +432,9 @@ function addItem(idx, jObj ){
 		
 		<script>
 			function viewReply(id){
+				event.stopPropagation();
+				
+				//alert(1231);
 				var jObj = $("#"+id);
 				var onClassTxt = "itemInfoReplyOn";
 				if( jObj.hasClass( onClassTxt ) ){
@@ -343,42 +443,20 @@ function addItem(idx, jObj ){
 					jObj.addClass( onClassTxt );
 				}
 			}
+			
+			function openLink(obj){
+				//alert(1122);				
+				var jObj = $(obj);
+				var itemDiv = jObj.closest(".itemDiv");
+				//alert(itemDiv.attr("data-link"));
+				window.open(itemDiv.attr("data-link"), "_blank");
+				
+			}
 		</script>
 		<section>
-			<div class="itemListDiv">
+			<div id="itemListDiv" class="itemListDiv">
 			
-				<!-- item start -->
-				<div class="itemDiv">
-					<div class="itemCell itemImgDiv itemSellerDiv" style="text-align:center;">
-						<img class="prodImg" title="@seller"
-							src="https://phinf.pstatic.net/shopping/main_1021908/10219087424.4.jpg?type=f133" />						
-					</div>
-					<div style="width:1em;">
-					 
-					</div>
-					<div class="itemCell itemInfoDiv">
-						<div class="itemInfoTitle" style="width:100%;">샤오미 보조배터리 10000mAh 3세대 프로 c타입 <span style="color:red">현재 11.6(SBD) </span></div>
-						<div class="itemInfoTitle">남은 시간 : <span data-countdown="2017-08-04 21:00:00"></span></div>
-						<div class="itemInfoRow">
-						  <div class="itemInfoCell">28,000원</div>						  
-						  <div class="itemInfoCell">$32.6 (12) <a href="javascript:;" onclick="viewReply('itemInfoReply1')">▼</a></div>
-						</div>
-						
-						
-						<div class="itemInfoReply" id="itemInfoReply1">
-							<div class="itemInfoReplyItem">
-								1. sigizzang 32SBD 입찰합니다.<br />
-								2. gomyh16 19SBD 입찰합니다.<br />
-								3. kwak 18SBD 입찰합니다.<br />
-								4. kimsungmin 17SBD 입찰합니다.<br />
-								5. nunojesus 16SBD 입찰합니다.<br />
-								
-							</div>
-						</div>											
-					</div>
-					
-				</div>
-				<!-- item end -->
+				
 				
 				
 				
@@ -391,6 +469,35 @@ function addItem(idx, jObj ){
 			</div>
 		</section>
 		<br /><br />
-	</main>  
+	</main>
+	<!-- item start -->
+	<div id="itemDummy" class="itemDiv" style="display:none;">
+		<div onclick="openLink(this);" class="itemCell itemImgDiv itemSellerDiv" style="text-align:center;">
+			<img id="prodImg" class="prodImg" title="@seller"
+				src="" />						
+		</div>
+		<div ontouch="openLink(this);" style="width:1em;">
+		 
+		</div>
+		<div class="itemCell itemInfoDiv">
+			<div  onclick="openLink(this);" class="itemInfoTitle" style="width:100%;margin-bottom:1.5em;">
+				<div id="prodName">샤오미 보조배터리 10000mAh 3세대 프로 c타입 </div>
+				<div id="realAmt" style="color:red;font-size:1.1em;">현재 11.6(SBD) </div>
+			</div>
+			<div onclick="openLink(this);" class="itemInfoTitle" style="font-size:1em;">남은 시간 : <span id="strAuctionEndDttm" data-countdown=""></span></div>
+			<div  class="itemInfoRow">
+			  <div onclick="openLink(this);" id="oriAmt" class="itemInfoCell" style="font-size:1em;">28,000원</div>						  
+			  <div class="itemInfoCell" style="font-size:1em;"><span id="voteAmt">0</span>&nbsp;<span id="voteInfo">(12)<a href="javascript:;" onclick="viewReply('itemInfoReply')">▼</a></span></div>
+			</div>
+			
+			
+			<div class="itemInfoReply" id="itemInfoReply">
+				<div id="itemInfoReplyItem" class="itemInfoReplyItem">
+				</div>
+			</div>											
+		</div>
+		
+	</div>
+	<!-- item end -->
 </body>
 </html>
