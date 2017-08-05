@@ -47,6 +47,8 @@ public class HibernateCfg {
 					;
 			if ( NetUtil.isMyLocal() ) {
 				config.setProperty("hibernate.show_sql","true");
+			}else{
+				config.setProperty("hibernate.show_sql","false");
 			}
 			
 			List<Class> classes = new ArrayList<Class>();
