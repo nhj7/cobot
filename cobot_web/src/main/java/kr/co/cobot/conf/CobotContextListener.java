@@ -35,6 +35,8 @@ public class CobotContextListener extends ContextLoaderListener{
 		// TODO Auto-generated method stub
 		super.contextInitialized(event);
 		
+		
+		
 		try {
 			if( NetUtil.isMyLocal() ){
 				Object source = event.getSource();
