@@ -20,7 +20,7 @@ public class HibernateCfg {
 
 	static {
 		org.apache.log4j.Logger.getLogger("org.hibernate").setLevel(org.apache.log4j.Level.INFO);
-		
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.INFO);
 		init();
 	}
 	
