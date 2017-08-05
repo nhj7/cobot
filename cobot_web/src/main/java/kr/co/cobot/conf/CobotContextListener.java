@@ -1,11 +1,16 @@
 package kr.co.cobot.conf;
 
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletContextEvent;
 
 import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.core.StandardContext;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
@@ -74,6 +79,12 @@ public class CobotContextListener extends ContextLoaderListener{
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+		loggers.add(LogManager.getRootLogger());
+		for ( Logger logger : loggers ) {
+		    logger.setLevel(Level.OFF);
 		}
 		
 	}
