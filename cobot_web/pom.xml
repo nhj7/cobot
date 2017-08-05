@@ -261,7 +261,7 @@
 		<dependency>
 			<groupId>eu.bittrade.libs</groupId>
 			<artifactId>steem-api-wrapper</artifactId>
-			<version>0.3.1</version>
+			<version>0.3.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
 		<dependency>
