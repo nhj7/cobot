@@ -235,6 +235,9 @@ public class SteemitManager implements Runnable {
 				else if( strCategory.indexOf("금융") > -1 ){
 					category = 99;
 				}
+				else if( strCategory.indexOf("도서") > -1 || strCategory.indexOf("책") > -1 ){
+					category = 8;
+				}
 				else {
 					category = 0;
 				}

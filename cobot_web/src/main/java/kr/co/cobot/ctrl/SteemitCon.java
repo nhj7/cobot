@@ -292,7 +292,7 @@ public class SteemitCon {
 				int postId = Integer.parseInt(market.get("postId").toString());
 				
 				market.add("strAuctionEndDttm"
-						, new JsonPrimitive(DateUtil.getDateToString(marketInfo.getAuctionEndDttm() , "yyyy-MM-dd kk:mm:ss")));
+						, new JsonPrimitive(DateUtil.getDateToString(marketInfo.getAuctionEndDttm() , "yyyy-MM-dd HH:mm:ss")));
 				
 				List<TbPostMarketReply> replys = session.createQuery("from TbPostMarketReply where postId = :postId order by auction_amt desc ")
 					.setParameter("postId", postId).list();

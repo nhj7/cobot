@@ -275,6 +275,8 @@ function addItem(idx, jObj ){
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="6">여행/문화</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="7">생활/건강</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="99">금융</span>
+						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="8">도서</span>
+						<br />
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="0">기타</span>
 					</div>
 				</div>
@@ -511,6 +513,6 @@ function addItem(idx, jObj ){
 		</div>
 	</div>
 	<!-- item end -->
-	
+	<%@ include file="/footer.jsp"  %>	
 </body>
 </html>
