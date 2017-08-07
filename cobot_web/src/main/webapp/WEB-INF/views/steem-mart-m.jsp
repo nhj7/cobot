@@ -46,6 +46,7 @@
 		padding-top:0.25em;
 		padding-bottom:0.25em;
 		font-weight:bold;
+		vertical-align:middle;
 	}
 	.searchBodyDiv{
 		display:table-cell;
@@ -60,11 +61,12 @@
 		-webkit-transform: translateZ(0px);
 	    -webkit-transform: translate3d(0,0,0);
 	    -webkit-perspective: 1000;
-	    -ms-overflow-style: none;  // IE 10+
-    	overflow: -moz-scrollbars-none;  // Firefox
+	    -ms-overflow-style: none;
+    	overflow: -moz-scrollbars-none;
+    	vertical-align:middle;
 	}	
 	.searchBodyDiv::-webkit-scrollbar { 
-	    display: none;  // Safari and Chrome
+	    display: none;
 	}
 	.searchBodyDivWrapper{		
 		-webkit-overflow-scrolling: touch;
@@ -128,7 +130,7 @@
 <script src="/js/steem/biz.js"></script>
 <script>
 var pageSize = 5; 
-var postSize = 5;
+var postSize = 10;
 var cachePath = "/extanal/img/";
 function addItem(idx, jObj ){
 	//alert();
@@ -158,7 +160,7 @@ function addItem(idx, jObj ){
 	try{
 		var sbdKrw = $("#sbd_txt").text().replace(",", "");
 		var realKrwAmt = newItem.find("#realKrwAmt");	
-		realKrwAmt.text( comma( exactRound(jObj.realAmt * sbdKrw, 0) ) + "원"  );
+		realKrwAmt.text( "한화 약 : ("+comma( exactRound(jObj.realAmt * sbdKrw, 0) ) + "원)"  );
 	}catch(e){
 		
 	}
@@ -188,7 +190,7 @@ function addItem(idx, jObj ){
 	var voteInfo = newItem.find("#voteInfo");
 	voteInfo.css("color","gray");
 	voteInfo.attr("onclick", "viewReply(\'itemInfoReply"+idx+"\')");
-	voteInfo.html("∧"+jObj.reply.length+"");
+	voteInfo.html("▼ "+jObj.reply.length+"");
 	
 	var itemInfoReply = newItem.find("#itemInfoReply");	
 	itemInfoReply.attr("id", "itemInfoReply" + idx);
@@ -257,6 +259,7 @@ function addItem(idx, jObj ){
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jejujinfarm" >@jejujinfarm</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="toktok" >@toktok</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="iieeiieeii" >@iieeiieeii</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="minari" >@minari</span>
 					</div>
 					</div>
 				</div>
@@ -280,7 +283,7 @@ function addItem(idx, jObj ){
 						카테고리
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv" >
-					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 235%;">
+					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 265%;">
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="1">의류</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="2">잡화</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="3">화장품/미용</span>
@@ -391,6 +394,7 @@ function addItem(idx, jObj ){
 				text-valign:top;
 				vertical-align: top;
 				margin-left:0.25em;
+				padding-top:0.5em;
 			}
 			.itemSellerDiv{
 				display:table-cell;
@@ -401,9 +405,10 @@ function addItem(idx, jObj ){
 				color:#4078c0;
 			}
 			.itemInfoTitle{
-				font-size:1.3em;
+				font-size:1em;
 				font-weight:bold;
 				margin-bottom:0.25em;
+				padding-top:0.25em;
 			}
 			.itemInfoAmt{
 			  display:table-cell;
@@ -428,7 +433,7 @@ function addItem(idx, jObj ){
 				padding-left:0.5em;
 			}
 			.prodImg{
-			  width:8em;height:8em;
+			  width:8em;height:6em;
 			}
 		</style>
 		
@@ -475,21 +480,22 @@ function addItem(idx, jObj ){
 	<!-- item start -->
 	<div id="itemDummy" class="itemDiv" style="display:none;">
 		<div onclick="openLink(this);" class="itemCell itemImgDiv itemSellerDiv" style="text-align:center;">
-			<img id="prodImg" class="prodImg" title="@seller"
+			<img id="prodImg" class="prodImg" title="판매상품 이미지"
 				src="" />						
 		</div>
 		<div ontouch="openLink(this);" style="width:1em;">
 		 
 		</div>
 		<div class="itemCell itemInfoDiv">
-			<div  onclick="openLink(this);" class="itemInfoTitle" style="width:100%;margin-bottom:1.5em;">
-				<div id="prodName">샤오미 보조배터리 10000mAh 3세대 프로 c타입 </div>
-				<div id="realAmt" style="color:red;font-size:1.1em;">현재 11.6(SBD) </div>
+			<div  onclick="openLink(this);" class="itemInfoTitle" style="width:100%;">
+				<div id="prodName" style="font-size:1.2em;margin-bottom:0.35em;">샤오미 보조배터리 10000mAh 3세대 프로 c타입 </div>
+				<div style="font-size:1.1em;"><span id="realAmt" style="color:red;"></span> <span style="margin-left:1em;" id="realKrwAmt"></span> </div>
+				<div style="font-size:1.1em;">할인율 : <span id="dcRatio" style="color:red;"></span></div>
 			</div>
-			<div onclick="openLink(this);" class="itemInfoTitle" style="font-size:1em;">남은 시간 : <span id="strAuctionEndDttm" data-countdown=""></span></div>
+			<div onclick="openLink(this);" class="itemInfoTitle" style="font-size:0.9em;">남은 시간 : <span id="strAuctionEndDttm" data-countdown=""></span></div>
 			<div  class="itemInfoRow">
-			  <div onclick="openLink(this);" id="oriAmt" class="itemInfoCell" style="font-size:1em;">28,000원</div>						  
-			  <div class="itemInfoCell" style="font-size:1em;"><span id="voteAmt">0</span>&nbsp;<span id="voteInfo">(12)<a href="javascript:;" onclick="viewReply('itemInfoReply')">▼</a></span></div>
+			  <div onclick="openLink(this);" id="oriAmt" class="itemInfoCell" style="font-size:0.9em;">28,000원</div>						  
+			  <div class="itemInfoCell" style="font-size:0.9em;"><span id="voteAmt">0</span>&nbsp;<span id="voteInfo">(12)<a href="javascript:;" onclick="viewReply('itemInfoReply')">▼</a></span></div>
 			</div>
 			
 			

@@ -103,6 +103,23 @@
 							}	
 						}
 						
+						var steemMartUrl = "/steemit/steem-mart/";
+						function steemMartOnOff( target ){
+							var steem_iframe = "#mart_iframe";
+							var steem_import = "#mart_import";
+							
+							var alarm_iframe = $(steem_iframe);
+							if( $(steem_import).css("display") == "none" ){
+								alarm_iframe.attr("src", steemMartUrl );
+								$(steem_import).show();
+							}else{
+								$(steem_import).hide();
+								alarm_iframe.attr("src", "" );
+								alarm_iframe.show();
+							}	
+						}
+						
+						
 						var etherScanUrl = "/EOS_SCAN";
 						function utilPageImport( target ){
 							alert("EOS 일자별 조회는 준비 중입니다.");
@@ -122,6 +139,15 @@
 						function help(){
 							
 						}
+						
+						function openSteemMart( dvcd ){
+							if( dvcd == "this"){
+								steemMartOnOff();
+							}else{
+								window.open("/steemit/steem-mart/","_blank");	
+							}
+							
+						}
 					</script>
 					<style>
 						.nav_detail{
@@ -135,6 +161,17 @@
 							<li>
 								<a href="http://blog.naver.com/nhj7/221041556926" target="_blank" id="top-link" class="skel-layers-ignoreHref nav_detail" >
 									How to use &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/question.png" />
+								</a>
+							</li>
+							
+							<li>
+								<a href="javascript:;" onclick="openSteemMart();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
+									<data style="color:white;">(New) &nbsp;&nbsp;</data>Steem Mart &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/market.png" />
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" onclick="openSteemMart('this');"  id="about-link" class="skel-layers-ignoreHref nav_detail">
+									<data style="color:white;">(This) &nbsp;&nbsp;</data>Steem Mart &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/market.png" />
 								</a>
 							</li>
 							<li>
@@ -368,7 +405,7 @@
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">&nbsp;&nbsp;&nbsp;USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1.01</data></span>
+											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">&nbsp;&nbsp;&nbsp;USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1</data></span>
 											<!-- img src="/img/btn/setting.png" width="16px" height="16px"/-->
 											&nbsp;&nbsp;&nbsp;
 											<!-- img src="/img/btn/close.png" width="16px" height="16px"/-->&nbsp;&nbsp;&nbsp;
@@ -449,6 +486,13 @@
 							    (i).height=iframeHeight+20;
 							}
 						</script>
+						<div id="mart_import" style="display:none;">
+							<div id="" style=";text-align:left !important;" onclick="changeDisplay('mart_iframe');" >
+								<div style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Steem Mart</div>
+							</div>
+							<iframe id="mart_iframe" onload="autoResize(this)" onunload="this.height=0;" src="" style="width:100%;display:block;height:1724px;" scrolling="no"></iframe>
+						</div>
+						
 						<div id="alarm_import" style="display:none;">
 							<div id="" style=";text-align:left !important;" onclick="changeDisplay('alarm_iframe');" >
 								<div style="color:black;font-size:0.8em;font-weight:bold;" >&nbsp;&nbsp;&nbsp;Alarm Setting</div>
@@ -558,18 +602,11 @@
 			}
 		</style-->
 		<div id="footer" style="">
-				<!-- Copyright -->
-				<!-- ul class="copyright">
-					<li><a href="/lib/cobot_chrome.crx">Chrome에서 사용하기</a></li>
-				</ul-->
-				
 				<ul class="copyright">
-					<li>필요한 기능이나 문제점은 메일로 보내주시면 다음 개발 시에 참고하여 진행하도록 하겠습니다.^^</li>
+					<li>필요한 기능/이슈는 메일로 보내주세요</li>
 					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
-					
 				</ul>
 				<ul class="copyright">
-					<li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
 					<li>&copy; Cobot. All rights reserved.</li>
 				</ul>
 		</div>

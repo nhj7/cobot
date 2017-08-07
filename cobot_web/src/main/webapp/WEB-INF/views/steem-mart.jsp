@@ -183,8 +183,15 @@ function addItem(idx, jObj ){
 	var voteAmt = newItem.find("#voteAmt");	
 	voteAmt.text( '$'+jObj.voteAmt);
 	
-	var itemInfoReplyPre = newItem.find("#itemInfoReplyPre");	
-	itemInfoReplyPre.attr("onclick", "viewReply('itemInfoReply"+idx+"')");
+	var itemInfoReplyPre = newItem.find("#itemInfoReplyPre");
+	itemInfoReplyPre.click(
+		function(e){
+			e.stopPropagation();
+			viewReply("itemInfoReply" + idx);
+			return false;
+		}		
+	);
+	
 	itemInfoReplyPre.text("총 " + jObj.reply.length + "건의 입찰이 있습니다. ");
 	
 	
@@ -214,8 +221,7 @@ function addItem(idx, jObj ){
 			var dcRatio = newItem.find("#dcRatio");	
 			dcRatio.text( exactRound( (1 - jObj.realAmt / jObj.sellAmt) * 100 , 1)+"%"  );
 		}
-	}catch(e){
-		
+	}catch(e){		
 	}
 	
 	
@@ -247,6 +253,7 @@ function addItem(idx, jObj ){
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jejujinfarm" >@jejujinfarm</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="toktok" >@toktok</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="iieeiieeii" >@iieeiieeii</span>
+			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="minari" >@minari</span>
 					</div>
 				</div>
 				<div class="searchRowDiv" id="searchRowDiv2" >
@@ -433,8 +440,7 @@ function addItem(idx, jObj ){
 		</style>
 		
 		<script>
-			function viewReply(id){				
-				event.stopPropagation();
+			function viewReply(id){
 				var jObj = $("#"+id);
 				var onClassTxt = "itemInfoReplyOn";
 				if( jObj.hasClass( onClassTxt ) ){
@@ -442,6 +448,7 @@ function addItem(idx, jObj ){
 				}else{
 					jObj.addClass( onClassTxt );
 				}
+				return false;
 			}
 			
 			
@@ -469,8 +476,8 @@ function addItem(idx, jObj ){
 		 
 		</div>
 		<div class="itemCell itemInfoDiv">
-			<div id="prodName" class="itemInfoTitle">샤오미 보조배터리 10000mAh 3세대 프로 c타입</div>
-			<div class="itemInfoTitle" ><span id="realAmt" style="color:red;">16.5</span>SBD (한화 약 : <data id="realKrwAmt">236700원</data> )</div>
+			<div id="prodName" class="itemInfoTitle">상품명</div>
+			<div class="itemInfoTitle" ><span id="realAmt" style="color:red;">0.0</span>SBD (한화 약 : <data id="realKrwAmt">0원</data> )</div>
 			<div class="itemInfoTitle">남은 시간 : <span id="strAuctionEndDttm" data-countdown="2017-08-04 21:00:00"></span></div>
 			<div class="itemInfoRow">
 			  <div class="itemInfoCell">할인율</div>
@@ -488,28 +495,22 @@ function addItem(idx, jObj ){
 			  <div id="auctionEndDttm" class="itemInfoCell">
 			    17년 8월 2일 21시
 			  </div>
-			  <div id="voteAmt" class="itemInfoCell">$32.6</div>
+			  <div id="voteAmt" class="itemInfoCell">$0.0</div>
 			</div>			
-			<div id="itemInfoReplyPre" onclick="event.stopPropagation(); viewReply('itemInfoReply')" class="itemInfoReplyPre">
-			 	총 12건의 입찰이 있습니다. 
+			<div id="itemInfoReplyPre" onclick="viewReply('itemInfoReply'); return false;" class="itemInfoReplyPre">
+			 	총 0건의 입찰이 있습니다. 
 			</div>
 			
 			<div class="itemInfoReply" id="itemInfoReply">
 				<div class="itemInfoReplyItem" id="itemInfoReplyItem">
-					<div>1. sigizzang 32SBD 입찰합니다.</div>
-					<div>2. gomyh16 19SBD 입찰합니다.</div>
-					<div>3. kwak 18SBD 입찰합니다.</div>
-					<div>4. kimsungmin 17SBD 입찰합니다.</div>
-					<div>5. nunojesus 16SBD 입찰합니다.</div>
-					
 				</div>
 			</div>											
 		</div>
-		<div onclick="alert(11);" class="itemCell itemSellerDiv">
+		<div onclick="" class="itemCell itemSellerDiv">
 			<img id="postImgUrl" width="160px" height="120px" 
-				src="https://steemitimages.com/0x0/https://steemitimages.com/DQmUmj9aPjv7iLTxAJhrJnYfRM8csW4358FkxZq1jTQYd5j/%ED%8C%90%EB%A7%A4%EC%A4%91.png" />
+				src="" />
 			<br />
-			<span id="seller">@seller</span>
+			<span id="seller"></span>
 		</div>
 	</div>
 	<!-- item end -->

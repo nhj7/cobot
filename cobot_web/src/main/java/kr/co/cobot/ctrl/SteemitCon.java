@@ -245,8 +245,8 @@ public class SteemitCon {
 			}
 			
 			
-			selectQuery.setFirstResult( (curPage-1) * pageSize );
-			selectQuery.setMaxResults( pageSize );
+			selectQuery.setFirstResult( (curPage-1) * postSize );
+			selectQuery.setMaxResults( postSize );
 			
 			int count = Math.toIntExact((Long)countQuery.getSingleResult());
 			List markets = selectQuery.getResultList();
