@@ -225,11 +225,15 @@ function addItem(idx, jObj ){
 			var sbdKrw = $("#sbd_txt").text().replace(",", "");
 			if( sbdKrw != "" && sbdKrw != "0" ){
 				
-				
-				var oriRatio = exactRound( (1 - jObj.realAmt / (jObj.oriAmt / sbdKrw) ) * 100 , 1);				
+				var oriRatio = exactRound( (1 - jObj.realAmt / ( jObj.oriAmt / sbdKrw) ) * 100 , 1);
+				console.log(jObj.author + ", " + sellRatio + ", " +  oriRatio);
+				sellRatio = parseFloat(sellRatio);
+				oriRatio = parseFloat(oriRatio);
 				var dcRtVal = 0.0;
 				if( sellRatio > 0 && oriRatio > 0 ){
+					
 					dcRtVal = sellRatio > oriRatio ? sellRatio : oriRatio;
+					console.log("둘다 양수 체크!! dcRtVal : " + dcRtVal);
 				}else if( sellRatio < 0 && oriRatio > 0){
 					dcRtVal  = sellRatio;
 				}else if( sellRatio > 0 && oriRatio < 0 ){
@@ -247,6 +251,7 @@ function addItem(idx, jObj ){
 			//dcRatio.text( exactRound( (1 - jObj.realAmt / jObj.sellAmt) * 100 , 1)+"%"  );
 		}
 	}catch(e){		
+		console.log("error : "+e);
 	}
 	
 	
