@@ -376,7 +376,11 @@ public class CoinoneAPI implements Runnable {
 
 			BigDecimal last = new BigDecimal(COIN_INFO.get(ccd).get("price"));
 
-			BigDecimal first = new BigDecimal(COIN_INFO.get(ccd).get("yesterday_price"));
+			BigDecimal first = BigDecimal.ZERO;
+			if( COIN_INFO.get(ccd).get("yesterday_price") == null){
+				first = new BigDecimal(COIN_INFO.get(ccd).get("yesterday_price"));
+			}
+			
 
 			BigDecimal ch = last.subtract(first);
 
