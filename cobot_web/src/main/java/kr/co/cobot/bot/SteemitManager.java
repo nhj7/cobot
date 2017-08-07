@@ -569,7 +569,7 @@ public class SteemitManager implements Runnable {
 		try {
 			
 			List<Discussion> replies = SteemApi.getContentReplies( postMarket.getAuthor() , permLink);
-			//System.out.println("--- replie start");
+			//System.out.println("--- replie start"); 
 			
 			double lastAuctionAmt = postMarket.getLastSellAmt();
 			int replyCnt = 0;
