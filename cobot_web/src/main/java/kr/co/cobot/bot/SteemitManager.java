@@ -571,7 +571,7 @@ public class SteemitManager implements Runnable {
 			List<Discussion> replies = SteemApi.getContentReplies( postMarket.getAuthor() , permLink);
 			//System.out.println("--- replie start");
 			
-			double lastAuctionAmt = 0.0;
+			double lastAuctionAmt = postMarket.getLastSellAmt();
 			int replyCnt = 0;
 			for( Discussion replie: replies){
 				// 리플 단 사람이 판매자인 경우 패스
