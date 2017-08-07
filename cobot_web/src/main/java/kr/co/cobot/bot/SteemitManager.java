@@ -464,8 +464,8 @@ public class SteemitManager implements Runnable {
     	double realAmt = 0.0;
     	if( method == 2 ){
     		realAmt = new BigDecimal(sellAmt - ( voteAmt * Double.parseDouble(voteRatio))).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-    		double realAmt2 = new BigDecimal( (Double.parseDouble(oriAmt)/1000 ) - ( voteAmt * Double.parseDouble(voteRatio))).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-    		realAmt = realAmt < realAmt2 ? realAmt : realAmt2;
+    		//double realAmt2 = new BigDecimal( (Double.parseDouble(oriAmt)/1000 ) - ( voteAmt * Double.parseDouble(voteRatio))).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+    		//realAmt = realAmt < realAmt2 ? realAmt : realAmt2;
     	}else{
     		realAmt = sellAmt;
     	}
