@@ -610,6 +610,10 @@ public class SteemitManager implements Runnable {
 					continue;
 				}
 				
+				if( lastAuctionAmt * 2.5 < auctionAmt ){
+					continue;
+				}
+				
 				lastAuctionAmt = lastAuctionAmt > auctionAmt ? lastAuctionAmt : auctionAmt;
 				//System.out.println(replie.getBody());
 				TbPostMarketReply reply = new TbPostMarketReply();
