@@ -221,20 +221,26 @@ function addItem(idx, jObj ){
 			
 			var dcRatio = newItem.find("#dcRatio");
 			var sellRatio = exactRound( (1 - jObj.realAmt / jObj.sellAmt) * 100 , 1);
-			var oriRatio = exactRound( (1 - jObj.realAmt / jObj.oriAmt) * 100 , 1);
-			
-			var dcRtVal = 0.0;
-			if( sellRatio > 0 && oriRatio > 0 ){
-				dcRtVal = sellRatio > oriRatio ? sellRatio : oriRatio;
-			}else if( sellRatio < 0 && oriRatio > 0){
-				dcRtVal  = sellRatio;
-			}else if( sellRatio > 0 && oriRatio < 0 ){
-				dcRtVal  = oriRatio;
-			}else if( sellRatio < 0 && oriRatio < 0 ){
-				dcRtVal = sellRatio > oriRatio ? oriRatio : sellRatio;
-			}else{
-				dcRtVal = sellRatio;
+			dcRtVal = sellRatio;
+			var sbdKrw = $("#sbd_txt").text().replace(",", "");
+			if( sbdKrw != "" && sbdKrw != "0" ){
+				
+				
+				var oriRatio = exactRound( (1 - jObj.realAmt / (jObj.oriAmt / sbdKrw) ) * 100 , 1);				
+				var dcRtVal = 0.0;
+				if( sellRatio > 0 && oriRatio > 0 ){
+					dcRtVal = sellRatio > oriRatio ? sellRatio : oriRatio;
+				}else if( sellRatio < 0 && oriRatio > 0){
+					dcRtVal  = sellRatio;
+				}else if( sellRatio > 0 && oriRatio < 0 ){
+					dcRtVal  = oriRatio;
+				}else if( sellRatio < 0 && oriRatio < 0 ){
+					dcRtVal = sellRatio > oriRatio ? oriRatio : sellRatio;
+				}else{
+					dcRtVal = sellRatio;
+				}
 			}
+			
 			dcRatio.text( dcRtVal +"%"  );
 			
 			//var dcRatio = newItem.find("#dcRatio");	
