@@ -328,12 +328,17 @@ public class SteemitManager implements Runnable {
 			};								
 			String endStr = "원";
 			oriAmt = getStringFromData(postBody, arrStartStr, endStr).replaceAll(",", "");
-			// 시작 가격을 인식 못했을 시 리턴!
-			/*
-			if( "".equals(oriAmt)){
-				return;
+			// 시작 가격을 인식 못했을 시 리턴!			
+			if( "".equals(oriAmt)){				
+				oriAmt = getStringFromData(postBody, arrStartStr, "</").replaceAll(",", "");				
+				if( "".equals(oriAmt) ){
+					oriAmt = getStringFromData(postBody, arrStartStr, newLine).replaceAll(",", "").replaceAll("원", "");
+					if( "".equals(oriAmt) ){
+						return;
+					}
+				}
 			}
-			*/
+			
 		} catch (Exception e) {
 			System.out.println("소비자 가격 읽어들이기 : "+e.toString());
 		}
