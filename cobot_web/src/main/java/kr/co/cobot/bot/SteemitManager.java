@@ -326,8 +326,8 @@ public class SteemitManager implements Runnable {
 					,"소비자가격 :"
 					,"소비자가격:"					
 			};								
-			String endStr = "원";
-			oriAmt = getStringFromData(postBody, arrStartStr, endStr).replaceAll(",", "");
+			//String endStr = "원";
+			oriAmt = getStringFromData(postBody, arrStartStr, newLine).replaceAll(",", "").replaceAll("원","");
 			// 시작 가격을 인식 못했을 시 리턴!
 			/*
 			if( "".equals(oriAmt)){
@@ -610,7 +610,7 @@ public class SteemitManager implements Runnable {
 					continue;
 				}
 				
-				if( lastAuctionAmt * 2.5 < auctionAmt ){
+				if( lastAuctionAmt > 0.0 && lastAuctionAmt * 2.5 < auctionAmt ){
 					continue;
 				}
 				
