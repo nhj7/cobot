@@ -60,7 +60,7 @@ public class HibernateCfg {
 					//.setProperty("show_sql", "true")
 					;
 			if ( NetUtil.isMyLocal() ) {
-				//config.setProperty("hibernate.show_sql","true");
+				config.setProperty("hibernate.show_sql","true");
 			}else{
 				config.setProperty("hibernate.show_sql","false");
 				//log4j.logger.org.hibernate=info;
