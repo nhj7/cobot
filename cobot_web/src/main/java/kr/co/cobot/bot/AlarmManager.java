@@ -212,7 +212,7 @@ public class AlarmManager implements Runnable {
         jsonObject.addProperty("url", "https://steemit.com/@" + market.getAuthor() + "/" + market.getPermLink());
         
         
-        jsonObject.addProperty("img", StringUtil.isBlank(market.getCacheProdImgUrl()) ? market.getCacheProdImgUrl() : market.getProdImgUrl());
+        jsonObject.addProperty("img", StringUtil.isBlank(market.getCacheProdImgUrl()) ? market.getProdImgUrl() : market.getCacheProdImgUrl() );
 		WebPushAPI.PushChrome( 
 				JsonUtil.get(pushTarget, "endPoint")
 				, JsonUtil.get(pushTarget, "publicKey") 
