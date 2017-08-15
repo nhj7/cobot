@@ -201,7 +201,7 @@ function searchSuc(jObj){
 }
 
 function popupAlarm(){
-	if( true){
+	if( chkAlarm() ){
 		setCenter(document.getElementById("alarmInfoDiv"));
 		var jObj = $("#alarmInfoDiv");	
 		if( jObj.css("display") == "none" ){
