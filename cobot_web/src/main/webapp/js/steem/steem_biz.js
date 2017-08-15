@@ -52,8 +52,70 @@ $(function() {
 	
 	// 첫 페이지 조회 call
 	inqryPage();
-	  
+	
+	try{
+		
+		
+		pushButton.addEventListener("DOMNodeInserted", function (e) {
+		    //e.target //
+			var data = e.target.data.replace(/ /gi ,"").toLowerCase();
+			//alert(data);
+			if(data == "cobot알람중지"){
+				popupAlarm();
+			}else{
+				console.log("alarm status : " + data);
+			}
+		}, false);
+	}catch(e){
+		
+		console.log("alarm init err : " + e);
+		
+	}
+	
+	var alarmID = $.cookie("kr.co.cobot.alarmID");
+	if( alarmID != null && alarmID != "" ){
+		reqJson("/Alarm/Search", { alarmID : alarmID } , alarmSearchSuc );  
+	}  
 });
+
+var alarmJson;
+function alarmSearchSuc(res){
+	log(JSON.stringify(res));
+	alarmJson = res;
+	if( res.mart ){
+		var mart = res.mart;
+		//alert(res.mart.newChk);
+		if( mart.newChk == "true"){
+			$("#newChk").prop("checked", "checked");
+		}
+		
+		if( mart.auctionChk == "all" ){
+			$("#actAll").prop("checked", "checked");
+		}
+		else if( mart.auctionChk == "choose" ){
+			$("#actChoose").prop("checked", "checked");
+		}
+		else if( mart.auctionChk == "no" ){
+			$("#actNo").prop("checked", "checked");
+		}
+		
+		$("#steemitId").val( mart.steemitId );
+		if( mart.alarmTimer != "" ){
+			$("#alarmTimer").val( mart.alarmTimer );
+		}
+		
+	}
+}
+
+function log(str){
+	console.log(str);
+}
+
+function getAlarmInfo(){
+	
+	var alarmJson = new Object();
+	return alarmJson;
+}
 
 function create(tag){
 	return document.createElement(tag);
@@ -138,6 +200,85 @@ function searchSuc(jObj){
 
 }
 
+function popupAlarm(){
+	if( true){
+		setCenter(document.getElementById("alarmInfoDiv"));
+		var jObj = $("#alarmInfoDiv");	
+		if( jObj.css("display") == "none" ){
+			jObj.css("display","block");	
+		}else{
+			jObj.css("display","none");
+		}
+	}	
+}
+
+function chkAlarm(){
+	var textContent = pushButton.textContent;
+	if( textContent == 'Push Not Supported' ){
+		alert("알람기능은 현재 브라우저에서 지원되지 않습니다. 크롬을 사용해주세요 ");
+	}
+	else if( Notification.permission === 'denied' ){
+		alert("브라우저 알람 차단을 먼저 해제해주시고 다시 접속 부탁드립니다.");
+	}
+	else{
+		if(textContent == 'Cobot 알람 받기'){ 
+			pushButton.click();
+		}else if( textContent == 'Cobot 알람 중지' ){
+			return true;
+		}		
+	}
+	return false;
+}
+
+function setAlarmChk(chkId){
+	$("input[name=auctionChk]:checkbox").removeProp("checked");
+	
+	$("#" + chkId).prop("checked", "checked");
+	
+	return false;
+}
+
+
+function saveAlarm(){
+	
+	var jsonObject = alarmJson ? alarmJson : new Object();
+	jsonObject.mart = new Object();
+	
+	jsonObject.mart.newChk = $("#newChk").is(":checked");
+	
+	var auctionChk = "";
+	if( $("#actAll").is(":checked") ){
+		auctionChk = "all";
+	}else if( $("#actChoose").is(":checked") ){
+		auctionChk = "choose";
+	}else if( $("#actNo").is(":checked") ){
+		auctionChk = "no";
+	}
+	jsonObject.mart.auctionChk = auctionChk;
+	
+	jsonObject.mart.steemitId = $("#steemitId").val();
+	
+	jsonObject.mart.alarmTimer = $("#alarmTimer").val();
+	
+	var jsonStr = JSON.stringify(jsonObject);
+	
+	console.log( jsonStr );
+	
+	var alarmID = $.cookie("kr.co.cobot.alarmID");
+	jsonObject.alarmID = alarmID;
+	if( alarmID != null && alarmID != "" ){
+		reqJson("/Alarm/Update", jsonObject , alarmUpdateSuc ); 
+	}else{
+		alert("브라우저 알람 해제 후 다시 등록해보시기 바랍니다.");
+	}
+}
+
+function alarmUpdateSuc(res){
+	//alert(res);
+	popupAlarm();
+	
+}
+
 function initPaging(){
 	$('.paging-itemClass').each(
 		function(e){
@@ -163,9 +304,20 @@ function setPaging( pg ){
 }
 
 var GCurPage;
+
+function setCenter(obj){
+	var jObj = $(obj);
+	var top = $(window).height() / 2 - ( jObj.height() );
+	var left = $(window).width() / 2 - ( jObj.width() / 2 );
+	console.log( "["+jObj.attr("id") + "] top : " + top + ", left : " + left );
+	jObj.css("top", top );
+	jObj.css("left",left  );
+}
+
 function loadingView(flag){
-	$("#loadSpinnerWrapper").css("top", $(window).height() / 2 - ( $("#loadSpinnerWrapper").height() ) );
-	$("#loadSpinnerWrapper").css("left", $(window).width() / 2 - ( $("#loadSpinnerWrapper").width() / 2 ) );
+	
+	setCenter($("#loadSpinnerWrapper"));
+	
 	if( flag ){ 
 		$("#loadSpinnerWrapper").show();
 	}

@@ -3,11 +3,22 @@ package nhj.util;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class JsonUtil {
+	private static Gson gson = new Gson();
+	
+	
+	public static JsonObject getJsonObject(String jsonStr){
+		return gson.fromJson(jsonStr, JsonObject.class);
+	}
+	
+	public static JsonObject getJsonObject(Object obj){
+		return gson.toJsonTree(obj).getAsJsonObject();
+	}
 	
 	public static String get(JsonObject jo, String memberName){
 		if( jo.get(memberName) == null ) return "";

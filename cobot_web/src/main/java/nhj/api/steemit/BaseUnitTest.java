@@ -15,7 +15,7 @@ public abstract class BaseUnitTest extends BaseTest {
     protected static void setupUnitTestEnvironment() {
         setupBasicTestEnvironment();
 
-        CONFIG.setPrivateKey(PrivateKeyType.POSTING, PRIVATE_POSTING_KEY);
-        CONFIG.setPrivateKey(PrivateKeyType.ACTIVE, PRIVATE_ACTIVE_KEY);
+        //CONFIG.setPrivateKey(PrivateKeyType.POSTING, PRIVATE_POSTING_KEY);
+        //CONFIG.setPrivateKey(PrivateKeyType.ACTIVE, PRIVATE_ACTIVE_KEY);
     }
 }

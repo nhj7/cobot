@@ -6,6 +6,12 @@ import java.text.DecimalFormat;
 import com.google.gson.Gson;
 
 public class StringUtil {
+	
+	
+	public static boolean isBlank( Object obj ){
+		return ( obj == null || "".equals(obj)); 
+	}
+	
 	public static String addComma(String str){
 		DecimalFormat formatter = new DecimalFormat("#,###");
 		return formatter.format( new BigDecimal(str));

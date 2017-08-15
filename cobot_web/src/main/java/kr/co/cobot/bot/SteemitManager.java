@@ -26,12 +26,12 @@ import nhj.util.JsonUtil;
 
 public class SteemitManager implements Runnable {
 	private static Gson gson = new Gson();
-	private static String STEEM_URL = "https://steemit.com";
-	private static String STEEM_IMG_START_IDX_STR = ":url(";
+	private static String STEEM_URL = "https://steemit.com";	
 	private static Session session = HibernateCfg.getCurrentSession();
 	
 	public static void main(String[] args) throws Throwable {
 		CacheImgManager.init();
+		AlarmManager.init();
 		SteemitManager.init();
 	}
 	public SteemitManager(){
@@ -53,13 +53,20 @@ public class SteemitManager implements Runnable {
 			*/
 	};
 	
+	static boolean INIT_FLAG = true;
+	
 	public void run(){		
 		while(true){
 			try {
 				
 				long cur = System.currentTimeMillis();
+				if( INIT_FLAG ){
+					INIT_FLAG = false;
+					executeSave("kr", 100);
+				}else{
+					executeSave("kr", 20);
+				}
 				
-				executeSave();
 				
 				System.out.println("[SteemitManager.executeSave()] : " + (System.currentTimeMillis()-cur) + "ms" );
 				Thread.sleep(TERM_STEEM_POST_CHECK);
@@ -169,6 +176,7 @@ public class SteemitManager implements Runnable {
 		*/
 		short method = 2;
 		String prodMethod = "";
+		double dayLimitAmt = 0.0;
 		try {
 			
 			String[] arrStartStr = new String[]{
@@ -176,15 +184,47 @@ public class SteemitManager implements Runnable {
 					,"판매방식:" 					
 			};			
 			prodMethod = getStringFromData(postBody, arrStartStr, newLine);
+						
 			// 상품방식을 인식 못했을 시 리턴!
 			if( "".equals(prodMethod)){
-				return;
+				
+				arrStartStr = new String[]{
+						"1일 최대 거래 가능 스팀달러(매수,매도 각각) :"
+						,"1일 최대 거래 가능 스팀달러(매수,매도 각각):" 					
+				};
+				prodMethod = getStringFromData(postBody, arrStartStr, "SBD");
+				
+				if( "".equals(prodMethod) ){	
+					
+					/*
+					arrStartStr = new String[]{
+							"대출 시행일 :"
+							,"대출 시행일:"
+					};
+					prodMethod = getStringFromData(postBody, arrStartStr, newLine);
+					if( "".equals(prodMethod) ){		
+						return;
+					}else{
+						method = 5;	// 대출
+					}
+					*/
+					
+					return;
+					
+				}else{
+					method = 4;	// 스팀거래소
+					dayLimitAmt = Double.parseDouble(prodMethod);
+				}
+				
+				
 			}
 			
 			if( prodMethod.indexOf("판매") > -1 ){
 				method = 1;
 			}else if(prodMethod.indexOf("이벤트") > -1) {
 				method = 3;
+			}else if( prodMethod.indexOf("대출") > -1 ){
+				method = 5;
 			}
 		} catch (Exception e) {
 			System.out.println("상품방식 읽어들이기 : "+e.toString());
@@ -243,10 +283,9 @@ public class SteemitManager implements Runnable {
 				}
 			}
 			
-			if( prodMethod.indexOf("판매") > -1 ){
-				method = 1;
-			}else if(prodMethod.indexOf("이벤트") > -1) {
-				method = 3;
+			// 거래소인 경우 '금융'으로 고정
+			if( method == 4 ){
+				category = 8;
 			}
 		} catch (Exception e) {
 			System.out.println("상품방식 읽어들이기 : "+e.toString());
@@ -258,6 +297,7 @@ public class SteemitManager implements Runnable {
 		
 		
 		// 2. 상품명 읽어들이기 prodName
+		if( method != 4 )	// 거래소가 아닌 경우
 		try {
 			
 			String[] arrStartStr = new String[]{
@@ -283,6 +323,7 @@ public class SteemitManager implements Runnable {
 		// 3. 판매가 혹은 시작 가격 읽어들이기 sellAmt
 		double sellAmt = 0.0;
 		String strSellAmt = "";
+		if( method != 4 )	// 거래소가 아닌 경우
 		try {
 			String[] arrStartStr = new String[]{
 					"경매시작가 :"
@@ -318,25 +359,26 @@ public class SteemitManager implements Runnable {
 		}
 		
 		// 4. 소비자 가격 읽어들이기 oriAmt
+		if( discussion.getPermlink().equals("kr-market-0812-2") ){
+			System.out.println("debug");
+		}
 		String oriAmt = "";
+		if( method != 4 )	// 거래소가 아닌 경우
 		try {
 			String[] arrStartStr = new String[]{
 					"소비자 가격 :"
 					,"소비자 가격:" 
 					,"소비자가격 :"
-					,"소비자가격:"					
+					,"소비자가격:"	
+					
 			};								
 			String endStr = "원";
-			oriAmt = getStringFromData(postBody, arrStartStr, endStr).replaceAll(",", "");
+			oriAmt = getStringFromData(postBody, arrStartStr, newLine);
 			// 시작 가격을 인식 못했을 시 리턴!			
 			if( "".equals(oriAmt)){				
-				oriAmt = getStringFromData(postBody, arrStartStr, "</").replaceAll(",", "");				
-				if( "".equals(oriAmt) ){
-					oriAmt = getStringFromData(postBody, arrStartStr, newLine).replaceAll(",", "").replaceAll("원", "");
-					if( "".equals(oriAmt) ){
-						return;
-					}
-				}
+				return;
+			}else{
+				oriAmt = String.valueOf(getAmt(oriAmt));
 			}
 			
 		} catch (Exception e) {
@@ -369,6 +411,7 @@ public class SteemitManager implements Runnable {
 		
 		// 6. 호가단위 읽어들이기 actionUnitAmt 
 		String auctionUnitAmt = "0.0";
+		if( method != 4 )	// 거래소가 아닌 경우
 		try {
 			String[] arrStartStr = new String[]{
 					"호가 단위 :"
@@ -391,6 +434,7 @@ public class SteemitManager implements Runnable {
 		// 7. 경매종료일시 읽어들이기 actionUnitAmt 
 		String actionEndDtStr = "";		
 		Date auctionEndDttm = discussion.getCashoutTime().getDateTimeAsDate();
+		if( method != 4 )	// 거래소가 아닌 경우
 		try {
 			String[] arrStartStr = new String[]{
 					"경매종료날짜 :"
@@ -559,7 +603,7 @@ public class SteemitManager implements Runnable {
 			}
 		}
 		
-		
+		postMarket.setDayLimitAmt(dayLimitAmt);
 		
 		
 		if( marketInfo != null){
@@ -610,7 +654,7 @@ public class SteemitManager implements Runnable {
 				}
 					
 				
-				double auctionAmt = getAuctionAmt(body);
+				double auctionAmt = getAmt(body);
 				if( auctionAmt == 0.0 ){
 					continue;
 				}
@@ -651,8 +695,9 @@ public class SteemitManager implements Runnable {
 	    	}
 			postMarket.setReplyCnt(replyCnt);
 			
-			
-			
+			if( marketInfo != null ){
+				postMarket.setAlarmInfo(marketInfo.getAlarmInfo());
+			}
 			//postMarket.setCachePostImgUrl("");
 			//System.out.println("--- replie end");
 			
@@ -669,10 +714,14 @@ public class SteemitManager implements Runnable {
 		//postMarket.setLastSellAmt(lastSellAmt);
 	}
 	
-	private static double getAuctionAmt(String str){
+	private static double getAmt(String str){
 		if( str == null || str.length() < 2 ){
 			return 0.0;
 		}
+		if( str.indexOf("</") > -1 ){
+			str = str.substring(0, str.indexOf("</"));
+		}
+		
 		str = str.replaceAll("[^0-9.]", "");
 		while( str.length() > 1 && str.substring(0, 1).equals(".") ){
 			str = str.substring(1, str.length());
@@ -689,9 +738,20 @@ public class SteemitManager implements Runnable {
 		return rtnDouble;
 	}
 	
+	static boolean INIT_MARKET_FLAG = true;
 	private static void marketRefresh() throws Throwable{
+		
+		if( INIT_MARKET_FLAG ){
+			INIT_MARKET_FLAG = false;
+			executeSave( "kr-market" , 100 );
+		}else{
+			executeSave( "kr-market" , 20 );
+		}
+		
+		
 		List<TbPostMarketInfo> marketList =  session.createQuery( "from TbPostMarketInfo where status <> 8 ").list();
 		
+		System.out.println("marketRefresh : size " + marketList.size());
 		for( TbPostMarketInfo market : marketList ){
 			String author = market.getAuthor();
 			String permLink = market.getPermLink();
@@ -699,42 +759,67 @@ public class SteemitManager implements Runnable {
 			Discussion discussion = SteemApi.getContent(author, permLink);
 			TbPostInfo post = new TbPostInfo();
 			post.setPostId(market.getPostId());
+			
+			AlarmManager.auctionCheckAndSendAlarm(market);
+			
 			chkMarketDataAndMerge(post, discussion, market);
 			
 		}
 		
 	}
 	
-	public static void executeSave() throws Throwable{
+	
+	public static void executeSave( String tag , int limit ) throws Throwable{
 		org.hibernate.Transaction tx = null;
 		
 		try{
 			tx = session.getTransaction();
+			if( tag == null ){
+				tag = "kr";
+			}
 			
-			List<Discussion> arrayPost = SteemApi.getDiscussionBy("kr", 50);
+			List<Discussion> arrayPost = SteemApi.getDiscussionBy(tag, limit);
 			//List<Discussion> arrayPost = SteemApi.getDiscussionBy("kr-seller", 20);
+			
+			/*
+			List webPushList = session.createQuery("from TbWebPushM ").list();
+			
+			System.out.println("[webPushList]" + webPushList.size() );
+			*/
+			
 			
 			// 전체 조회 수 만큼 반복!!
 			for(int postIdx = 0; postIdx < arrayPost.size();postIdx++){
 				
-				Discussion discussion = arrayPost.get(postIdx);
-				
+				Discussion discussion = arrayPost.get(postIdx);				
 				TbPostInfo post = new TbPostInfo();
 				
 				setPostFromDiscussion(post, discussion);
 				
-				List postList =  session.createQuery( "from TbPostInfo where POST_URL = :postUrl ").setParameter("postUrl", post.getPostUrl()).list();
-				TbPostInfo oldPost = postList.size() > 0 ? (TbPostInfo) postList.get(0) : null;
-				if( oldPost != null ){
-					System.out.println("Database Post exists!! continue.. [" + oldPost.getPostTitle()+ "]" );
+				List postList =  session.createQuery( "from TbPostInfo post left outer join TbPostMarketInfo market on post.postId = market.postId where 1=1 and post.postUrl = :postUrl ").setParameter("postUrl", post.getPostUrl()).list();
+				
+				TbPostInfo oldPost = null;
+				TbPostMarketInfo market = null;
+				if( postList != null && postList.size() > 0 ) {
+					Object[] tables = (Object[]) postList.get(0);
+					oldPost = (TbPostInfo)tables[0];
+					market = (TbPostMarketInfo)tables[1];
+				};
+				
+				if( oldPost != null ){					
 					// kr-market의 포스팅인 경우 마켓 인식 로직 수행!!
-					post.setPostId(oldPost.getPostId());
-					if( post.getArrTagStr().indexOf("kr-market") > -1 ){
-						if( discussion.getBody().indexOf("판매방식 :") > -1 ){
-							chkMarketDataAndMerge(post, discussion, null);
-						}
+					if( "kr-market".equals(tag)
+							|| post.getArrTagStr().indexOf("kr-market") > -1
+					){
+						System.out.println("Database Post exists!! continue ["+tag+"] [" + oldPost.getPostTitle()+ "] : continue!" );
+						post.setPostId(oldPost.getPostId());
+						if( post.getArrTagStr().indexOf("kr-market") > -1 ){								
+							chkMarketDataAndMerge(post, discussion, market);							
+						}						
+					}else{
+						System.out.println("Database Post exists!! continue.. [" + oldPost.getPostTitle()+ "] : break!" );
+						break;	// 일반 kr글은 겹치는 포스팅이 있다면 그 상태로 브레이끼.
 					}
-					continue;	// 겹치는 포스팅이 있다면 그 상태로 브레이끼.
 				}
 				// old not exists save and send alarm
 				else{
@@ -748,35 +833,13 @@ public class SteemitManager implements Runnable {
 					
 					System.out.println("[New Post "+post.getPostId()+"] [created] [" + post.getPostTitle() + "]" );
 					
-					// 알람 대상을 조회하여 알람을 발송한다!!
-					{
-						List webPushList = session.createQuery("from TbWebPushM ").list();
-						
-						System.out.println("[webPushList]" + webPushList.size() );
-						
-						Gson gson = new Gson();
-						for(int pushIdx = 0; pushIdx < webPushList.size();pushIdx++){
-							TbWebPushM pushTarget = (TbWebPushM) webPushList.get(pushIdx);
-							
-							try{
-								JsonObject settingJson = gson.fromJson(pushTarget.getAlarmSettingStr(), JsonObject.class);
-								if( settingJson == null ) continue;
-								
-								checkAndSendAlarm(settingJson, post, pushTarget );
-								
-							}catch(Throwable e){
-								System.out.println("sendAlarm.Throwable");
-								e.printStackTrace();
-								continue;
-							}
-						}
-					}
+					AlarmManager.newCheckAndSendAlarm(post);
 					
 					// kr-market의 포스팅인 경우 마켓 인식 로직 수행!!
 					if( post.getArrTagStr().indexOf("kr-market") > -1 ){
-						if( discussion.getBody().indexOf("판매방식 :") > -1 ){
+						//if( discussion.getBody().indexOf("판매방식 :") > -1 ){
 							chkMarketDataAndMerge(post, discussion, null);
-						}
+						//}
 					}
 					
 					//System.out.println("save post : " + StringUtil.getObjToStr(post) );

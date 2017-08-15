@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,8 +15,10 @@
   <script src="/js/jquery.cookie.1.4.1.js"></script>
   <script src="/js/jquery.countdown.min.js"></script>
   <script src="/js/jquery.paging.min.js"></script>
+  <script src="/js/alarm/push_main.js"></script>
   <script src="/js/loading/jm.spinner.js"></script>
   <link href="/css/loading/jm.spinner.css" rel="stylesheet">
+  <link rel="manifest" href="/manifest.json">
   
 </head>
 <style>
@@ -127,7 +127,7 @@
 	}
 </style>
 
-<script src="/js/steem/biz.js"></script>
+<script src="/js/steem/steem_biz.js"></script>
 <script>
 var pageSize = 5; 
 var postSize = 10;
@@ -267,21 +267,26 @@ function addItem(idx, jObj ){
 	<!-- style="width:15em;height:7em;" -->
 	<main style="margin-left:0.5;margin-top:0.5em;" >
 	  <center><img 
-	    
+	    width="75%" height="75%"
 	    src="/img/steem/steemmart.png" /></center>
+	    
 		<div id="loadSpinnerWrapper" style="position:fixed;text-align:center;display:none;">
 			<img width="140px" height="140px" src="/img/loading/steemit.png" /><br />
 			<div id="loadSpinner" ></div>
 		</div>
 		<section>
-		  <div style="font-size:0.7em;margin-top:-1.5em;text-align:right;color:gray;" title="이 데이터는 Cobot 시세조회 서비스를 사용합니다.">(폴로닉스 기준 1SBD : 약 <span id="sbd_txt"></span>원)</div>
+		  <div style="font-size:0.7em;margin-top:-1.5em;text-align:right;color:gray;" title="이 데이터는 Cobot 시세조회 서비스를 사용합니다.">
+		  	
+		  	<span>(폴로닉스 기준 1SBD : 약 <span id="sbd_txt"></span>원)</span>
+		  	<span onclick="popupAlarm();" style="font-size:2em;cursor:pointer;">&#x23F0;</span>
+		  </div>
 			<div class="searchDiv" id="searchDiv">
 				<div class="searchRowDiv" id="searchRowDiv1" >
 					<div class="searchTitleDiv" id="searchTitleDiv" style="">
 						판매자
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv" style="font-weight:bold;">
-					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 250%;">
+					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 330%;">
 						<span class="searchBodyItem" data-item-dvcd="seller" data-item-value="seller" >@seller</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="jumma" >@jumma</span>
 			            <span class="searchBodyItem" data-item-dvcd="seller" data-item-value="greenjuice" >@greenjuice</span>
@@ -297,7 +302,7 @@ function addItem(idx, jObj ){
 						판매방식
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv"  >
-					<div id="searchBodyDivWrapper" class="searchBodyDivWrapper"  style="width: 170%;">
+					<div id="searchBodyDivWrapper" class="searchBodyDivWrapper"  style="width: 190%;">
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="1">판매</span>
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="2">경매</span>
 						<span class="searchBodyItem" data-item-dvcd="method" data-item-value="3">이벤트</span>
@@ -312,7 +317,7 @@ function addItem(idx, jObj ){
 						카테고리
 					</div>
 					<div class="searchBodyDiv" id="searchBodyDiv" >
-					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 265%;">
+					<div class="searchBodyDivWrapper" id="searchBodyDivWrapper" style="width: 295%;">
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="1">의류</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="2">잡화</span>
 						<span class="searchBodyItem" data-item-dvcd="category" data-item-value="3">화장품/미용</span>
@@ -536,6 +541,92 @@ function addItem(idx, jObj ){
 		
 	</div>
 	<!-- item end -->
+	
+<!--  alarmInfoDiv start -->
+<style>
+.alarmInfoDiv{
+	background-color: rgba( 30, 115, 235, 0.75 );
+	position:fixed;
+	display:none;
+	text-align:center;
+	width:90%;
+	height:32%;
+	color:white;
+	border-radius: 24px;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;    
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid black transparent;
+    border-radius: 4px;
+    background-color: white;
+}
+.btn:hover {
+   color: #333;
+   background-color: #e6e6e6;
+   border-color: #adadad;
+}
+.btn:active {
+  background-color: #e6e6e6;
+  box-shadow: 0 2px #adadad;
+  transform: translateY(0.6px);
+}
+input[type=checkbox]{
+	
+}
+select{
+	height:2em;
+}
+</style>	
+<div id="alarmInfoDiv" class="alarmInfoDiv selnone">
+	<div style="margin-top:20px;">&#x1F55C; 알람 받으실 정보를 입력해주세요.</div>
+	<div style="margin-top:10px;">
+		<span onclick="newChk.checked = !newChk.checked;" >
+			신규 물품 등록 시에도 받을래요
+			<input style="cursor:pointer;" id="newChk" type="checkbox" readonly="readonly" />
+		</span>
+	</div>
+	<div style="margin-top:10px;">
+		경매 임박시
+		<span onclick="setAlarmChk('actAll')" >모두<input style="cursor:pointer;" name="auctionChk" id="actAll" type="checkbox" readonly="readonly" /></span>
+		<span style="text-decoration:line-through;">입찰건만<input name="auctionChk" id="actChoose" type="checkbox" readonly="readonly" /></span>
+		<span onclick="setAlarmChk('actNo')">중지<input name="auctionChk" id="actNo" type="checkbox" readonly="readonly" /></span>
+	</div>
+	<div style="margin-top:10px;">
+		<span>@ </span>
+		<span><input type="text" id="steemitId" style="padding-left:5px;"></span>	
+	</div>
+	<div style="margin-top:10px;">
+		<select id="alarmTimer" >
+			<option value="90">90분</option>
+			<option value="60">60분</option>
+			<option value="30">30분</option>
+			<option value="20">20분</option>
+			<option value="10">10분</option>
+			<option value="5">5분</option>
+		</select>
+	</div>
+	
+	<div style="margin-top:20px;align:center;text-align:right">
+		<button onclick="saveAlarm();" class="btn btn-default">저장</button> <button onclick="popupAlarm();" style="margin-left:10px;margin-right:10px" class="btn">취소</button>
+	</div>
+</div>
+<!--  alarmInfoDiv end -->
+
 	<%@ include file="/footer.jsp"  %>
 </body>
 

@@ -12,15 +12,21 @@
   <script src="/js/jquery.countdown.min.js"></script>
   <script src="/js/jquery.paging.min.js"></script>
   <script src="/js/loading/jm.spinner.js"></script>
+  <script src="/js/alarm/push_main.js"></script>
+  <script src="/js/steem/steem_biz.js"></script>
   <link href="/css/loading/jm.spinner.css" rel="stylesheet">
   
+  <link rel="manifest" href="/manifest.json">
+  <!-- link href="/css/steem/app.css" rel="stylesheet" type="text/css" data-reactid="40"-->
 </head>
 <style>
 	:root{
 		--main-width:980px;
 		--main-color:#4078c0
 	}
-	
+	.selnone{
+		-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;
+	}
 	main{
 		width:var(--main-width);
 	}
@@ -130,7 +136,7 @@ else if (agent.indexOf("msie") != -1) {
 var pageSize = 10; 
 var postSize = 10;
 </script>
-<script src="/js/steem/biz.js"></script>
+
 <script>
 var cachePath = "/extanal/img/";
 
@@ -261,17 +267,22 @@ function addItem(idx, jObj ){
 
 
 
+
 </script>
-<body>	
+<body >	
 	<main style="margin: 0 auto;" >
 	  <center><img src="/img/steem/steemmart.png" style="position:relative;z-index:1;"/></center>
-		<div id="loadSpinnerWrapper" style="position:fixed;text-align:center;display:none;">
+		<div id="loadSpinnerWrapper" style="position:fixed;text-align:center;display:none;" class="selnone">
 			<img width="140px" height="140px" src="/img/loading/steemit.png" /><br />
 			<div id="loadSpinner" ></div>
 		</div>
 		<section>
-		  <div id="searchDivWrapper" class="searchDivWrapper" style="" title="이 데이터는 Cobot 시세조회 서비스를 사용합니다.">(폴로닉스 기준 1SBD : 약<span id="sbd_txt"></span>원)</div>
-			<div class="searchDiv" id="searchDiv">
+		  <div id="searchDivWrapper" class="searchDivWrapper selnone" style="" title="이 데이터는 Cobot 시세조회 서비스를 사용합니다.">
+		  	<span onclick="popupAlarm();" style="cursor:pointer;">&#x23F0;</span>
+		  	<span>(폴로닉스 기준 1SBD : 약<span id="sbd_txt"></span>원)</span>
+		  	
+		  </div>
+			<div class="searchDiv selnone" id="searchDiv">
 				<div class="searchRowDiv" id="searchRowDiv1" >
 					<div class="searchTitleDiv" id="searchTitleDiv" style="">
 						판매자
@@ -364,7 +375,7 @@ function addItem(idx, jObj ){
 		}
 		</style>
 		<section>
-			<div class="sortDiv">
+			<div class="sortDiv selnone">
 				
 				<span class="sortItem sortItemOn" data-dvcd="descAuctionDate">낙찰일순(낙찰임박)</span>
 				<span class="sortItem" data-dvcd="descRegDate">등록일순(최근)</span>
@@ -527,8 +538,9 @@ function addItem(idx, jObj ){
 			  </div>
 			  <div id="voteAmt" class="itemInfoCell">$0.0</div>
 			</div>			
-			<div id="itemInfoReplyPre" onclick="viewReply('itemInfoReply'); return false;" class="itemInfoReplyPre">
-			 	총 0건의 입찰이 있습니다. 
+			<div  onclick="viewReply('itemInfoReply'); return false;" class="itemInfoReplyPre">
+			 	
+				<span id="itemInfoReplyPre">총 0건의 입찰이 있습니다.</span> 
 			</div>
 			
 			<div class="itemInfoReply" id="itemInfoReply">
@@ -542,8 +554,109 @@ function addItem(idx, jObj ){
 			<br />
 			<span id="seller"></span>
 		</div>
+		
+		
 	</div>
+	
+	
 	<!-- item end -->
 	<%@ include file="/footer.jsp"  %>	
+	
+
+<style>
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;    
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid black transparent;
+    border-radius: 4px;
+    background-color: white;
+}
+.btn:hover {
+   color: #333;
+   background-color: #e6e6e6;
+   border-color: #adadad;
+}
+.btn:active {
+  background-color: #e6e6e6;
+  box-shadow: 0 2px #adadad;
+  transform: translateY(0.6px);
+}
+.alarmInfoDiv{
+	background-color: rgba( 30, 115, 235, 0.75 );
+	position:fixed;
+	display:none;
+	text-align:center;
+	width:360px;
+	height:210px;
+	color:white;
+	border-radius: 24px;
+}
+input[type=checkbox]{
+	cursor:pointer;
+}
+select{
+	height:2em;
+}
+
+</style>
+<script>
+	
+	
+	
+	
+	function saveCookie(key, value){
+		$.cookie(key, value, {expires: 3650});
+	}
+</script>
+
+
+<div id="alarmInfoDiv" class="alarmInfoDiv selnone">
+	<div style="margin-top:20px;">&#x1F55C; 알람 받으실 정보를 입력해주세요.</div>
+	<div style="margin-top:10px;cursor:pointer;">
+		<span onclick="newChk.checked = !newChk.checked;" >
+			신규 물품 등록 시에도 받을래요
+			<input style="cursor:pointer;" id="newChk" type="checkbox" readonly="readonly" />
+		</span>
+	</div>
+	<div style="margin-top:10px;cursor:pointer;">
+		경매 임박시
+		<span onclick="setAlarmChk('actAll')" >모두<input style="cursor:pointer;" name="auctionChk" id="actAll" type="checkbox" readonly="readonly" /></span>
+		<span style="text-decoration:line-through;">입찰건만<input name="auctionChk" id="actChoose" type="checkbox" readonly="readonly" /></span>
+		<span onclick="setAlarmChk('actNo')">중지<input name="auctionChk" id="actNo" type="checkbox" readonly="readonly" /></span>
+	</div>
+	<div style="margin-top:10px;">
+		<span>@ </span>
+		<span><input type="text" id="steemitId" style="padding-left:5px;"></span>	
+	</div>
+	<div style="margin-top:10px;">
+		<select id="alarmTimer" >
+			<option value="90">90분</option>
+			<option value="60">60분</option>
+			<option value="30">30분</option>
+			<option value="20">20분</option>
+			<option value="10">10분</option>
+			<option value="5">5분</option>
+		</select>
+	</div>
+	
+	<div style="margin-top:20px;align:center;text-align:right">
+		<button onclick="saveAlarm();" class="btn btn-default">저장</button> <button onclick="popupAlarm();" style="margin-left:10px;margin-right:10px" class="btn">취소</button>
+	</div>
+</div>
+
 </body>
 </html>

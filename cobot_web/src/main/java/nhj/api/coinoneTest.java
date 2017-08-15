@@ -1,8 +1,6 @@
 package nhj.api;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +21,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 public class coinoneTest {
 	private final static Pattern OPERATION_PATTERN = Pattern.compile("setTimeout\\(function\\(\\)\\{\\s+(var s,t,o,p,b,r,e,a,k,i,n,g,f,.+?\\r?\\n[\\s\\S]+?a\\.value =.+?)\\r?\\n");
@@ -31,18 +30,11 @@ public class coinoneTest {
 
     
     public static void main(String[] args) throws Throwable {
+		String url = "";
+		HttpResponse res = getPage("https://coinone.co.kr/exchange/", null, null, null);
 		
-    	Hashtable t = new Hashtable();
-    	t.put("1", "1");
-    	t.put("1", "2");
-    	
-    	System.out.println(t);
-    	
-    	HashMap t2 = new HashMap();
-    	t2.put("1", "1");
-    	t2.put("1", "2");
-    	
-    	System.out.println(t2);
+		String HTML = EntityUtils.toString(res.getEntity());
+		System.out.println(HTML);
 	}
     
     
@@ -53,21 +45,22 @@ public class coinoneTest {
     	
     	HttpContext localContext = new BasicHttpContext();
     	localContext.setAttribute(HttpClientContext.COOKIE_STORE, cs);
-
-    	
-    	List<NameValuePair> params = new LinkedList<NameValuePair>();
-    	for(Iterator it = param.keySet().iterator();it.hasNext();){
-    		
-    		Object key = it.next();
-    		
-    		params.add(new BasicNameValuePair( key.toString() , String.valueOf(param.get(key.toString()))));    		
+    	HttpGet httpget;
+    	if( param != null ){
+    		List<NameValuePair> params = new LinkedList<NameValuePair>();
+        	for(Iterator it = param.keySet().iterator();it.hasNext();){
+        		
+        		Object key = it.next();
+        		
+        		params.add(new BasicNameValuePair( key.toString() , String.valueOf(param.get(key.toString()))));    		
+        	}
+        	String paramString = URLEncodedUtils.format(params, "utf-8");
+        	httpget = new HttpGet( url + paramString);
+    	}else{
+    		httpget = new HttpGet( url);
     	}
-    	
-
-        String paramString = URLEncodedUtils.format(params, "utf-8");
         
-        HttpGet httpget = new HttpGet( url + paramString);
-        
+    	if( headers != null)
         for(Iterator it = headers.keySet().iterator();it.hasNext();){
     		Object obj = it.next();
     		if( obj == null ) continue;

@@ -1,0 +1,252 @@
+/*! normalize-scss | MIT/GPLv2 License | bit.ly/normalize-scss */
+.LoadingIndicator.circle.inline {
+	display: inline - block;
+	position: relative;
+	top: 6px
+}
+.LoadingIndicator.circle > div {
+	width: 16px;
+	height: 16px;
+	margin: 4px;
+	border: 1px solid # 8a8a8a;
+	border - radius: 50 % ;
+	border - right - color: transparent;
+	border - top - color: transparent;
+	-webkit - animation: loading.5s infinite linear;
+	animation: loading.5s infinite linear
+}
+.Userpic {
+	display: inline - block;
+	background - size: cover;
+	background - repeat: no - repeat;
+	background - position: 50 % 50 % ;
+	border - radius: 50 % ;
+	width: 48px;
+	height: 48px
+}
+.Voting, .Voting span {
+	white - space: nowrap!important
+}
+.Voting__button.Icon {
+	-webkit - transform: translateZ(0);
+	transform: translateZ(0)
+}
+.Voting__button path {
+	fill:  # 8a8a8a
+}
+.Voting__button circle {
+	stroke:  # 8a8a8a
+}
+.Voting__button > a: hover path {
+	fill:  # 333
+}
+.Voting__about - flag {
+	margin - right: 30px
+}
+.Voting__button - up.Icon {
+	margin - left: 0;
+	border - radius: 50 %
+}
+.Voting__button - up > a {
+	padding - right: .5rem
+}
+.Voting__button - up path {
+	fill:  # 4ba2f2
+}
+.Voting__button - up circle {
+	stroke:  # 4ba2f2
+}
+@ media screen and(min - width: 39.9375em) {
+	.Voting__button - up.Icon: hover {
+		box - shadow: 0 0 0 # 4ba2f2;
+		-webkit - animation: pulse 2s infinite;
+		animation: pulse 2s infinite
+	}
+}
+.Voting__button - up > a: hover path, a.confirm_weight: hover path {
+	fill:  # fff
+}
+.Voting__button - up > a: hover circle, a.confirm_weight: hover circle {
+	fill:  # 4ba2f2;
+	stroke:  # 4ba2f2
+}
+.Voting__button - up > a: hover svg, a.confirm_weight: hover svg {
+	background - size: contain;
+	border - radius: 50 %
+}
+.Voting__button - up.votingUp {
+	padding - right: .5rem
+}
+.Voting__button - up.votingUp svg {
+	border: 1px solid # 4ba2f2;
+	border - radius: 50 % ;
+	border - right - color: transparent;
+	border - top - color: transparent
+}
+.Voting__button - down.votingDown svg, .Voting__button - up.votingUp svg {
+	-webkit - animation: loading.5s infinite linear;
+	animation: loading.5s infinite linear
+}
+.Voting__button - down.votingDown svg {
+	border: 1px solid # a00;
+	border - radius: 50 % ;
+	border - right - color: transparent;
+	border - top - color: transparent
+}
+.Voting__button - down {
+	margin - left: .25rem
+}
+.Voting__button - down.Voting__button - downvotes {
+	color:  # aaa;
+	font - size: 80 % ;
+	vertical - align: 15 % ;
+	padding - right: .1rem
+}
+.Voting__button - down a: hover path {
+	fill:  # a00
+}
+.Voting__button--upvoted.Icon: hover {
+	-webkit - animation: none!important;
+	animation: none!important
+}
+.Voting__button--upvoted path {
+	fill:  # fff!important
+}
+.Voting__button--upvoted circle {
+	fill:  # 4ba2f2;
+	stroke:  # 4ba2f2
+}
+.Voting__button--upvoted a: hover path {
+	fill:  # fff!important
+}
+.Voting__button--upvoted a: hover circle {
+	fill:  # 258deb;
+	stroke:  # 258deb
+}
+.Voting__button--downvoted path {
+	fill:  # a00
+}
+.Voting.DropdownMenu ul {
+	width: 240px
+}
+.Voting.DropdownMenu ul li > a, .Voting.DropdownMenu ul li > span {
+	padding: 0.5rem;
+	line - height: 1.25
+}
+.DropdownMenu.Voting__voters_list ul li > span {
+	padding: .25rem.5rem;
+	font - size: 82.5 % ;
+	display: block;
+	color:  # 666
+}
+.Voting__inner {
+	border - right: 1px solid # cacaca;
+	padding - right: .8rem;
+	margin - right: .6rem
+}
+.Voting__inner.DropdownMenu.Icon.dropdown - arrow {
+	margin - right:  - .5rem
+}
+.Voting__inner.cancel {
+	font - size: 80 % ;
+	padding: 0.4em;
+	margin - left: .5rem;
+	margin - right: 2px;
+	background - color:  # f8f8f8;
+	border - radius: 50 % ;
+	border: 1px solid # dadada;
+	color:  # 8a8a8a
+}
+.Voting__adjust_weight_down {
+	right: 0;
+	width: auto!important;
+	max - width: 500px
+}
+.Voting__adjust_weight_down div.clear {
+	clear: both
+}
+.Voting__adjust_weight_down p, .Voting__adjust_weight_down span {
+	white - space: normal!important
+}
+.Voting__adjust_weight_down.weight - display {
+	color:  # c00!important
+}
+.Voting__adjust_weight_down.rangeslider {
+	margin - right: 2rem
+}
+.Voting__adjust_weight, .Voting__adjust_weight_down {
+	padding: 10px 20px;
+	margin - right: 10px;
+	width: 350px;
+	overflow: hidden
+}
+.Voting__adjust_weight.Icon: hover, .Voting__adjust_weight_down.Icon: hover {
+	-webkit - animation: none!important;
+	animation: none!important
+}
+.Voting__adjust_weight.weight - display, .Voting__adjust_weight_down.weight - display {
+	width: 3rem;
+	float: left;
+	margin - right: .5rem;
+	text - align: right;
+	color:  # 8a8a8a;
+	line - height: 2.6rem
+}
+.Voting__adjust_weight_down a.confirm_weight, .Voting__adjust_weight a.confirm_weight {
+	float: left;
+	width: 2rem;
+	height: 2rem;
+	line - height: 2.6rem
+}
+.Voting__adjust_weight.rangeslider, .Voting__adjust_weight_down.rangeslider {
+	position: relative;
+	float: left;
+	background:  # e6e6e6
+}
+.Voting__adjust_weight.rangeslider.rangeslider__fill, .Voting__adjust_weight.rangeslider.rangeslider__handle, .Voting__adjust_weight_down.rangeslider.rangeslider__fill, .Voting__adjust_weight_down.rangeslider.rangeslider__handle {
+	position: absolute
+}
+.Voting__adjust_weight.rangeslider, .Voting__adjust_weight.rangeslider.rangeslider__fill, .Voting__adjust_weight_down.rangeslider, .Voting__adjust_weight_down.rangeslider.rangeslider__fill {
+	display: block;
+	box - shadow: inset 0 1px 3px rgba(0, 0, 0, .3);
+	border - radius: 10px
+}
+.Voting__adjust_weight.rangeslider.rangeslider__handle, .Voting__adjust_weight_down.rangeslider.rangeslider__handle {
+	background:  # fff;
+	border: 1px solid # ccc;
+	cursor: pointer;
+	display: inline - block;
+	position: absolute
+}
+.Voting__adjust_weight.rangeslider.rangeslider__handle: active, .Voting__adjust_weight_down.rangeslider.rangeslider__handle: active {
+	background:  # 4ba2f2
+}
+.Voting__adjust_weight.rangeslider - horizontal, .Voting__adjust_weight_down.rangeslider - horizontal {
+	height: 10px;
+	width: 200px;
+	background: none;
+	float: left;
+	margin - top: 18px
+}
+.Voting__adjust_weight.rangeslider - horizontal.rangeslider__fill, .Voting__adjust_weight_down.rangeslider - horizontal.rangeslider__fill {
+	height: 100 % ;
+	background:  # 4ba2f2;
+	box - shadow: none;
+	left: 0
+}
+.Voting__adjust_weight.rangeslider - horizontal.rangeslider__handle, .Voting__adjust_weight_down.rangeslider - horizontal.rangeslider__handle {
+	width: 30px;
+	height: 30px;
+	border - radius: 50 % ;
+	top: -10px
+}
+.Voting__adjust_weight.rangeslider - horizontal.rangeslider__handle: active, .Voting__adjust_weight_down.rangeslider - horizontal.rangeslider__handle: active {
+	box - shadow: none
+}
+.Voting__adjust_weight.Voting__adjust_weight_close, .Voting__adjust_weight_down.Voting__adjust_weight_close {
+	position: static;
+	line - height: 2.6rem;
+	font - size: 2rem;
+	margin - left: 1rem
+}
+		

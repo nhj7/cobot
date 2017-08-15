@@ -22,9 +22,17 @@
 
 /* eslint-env browser, es6 */
 
+var pushButton = document.querySelector('.js-push-btn');
+
+if( pushButton == null ){		
+	pushButton = document.createElement("button");
+	pushButton.setAttribute("class", "js-push-btn");
+	
+} 
+
 const applicationServerPublicKey = 'BLjkJUY4Padux-qoYj_qT5FgPM5YW9p19Y8JyWeN0zeAA2ESySpuHcaDImzEJBlxzkcXMa9FOZsKLP0WZ9O6AK4';
 
-const pushButton = document.querySelector('.js-push-btn');
+
 
 let isSubscribed = false;
 let swRegistration = null;
@@ -174,6 +182,8 @@ function updateBtn() {
 		
 	    pushButton.textContent = 'Cobot 알람 받기';
 	  }
+	  
+	  
 	  pushButton.disabled = false;
 	}
 try{

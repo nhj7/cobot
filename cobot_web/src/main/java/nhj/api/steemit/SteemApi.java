@@ -96,36 +96,13 @@ public class SteemApi {
     public static void main(String[] args) throws Throwable {
 		
     	init();
-    	List<Discussion> discussions = getDiscussionBy("kr-seller", 10);
     	
-    	Gson gson = new Gson();
+    	List<Discussion> discussions = getDiscussionBy("kr-market", 100);
+    	//Discussion discussions = getContent("leesunmoo", "2017-8-11");
     	
-    	for( Discussion post : discussions ){
-        	System.out.println("----------------------------------------------------------");
-        	System.out.println(post.getTitle());
-        	System.out.println(post.getAuthor().getAccountName());
-        	System.out.println("category : "+post.getCategory());
-        	
-        	
-        	JsonObject postMeta = gson.fromJson(post.getJsonMetadata(), JsonObject.class);
-        	
-        	System.out.println("postMeta : "+postMeta);
-        	System.out.println("postMeta : "+postMeta.get("tags").toString().replaceAll("\"", ""));
-        	
-        	JsonArray arrayImg = postMeta.get("image").getAsJsonArray();
-        	
-        	if( arrayImg.size() > 0 ){
-        		System.out.println("대문 이미지 주소 : "+ arrayImg.get(0).toString().replaceAll("\"", ""));
-        	}
-        	if( arrayImg.size() > 1 ){
-        		System.out.println("상품 이미지 주소 : "+ arrayImg.get(1).toString().replaceAll("\"", ""));
-        	}
-        	
-        	System.out.println("url : "+post.getUrl());
-        	//System.out.println("body : "+post.getBody());
-        	
-        	System.out.println("----------------------------------------------------------");
-        }
+    	//List<Discussion> discussions = getContentReplies("leesunmoo", "2017-8-11");
+    	
+    	System.out.println("Hello : " + discussions);
     	
 	}
 }

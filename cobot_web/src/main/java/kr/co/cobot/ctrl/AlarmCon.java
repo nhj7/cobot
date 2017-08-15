@@ -191,6 +191,9 @@ public class AlarmCon {
 			Session session = HibernateCfg.getCurrentSession();
 			// 트랜잭션 시작
 			TbWebPushM webPushM = session.get(TbWebPushM.class, alarmID);
+			if( webPushM == null ){
+				return "{}";
+			}
 			return webPushM.getAlarmSettingStr();
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block

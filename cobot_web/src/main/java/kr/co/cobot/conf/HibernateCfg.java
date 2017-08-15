@@ -8,20 +8,25 @@ import javax.persistence.Entity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.SessionFactoryObserver;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.registry.internal.StandardServiceRegistryImpl;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import kr.co.cobot.ctrl.HomeCon;
 import nhj.util.NetUtil;
 
 public class HibernateCfg {
 	private static final Logger logger = LoggerFactory.getLogger(HibernateCfg.class);
 	private static SessionFactory sessionFactory;
+	private static ServiceRegistry serviceRegistry;
 
+	
 	static {
 		org.apache.log4j.Logger.getLogger("org.hibernate").setLevel(org.apache.log4j.Level.INFO);
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.INFO);
@@ -32,16 +37,19 @@ public class HibernateCfg {
 		try {
 			String jdbcParam = "?autoReconnect=true&sessionVariables=character_set_client=utf8mb4,character_set_results=utf8mb4,character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci";
 			String url = "jdbc:mariadb://localhost:33067/cobot" + jdbcParam;
-
+			String id = "cobot";
+			String passwd = "cobot1234";
 			if ( NetUtil.isMyLocal() ) {
-				url = "jdbc:mariadb://220.230.118.187:33067/cobot" + jdbcParam;
+				url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
+				id = "cobot_test";
+				passwd = "test1234";
 			}
 
 			// Create the SessionFactory from hibernate.cfg.xml
 			Configuration config = new Configuration()
 					.setProperty("hibernate.connection.driver_class", "org.mariadb.jdbc.Driver")
-					.setProperty("hibernate.connection.url", url).setProperty("hibernate.connection.username", "cobot")
-					.setProperty("hibernate.connection.password", "cobot1234")
+					.setProperty("hibernate.connection.url", url).setProperty("hibernate.connection.username", id)
+					.setProperty("hibernate.connection.password", passwd)
 					.setProperty("hibernate.connection.timeout", "0")
 					.setProperty("hibernate.connection.autoRecoonect", "true")
 					.setProperty("connection.autoReconnect", "true")
@@ -52,7 +60,7 @@ public class HibernateCfg {
 					//.setProperty("show_sql", "true")
 					;
 			if ( NetUtil.isMyLocal() ) {
-				config.setProperty("hibernate.show_sql","true");
+				//config.setProperty("hibernate.show_sql","true");
 			}else{
 				config.setProperty("hibernate.show_sql","false");
 				//log4j.logger.org.hibernate=info;
@@ -79,6 +87,23 @@ public class HibernateCfg {
 					// TODO: handle exception - couldn't load class in question
 				}
 			} // for
+			
+			
+			serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+					config.getProperties()).build();
+
+			config.setSessionFactoryObserver(
+			        new SessionFactoryObserver() {
+			            @Override
+			            public void sessionFactoryCreated(SessionFactory factory) {}
+			            @Override
+			            public void sessionFactoryClosed(SessionFactory factory) {
+			                ((StandardServiceRegistryImpl) serviceRegistry).destroy();
+			            }
+			        }
+			);
+
+			
 			
 			//config.addAnnotatedClass(TbExchange.class);
 
@@ -114,7 +139,33 @@ public class HibernateCfg {
 	}
 	
 	public static void closeSessionFactory(){
-		sessionFactory.close();
+		if( sessionFactory != null ){
+			sessionFactory.close();
+			System.out.println("closeSessionFactory");
+		}
+		
+	}
+	
+	public static void close() throws Exception{
+	    if(serviceRegistry!= null) {
+	        StandardServiceRegistryBuilder.destroy( serviceRegistry);
+	    }
+	}
+	
+	public static void main(String[] args) throws Throwable {
+		init();
+		
+		Session session = getCurrentSession();
+		
+		System.out.println(session);
+		
+		session.close();
+		
+		closeSession();
+		closeSessionFactory();		
+		close();
+		
+		System.out.println("exit");
 	}
 
 }

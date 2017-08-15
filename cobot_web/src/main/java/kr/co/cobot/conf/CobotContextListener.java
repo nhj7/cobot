@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
+import kr.co.cobot.bot.AlarmManager;
 import kr.co.cobot.bot.CacheImgManager;
 import kr.co.cobot.bot.ExchManager;
 import kr.co.cobot.bot.SteemitManager;
@@ -25,8 +26,7 @@ public class CobotContextListener extends ContextLoaderListener{
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		// TODO Auto-generated method stub
-		super.contextDestroyed(event);
-		
+		super.contextDestroyed(event);		
 		System.out.println("CobotContextListener End..");
 	}
 
@@ -61,19 +61,21 @@ public class CobotContextListener extends ContextLoaderListener{
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		System.out.println("CobotContextListener Start......");
 		System.out.println("mode : " + System.getProperty("mode") );
 		
 		try {
 			if( !NetUtil.isMyLocal() ){
-				new Thread( new ExchManager()).start();
-				SteemitManager.init();
-				
-				CacheImgManager.init();
 			}
+			
+			AlarmManager.init();
+			
 			new Thread( new TickManager()).start();
+			//new Thread( new ExchManager()).start();
+			CacheImgManager.init();
+			SteemitManager.init();
+			
 			
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
