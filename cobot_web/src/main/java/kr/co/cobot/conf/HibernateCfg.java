@@ -40,9 +40,9 @@ public class HibernateCfg {
 			String id = "cobot";
 			String passwd = "cobot1234";
 			if ( NetUtil.isMyLocal() ) {
-				url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
-				id = "cobot_test";
-				passwd = "test1234";
+				//url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
+				//id = "cobot_test";
+				//passwd = "test1234";
 			}
 
 			// Create the SessionFactory from hibernate.cfg.xml
