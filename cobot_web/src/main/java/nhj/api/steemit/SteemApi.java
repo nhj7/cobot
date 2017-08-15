@@ -97,8 +97,8 @@ public class SteemApi {
 		
     	init();
     	
-    	List<Discussion> discussions = getDiscussionBy("kr-market", 100);
-    	//Discussion discussions = getContent("leesunmoo", "2017-8-11");
+    	//List<Discussion> discussions = getDiscussionBy("kr-market", 100);
+    	Discussion discussions = getContent("jumma", "kr-market-4-0808-1");
     	
     	//List<Discussion> discussions = getContentReplies("leesunmoo", "2017-8-11");
     	

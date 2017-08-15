@@ -77,7 +77,7 @@ public class HibernateCfg {
 			String entityPath = "kr.co.cobot.entity";
 			
 			if ( NetUtil.isMyLocal() ) {
-				entityPath = "kr.co.cobot.test.entity";
+				//entityPath = "kr.co.cobot.test.entity";
 			}
 			for (BeanDefinition bd : scanner.findCandidateComponents(entityPath)) {
 				String name = bd.getBeanClassName();

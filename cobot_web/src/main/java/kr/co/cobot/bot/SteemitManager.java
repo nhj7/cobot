@@ -470,7 +470,12 @@ public class SteemitManager implements Runnable {
 				
 				//System.out.println("convert Date : "+auctionEndDttm);
 			}else{
-				auctionEndDttm = discussion.getCashoutTime().getDateTimeAsDate();
+				if( discussion.getCashoutTime().getDateTimeAsTimestamp() == -1000 ){
+					auctionEndDttm = discussion.getLastPayout().getDateTimeAsDate();
+				}else{
+					auctionEndDttm = discussion.getCashoutTime().getDateTimeAsDate();
+				}
+				
 			}
 			
 		} catch (Throwable e) {
@@ -495,14 +500,18 @@ public class SteemitManager implements Runnable {
         		
         	}
     	}
-    	Asset pendingPayoutValue = discussion.getPendingPayoutValue();
-    	
-    	
-    	
+    	Asset pendingPayoutValue = discussion.getPendingPayoutValue();    	
     	BigDecimal tmpAmt = new BigDecimal(pendingPayoutValue.getAmount());
+    	double voteAmt = tmpAmt.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    	
+    	if( voteAmt == 0.0){
+    		voteAmt = new BigDecimal(discussion.getCuratorPayoutValue().getAmount() + discussion.getTotalPayoutValue().getAmount())
+    					.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    	}
+    	
     	Date curDate = new Date();
     	//tmpAmt.setScale(pendingPayoutValue.getPrecision(), BigDecimal.ROUND_HALF_UP);
-    	double voteAmt = tmpAmt.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+    	
     	short status = 1;	// 판매중 1, 종료 8 
     	if( discussion.getTitle().indexOf("종료") > -1 
     		|| discussion.getTitle().indexOf("중단") > -1	
@@ -693,6 +702,7 @@ public class SteemitManager implements Runnable {
 	    	}else{
 	    		realAmt = lastAuctionAmt;
 	    	}
+			postMarket.setRealAmt(realAmt);
 			postMarket.setReplyCnt(replyCnt);
 			
 			if( marketInfo != null ){
