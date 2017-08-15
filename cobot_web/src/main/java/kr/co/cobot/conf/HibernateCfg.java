@@ -40,9 +40,9 @@ public class HibernateCfg {
 			String id = "cobot";
 			String passwd = "cobot1234";
 			if ( NetUtil.isMyLocal() ) {
-				//url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
-				//id = "cobot_test";
-				//passwd = "test1234";
+				url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
+				id = "cobot_test";
+				passwd = "test1234";
 			}
 
 			// Create the SessionFactory from hibernate.cfg.xml
@@ -60,7 +60,7 @@ public class HibernateCfg {
 					//.setProperty("show_sql", "true")
 					;
 			if ( NetUtil.isMyLocal() ) {
-				config.setProperty("hibernate.show_sql","true");
+				//config.setProperty("hibernate.show_sql","true");
 			}else{
 				config.setProperty("hibernate.show_sql","false");
 				//log4j.logger.org.hibernate=info;
@@ -74,7 +74,12 @@ public class HibernateCfg {
 			scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
 			// only register classes within "com.fooPackage" package
-			for (BeanDefinition bd : scanner.findCandidateComponents("kr.co.cobot")) {
+			String entityPath = "kr.co.cobot.entity";
+			
+			if ( NetUtil.isMyLocal() ) {
+				entityPath = "kr.co.cobot.test.entity";
+			}
+			for (BeanDefinition bd : scanner.findCandidateComponents(entityPath)) {
 				String name = bd.getBeanClassName();
 				try {
 					Class c = Class.forName(name);

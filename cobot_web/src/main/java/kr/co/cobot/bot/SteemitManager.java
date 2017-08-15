@@ -496,6 +496,9 @@ public class SteemitManager implements Runnable {
         	}
     	}
     	Asset pendingPayoutValue = discussion.getPendingPayoutValue();
+    	
+    	
+    	
     	BigDecimal tmpAmt = new BigDecimal(pendingPayoutValue.getAmount());
     	Date curDate = new Date();
     	//tmpAmt.setScale(pendingPayoutValue.getPrecision(), BigDecimal.ROUND_HALF_UP);
@@ -659,9 +662,6 @@ public class SteemitManager implements Runnable {
 					continue;
 				}
 				
-				if( lastAuctionAmt > 0.0 && lastAuctionAmt * 2.5 < auctionAmt ){
-					continue;
-				}
 				
 				lastAuctionAmt = lastAuctionAmt > auctionAmt ? lastAuctionAmt : auctionAmt;
 				//System.out.println(replie.getBody());
