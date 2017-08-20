@@ -81,7 +81,7 @@ public class WebSocketCon {
 	 * @param self
 	 * @param message
 	 */
-	private void sendAllSessionToMessage(String message) {
+	public static void sendAllSessionToMessage(String message) {
 		try {
 			for (Session session : WebSocketCon.sessions) {
 				session.getBasicRemote().sendText(message);
@@ -125,13 +125,18 @@ public class WebSocketCon {
 				rtnJsonStr.append("{ \"cmd\" : \"tick\" , \"value\" : "+DATA.COIN_INFO_STR+" }" );
 			}else{
 				
-			
+			int idx = 0;
 			for(Iterator it = ja.iterator(); it.hasNext();){
 				
 				JsonObject jo = (JsonObject)it.next();
 				String cmd = get(jo, "cmd");
-				if( cmd.equals("tick")){
-					
+				
+				
+				
+				if( cmd.equals("tick") && "true".equals(get(jo, "initFlag")) ){
+					if( idx > 0 ){
+						rtnJsonStr.append(",");
+					}
 					rtnJsonStr.append("{ \"cmd\" : \"tick\" , \"value\" : "+DATA.COIN_INFO_STR+" }" );
 					
 					
@@ -143,7 +148,10 @@ public class WebSocketCon {
 					String chartData = ChartManager.getChartData(eid, unit_ccd, ccd);
 					
 					try {
-						rtnJsonStr.append( " , { \"cmd\" : \"chart\", \"title\":\""+ccd+"/BTC\", \"tick\":"+ChartManager.getTickData(eid, unit_ccd, ccd)+" , \"value\" : "+ chartData +" }" );
+						if( idx > 0 ){
+							rtnJsonStr.append(",");
+						}
+						rtnJsonStr.append( "  { \"cmd\" : \"chart\", \"title\":\""+ccd+"/BTC\", \"tick\":"+ChartManager.getTickData(eid, unit_ccd, ccd)+" , \"value\" : "+ chartData +" }" );
 						
 						
 					} catch (Throwable e) {
@@ -153,7 +161,10 @@ public class WebSocketCon {
 					}
 					
 				}
+				idx++;
 			} // for end
+			
+			
 			} // else end
 			rtnJsonStr.append( "]" );
 			final Basic basic = session.getBasicRemote();

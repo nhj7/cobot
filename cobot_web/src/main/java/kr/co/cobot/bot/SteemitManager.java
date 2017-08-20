@@ -355,13 +355,10 @@ public class SteemitManager implements Runnable {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("시작 가격 읽어들이기 : "+e.toString());
+			System.out.println("시작 가격 읽어들이기 : "+e.toString() + ", @"+ discussion.getAuthor()+"/" + discussion.getPermlink());
 		}
 		
-		// 4. 소비자 가격 읽어들이기 oriAmt
-		if( discussion.getPermlink().equals("kr-market-0812-2") ){
-			System.out.println("debug");
-		}
+		// 4. 소비자 가격 읽어들이기 oriAmt		
 		String oriAmt = "";
 		if( method != 4 )	// 거래소가 아닌 경우
 		try {
@@ -636,7 +633,7 @@ public class SteemitManager implements Runnable {
 			int replyCnt = 0;
 			for( Discussion replie: replies){
 				// 리플 단 사람이 판매자인 경우 패스
-				if( replie.getAuthor().equals( postMarket.getAuthor() ) ){
+				if( replie.getAuthor().equals( discussion.getAuthor().getAccountName() ) ){
 					continue;
 				}				
 				if(

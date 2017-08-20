@@ -2,10 +2,13 @@ package kr.co.cobot.bot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.cobot.ctrl.WebSocketCon;
 import nhj.api.BithumbAPI;
+import nhj.api.BittrexAPI;
 import nhj.api.CoinoneAPI;
 import nhj.api.HTMLParsingAPI;
 import nhj.api.KorbitAPI;
@@ -29,22 +32,22 @@ public class TickManager implements Runnable {
 		while(true){
 			try {
 				
-				Map m = new HashMap();
+				Map newCoinMap = new HashMap();
 				
 				// PoloniexAPI
 				{
 					PoloniexAPI poloniex = new PoloniexAPI("", "");
 					List poloList = poloniex.returnTicker();
-					m.put("eid_" + 1, poloList);
+					newCoinMap.put("eid_" + 1, poloList);
 				}
 				
 				// BithumbAPI
 				{
 					try{
-						m.put("eid_" + 2, DATA.getBitthumb_LIST());
+						newCoinMap.put("eid_" + 2, DATA.getBitthumb_LIST());
 					}catch(Throwable e){
 						e.printStackTrace();
-						m.put("eid_" + 2, new ArrayList());
+						newCoinMap.put("eid_" + 2, new ArrayList());
 						
 					}
 					
@@ -53,27 +56,62 @@ public class TickManager implements Runnable {
 				// CoinoneAPI
 				{
 					List coinList = CoinoneAPI.returnTicker();
-					m.put("eid_" + 3, coinList);
+					newCoinMap.put("eid_" + 3, coinList);
 				}
 				
 				// KorbitAPI
 				{
 					List korbitList = KorbitAPI.returnTicker();
-					m.put("eid_" + 4, korbitList);
+					newCoinMap.put("eid_" + 4, korbitList);
 				}
 				
+				// KorbitAPI
 				{
-					String per_krw = CoinoneAPI.getPerKrw();
-					m.put("per_krw" , per_krw);
+					List list = BittrexAPI.returnTicker();
+					newCoinMap.put("eid_" + 5, list);
+				}
+				
+				String per_krw = "1145";
+				{
+					per_krw = CoinoneAPI.getPerKrw();
+					newCoinMap.put("per_krw" , per_krw);
 					
 					DATA.USD_KRW = per_krw;
 				}
 				
-				DATA.setCoinInfo(m);
+				Map oldCoinMap = DATA.getCoinInfo();
+				
+				DATA.setCoinInfo(newCoinMap);
+				
+				Map chCoinMap = new HashMap();
+				
+				for(Iterator it = oldCoinMap.keySet().iterator();it.hasNext(); ){
+					String key = it.next().toString();
+					if( "per_krw".equals(key) ) {
+						chCoinMap.put("per_krw" , per_krw);
+						continue;
+					}
+					
+					List<Map> oldCoinList = (List)oldCoinMap.get(key);
+					List<Map> newCoinList = (List)newCoinMap.get(key);					
+					List<Map> chCoinList = new ArrayList();					
+					chCoinMap.put(key, chCoinList);
+					for(int i = 0; i < oldCoinList.size();i++){
+						Map oldCoin = oldCoinList.get(i);
+						Map newCoin = newCoinList.get(i);
+						if( !oldCoin.get("per_ch").equals(newCoin.get("per_ch")) ){
+							chCoinList.add(newCoin);
+						}
+					}
+				}
+				StringBuilder rtnJsonStr = new StringBuilder("[");
+				rtnJsonStr.append("{ \"cmd\" : \"tick_ch\" , \"value\" : "+JsonUtil.getJsonFromMap(chCoinMap).toString()+" }" );
+				rtnJsonStr.append("]");					
+				WebSocketCon.sendAllSessionToMessage( rtnJsonStr.toString() );
 				
 				DATA.COIN_INFO_STR = JsonUtil.getJsonFromMap(DATA.getCoinInfo()).toString();
 				
-				Thread.sleep( 3000 );
+				Thread.sleep( 2700 );
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

@@ -79,6 +79,31 @@ public class URLUtil {
 		return sb.toString();
 
 	}
+	
+	
+	public static String getUrlJsonData(String url) throws Throwable {
+		HttpURLConnection huc = (HttpURLConnection) new URL(url).openConnection();
+		huc.setRequestMethod("GET");
+		huc.addRequestProperty("User-Agent",
+				"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+		huc.setRequestProperty("Accept", "application/json, text/javascript, */*; q=0.01");		
+		huc.connect();
+		InputStream in = null;
+		if( huc.getResponseCode() != 200 ){
+			in = huc.getErrorStream();
+		}else{
+			in = huc.getInputStream();
+		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(  in , "UTF-8"));
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		while ((line = br.readLine()) != null) {
+			sb.append(line);
+		}
+		br.close();
+		return sb.toString();
+	}
+	
 
 	public static String htmlToString(String url, String encoding) throws Throwable {
 

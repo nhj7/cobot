@@ -1,6 +1,6 @@
 var webSocket;
 var messages = document.getElementById("messages");
-
+ 
 function openSocket() {
 	// Ensures only one connection is open at a time
 	if (webSocket !== undefined
@@ -43,7 +43,11 @@ function openSocket() {
 			
 			if( jo[i].cmd  == "tick" ){
 				setTick(jo[i]);
-			} else if( jo[i].cmd  == "chart" ){
+			}
+			if( jo[i].cmd  == "tick_ch" ){
+				setTick(jo[i]);
+			}
+			else if( jo[i].cmd  == "chart" ){
 				setChart(jo[i]);
 			} else if( jo[i].cmd  == "refresh" ){
 				location.reload(true);
@@ -63,6 +67,7 @@ function setChart(jo){
 	drawChart("chart_div",jo);
 }
 
+
 function setTick(jo){
 	if( jo.value.per_krw != "" ){
 		per_krw = jo.value.per_krw;
@@ -71,14 +76,20 @@ function setTick(jo){
 	//alert(per_krw);
 	$("#per_krw").text( comma(per_krw) );
 	
-	regCoins( jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_1)  );
+	var ALL_COINS = jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_5).concat(jo.value.eid_1)
+	
+	regCoins( ALL_COINS  );
 }
 
 /**
  * Sends the value of the text input to the server
  */
-var cmd = [{"cmd":"tick"}];
+var initFlag = true;
+var cmd_tick = {"cmd":"tick", "initFlag" : initFlag };
+var cmd = [cmd_tick];
 function send() {
+	
+	
 	
 	if( TOUCH_FLAG == 1) return;
 	
@@ -87,6 +98,12 @@ function send() {
 	}else{
 		openSocket();
 	}
+	
+	if( cmd_tick.initFlag) {
+		
+		cmd_tick.initFlag = false;	
+	}
+	
 	
 }
 
@@ -129,8 +146,6 @@ function writeResponse(text) {
 // Application
 // cookie save. 
 var activeCoins;
-var arrCoinRank = new Array();
-var arrCoinRank_bak = new Array(); // coinRank_bak
 var per_usdt = 1;
 var per_krw = 1130;
 
@@ -145,10 +160,14 @@ function getObjStr(obj){
 
 
 
+
+
 function regCoins( coins ){
 	
-	arrCoinRank = [];
-	arrCoinRank_bak = [];
+	var coinRank = $("#coinRank");
+	var coinRank_bak = $("#coinRank_bak");
+	
+	
 	//alert($.cookie("kr.co.cobot.activeCoins"));
 	
 	var cData = $.cookie("kr.co.cobot.activeCoins");
@@ -173,6 +192,9 @@ function regCoins( coins ){
 			BitCoin = coins[i]; 
 		} 
 	}
+	if( BitCoin == null || BitCoin == undefined ){
+		BitCoin = {price : document.getElementById( "rankRow_1_BTC" ).getAttribute("data-usdt") };
+	}
 	// for loop coins. 
 	for(var i = 0; i < coins.length;i++){
 		if( 
@@ -184,71 +206,14 @@ function regCoins( coins ){
 		
 		if( coins[i].unit_cid == "9999" && coins[i].ccd != "BTC" ){
 			continue;
-		}
-		
-		var rankRow = document.createElement("div");
-		
+		}		
+		var rankRow;		
 		var str_id = "rankRow_" + coins[i].eid + "_" + coins[i].ccd;
-		
-		rankRow.setAttribute("id", str_id );
-		rankRow.setAttribute("class","rankRow");
-		rankRow.setAttribute("data-cd","data");
-		
-		//.up_flash{ background-color:#FFFCFC !important;}
-		//.down_flash{ background-color:#F8FFFF !important;}
-		
-		rankRow.setAttribute("data-eid", coins[i].eid);
-		rankRow.setAttribute("data-ccd", coins[i].ccd );
-		
-		var jq_rankRow = $(rankRow);
-		$(rankRow).on('dblclick', function() {
-			
-			if( this.parentNode.id == "coinRank" ){
-				var eid = $(this).attr("data-eid");
-				var ccd = $(this).attr("data-ccd");
-				var tmpCoins = activeCoins["eid_" + eid ];
-				
-				//alert(tmpCoins + " : " + tmpCoins.indexOf( ccd ));
-				
-				tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );				
-				document.getElementById("coinRank_bak").appendChild(this);
-			}else{
-				
-				activeCoins["eid_" + $(this).attr("data-eid") ].push( $(this).attr("data-ccd") );
-				document.getElementById("coinRank").appendChild(this);
-			}
-			
-			$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
-			
-		});
-		
-		var ch = exactRound( coins[i].per_ch * 100 , 2 );
-		var upndownCls = "";
-		var even_class = "up_bg";
-		
-		if( ch > 0 ){
-			ch = "+" + ch;
-			upndownCls = "up";
-		}else if( ch < 0 ){
-			upndownCls = "down";
-			even_class = "down_bg";
-		}
-		
-		var str_html = '<span class="rCell col_ex '+ even_class +' " onclick="$(this.parentNode).dblclick();" >'
-		 + '<a href="javascript:;" ><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
-		
-		var viewChartClick = 'onclick="viewChart(\''+coins[i].eid+'\',\''+ coins[i].ccd +'\', \''+1+'\');"';
-		
-		str_html += '<span '+viewChartClick+' class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
-		
+		var old_ch = 100;
 		var price = coins[i].price;
 		if( coins[i].unit_cid == "9999" || coins[i].unit_cid == "9998" ){
 			price = "-";
 		}
-		
-		
-		
-		str_html += '<span '+viewChartClick+' class="rCell col_btc '+ even_class +'">'+ price +'</span>';
 		
 		var usd = "";
 		if( coins[i].unit_cid == "9999" ){
@@ -272,10 +237,6 @@ function regCoins( coins ){
 		}else{
 			usd = exactRound(usd, 4);
 		}
-		
-		
-		
-		
 		var krw = usd * per_usdt * per_krw;
 		if( coins[i].unit_cid == "9998" ){
 			krw = coins[i].price;
@@ -285,83 +246,161 @@ function regCoins( coins ){
 		
 		usd = formatValue(usd);
 		krw = formatValue(krw);
+		var upndownCls = "";
+		var even_class = "up_bg";
+		var ch = exactRound( coins[i].per_ch * 100 , 2 );
+		if( ch > 0 ){
+			ch = "+" + ch;
+			upndownCls = "up";
+		}else if( ch < 0 ){
+			upndownCls = "down";
+			even_class = "down_bg";
+		}
 		
-		str_html += '<span '+viewChartClick+' class="rCell col_usd '+ even_class +'">' + comma(usd) + '</span>';
-		str_html += '<span '+viewChartClick+' class="rCell col_krw '+ even_class +'">' + comma(krw) + '</span>';
-		
-		
-		str_html += '<span '+viewChartClick+' class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
-		rankRow.innerHTML = str_html;
+		if( document.getElementById(str_id) == undefined ){
+			rankRow = document.createElement("div");
+			rankRow = $(rankRow);
+			rankRow.attr("id", str_id );
+			rankRow.attr("class","rankRow");
+			rankRow.attr("data-cd","data");
+			rankRow.attr("data-eid", coins[i].eid);
+			rankRow.attr("data-ccd", coins[i].ccd );
+			
+			
+			
+			var str_html = '<span class="rCell col_ex '+ even_class +' " onclick="$(this.parentNode).dblclick();" >'
+			 + '<a href="javascript:;" ><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
+			
+			var viewChartClick = 'onclick="viewChart(\''+coins[i].eid+'\',\''+ coins[i].ccd +'\', \''+1+'\');"';
+			
+			str_html += '<span '+viewChartClick+' class="rCell col_coin '+even_class +'">'+ coins[i].ccd +'</span>';
+			
+			str_html += '<span '+viewChartClick+' class="rCell col_btc '+ even_class +'">'+ price +'</span>';
+			
+			str_html += '<span '+viewChartClick+' class="rCell col_usd '+ even_class +'">' + comma(usd) + '</span>';
+			str_html += '<span '+viewChartClick+' class="rCell col_krw '+ even_class +'">' + comma(krw) + '</span>';
+			str_html += '<span '+viewChartClick+' class="rCell col_ch '+ even_class +' '+upndownCls+' ">' + ch + '</span>';
+			rankRow.html(str_html);
+			
+		}else{
+			//rankRow = document.getElementById(str_id);			
+			//rankRow = arrCoinRank[str_id];
+			rankRow = $("div[id='"+str_id+"']");			
+			old_ch = rankRow.attr("data-ch");
+			old_btc = rankRow.attr("data-btc");
+			old_krw = rankRow.attr("data-krw");
+			
+			rankRow.find(".col_coin").text(coins[i].ccd);
+			rankRow.find(".col_btc").text(price);
+			
+			//console.log(str_id + " old_krw : " + old_krw + ", new_krw : " + krw + ", text : " + rankRow.find(".col_krw").text() );
+			
+			
+			rankRow.find(".col_usd").text(comma(usd));
+			rankRow.find(".col_krw").text(comma(krw));
+			rankRow.find(".col_ch").text(ch);
+			rankRow.find(".col_ch").removeClass("up");
+			rankRow.find(".col_ch").removeClass("down");
+			rankRow.find(".col_ch").addClass(upndownCls);
+		}
 		
 		if( activeCoins["eid_" + coins[i].eid] == null ){
 			activeCoins["eid_" + coins[i].eid] = new Array();
 		}
-		var chkList = activeCoins["eid_" + coins[i].eid];
 		
-		rankRow.setAttribute("data-ccd", coins[i].ccd );
-		rankRow.setAttribute("data-btc", price );
-		rankRow.setAttribute("data-usdt", usd );
-		rankRow.setAttribute("data-krw", krw );
-		rankRow.setAttribute("data-ch", ch );
+		rankRow.on('dblclick', function() {			
+			var jObj = $(this);
+			if( this.parentNode.id == "coinRank" ){
+				
+				var eid = jObj.attr("data-eid");
+				var ccd = jObj.attr("data-ccd");
+				var tmpCoins = activeCoins["eid_" + eid ];
+				//alert(tmpCoins + " : " + tmpCoins.indexOf( ccd ));
+				tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );
+				coinRank_bak.append(jObj);
+				coinRank.remove("div[id='"+jObj.attr("id")+"']");
+								
+			}else{
+				if( activeCoins["eid_" + jObj.attr("data-eid") ] == null ){
+					activeCoins["eid_" + jObj.attr("data-eid") ] = new Array();
+				}
+				activeCoins["eid_" + jObj.attr("data-eid") ].push(jObj.attr("data-ccd") );
+				coinRank_bak.remove("div[id='"+jObj.attr("id")+"']");				
+				coinRank.append(jObj);
+			}			
+			$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
+		});
+		
+		
+		var chkList = activeCoins["eid_" + coins[i].eid];		
+		
+		rankRow.attr("data-ccd", coins[i].ccd );
+		rankRow.attr("data-btc", price );
+		rankRow.attr("data-usdt", usd );
+		rankRow.attr("data-krw", krw );
+		rankRow.attr("data-ch", ch );
 		
 		//document.getElementById("rankRow_" + coins[i].eid )
-				
-		if( chkList.indexOf( coins[i].ccd ) > -1 ){
-			
-			
-			
-			var oldRankRow = document.getElementById(str_id);
-			//alert(oldRankRow);
-			
-			if( oldRankRow != null ){
-				//alert(str_id + " : old_ch - " + oldRankRow.getAttribute("data-ch") + ", new_ch : " + ch );
-				
-				try{
-					var old_ch = parseFloat(oldRankRow.getAttribute("data-ch"));
-					var new_ch = parseFloat(ch);
-					if( old_ch < new_ch ){
-						rankRow.setAttribute("data-ch-cd", "up" );
-					}else if( old_ch > new_ch ){
-						rankRow.setAttribute("data-ch-cd", "down" );
-					}else{
-						rankRow.setAttribute("data-ch-cd", "" );
-					}
-				}catch(e){
-					alert(e);
-				}
+		try{				
+			var new_ch = parseFloat(ch);
+			if( old_ch < new_ch ){
+				rankRow.attr("data-ch-cd", "up" );
+				//console.log(str_id + " : old_ch - " + old_ch + ", new_ch : " + ch + ", up");
+			}else if( old_ch > new_ch ){
+				rankRow.attr("data-ch-cd", "down" );
+				//console.log(str_id + " : old_ch - " + old_ch + ", new_ch : " + ch + ", down");
+			}else{
+				rankRow.attr("data-ch-cd", "" );
 			}
-			arrCoinRank.push(rankRow);
+		}catch(e){
+			alert(e);
+		}
+		if( initFlag == true ){
+			rankRow.attr("data-sort", i);
+		}
+		if( chkList.indexOf( coins[i].ccd ) > -1 ){
+			//$("#coinRank div[data-cd=data]").remove(rankRow);
+			if( initFlag ){
+				coinRank.append(rankRow);
+			}			
+			
 			//document.getElementById("coinRank").appendChild(rankRow);
-		}else{
-			arrCoinRank_bak.push(rankRow);
+		}else{			
+			if( initFlag ){
+				coinRank_bak.append(rankRow);				
+			}
 			//document.getElementById("coinRank_bak").appendChild(rankRow);
 		}
 		
 	} // end for coins
 	
-	calcKrPrimeum( $(arrCoinRank.concat(arrCoinRank_bak)) ); // 김치 프리미엄 계산
+	
+	calcKrPrimeum(); // 김치 프리미엄 계산
 	
 	// sort coins
 	//cfg_order = {"colId":colId , "orderBy" : orderBy};
 	if( cfg_order.colId == undefined ){
-		$("#coinRank div[data-cd=data]").remove();
-		$("#coinRank").append( arrCoinRank);
+		//$("#coinRank div[data-cd=data]").remove();
+		
 	}else{
-		exeOrder(cfg_order.colId, cfg_order.orderBy, arrCoinRank );
+		exeOrder(cfg_order.colId, cfg_order.orderBy, "coinRank" , "div[data-cd=data]" );
+		
 	}
 	
-	$("#coinRank_bak div[data-cd=data]").remove();
-	$("#coinRank_bak").append( arrCoinRank_bak);
+	//exeOrder("sort", "asc", arrCoinRank_bak);
 	
-	
-	
+	if( initFlag ){
+		//$("#coinRank").append( mapCoinRank);
+		//$("#coinRank_bak").append( mapCoinRank_bak);
+	}
 	flashCoins();
 	//var arrCoinRank = new Array();
 	//var arrCoinRank_bak = new Array(); // coinRank_bak
+	initFlag = false;
 }
 
-function calcKrPrimeum(arr_coinDiv){
-	//var arr_coinDiv = $("div[data-cd=data]");
+function calcKrPrimeum(){
+	var arr_coinDiv = $("div[data-cd=data]");
 	
 	var arr_plnxDiv = arr_coinDiv.filter("div[data-eid=1]");
 	
@@ -404,22 +443,23 @@ function flashCoins(){
 	
 	//return;
 	var isFlash = false;
+	var arrCoinRank = $("div[data-cd=data]");
 	for(var i = 0; i < arrCoinRank.length;i++){
-		if( arrCoinRank[i].getAttribute( "data-ch-cd" ) != "" ){
+		var coinDiv = $(arrCoinRank[i]);
+		if( coinDiv.attr( "data-ch-cd" ) != "" ){
 			//arrCoinRank[i].onFlash();
-			if( arrCoinRank[i].getAttribute("data-ch-cd") == "up"){
+			if( coinDiv.attr("data-ch-cd") == "up"){
 				flash_class = "up_flash";
-			}else{
+			}else if( coinDiv.attr("data-ch-cd") == "down" ){
 				flash_class = "down_flash";
+			}else{
+				continue;
 			}
-			
-			
-			$("#"+arrCoinRank[i].getAttribute("id") + " .rCell").addClass(flash_class);
-			
-			var cmdStr = "$('#"+arrCoinRank[i].getAttribute("id") + " .rCell').removeClass('"+flash_class+"');";
+			coinDiv.attr("data-ch-cd", "");
+			$("#"+coinDiv.attr("id") + " .rCell").addClass(flash_class);			
+			var cmdStr = "$('#"+coinDiv.attr("id") + " .rCell').removeClass('"+flash_class+"');";
 			//alert(cmdStr);
-			setTimeout(cmdStr ,500);
-			
+			setTimeout(cmdStr ,500);			
 			isFlash = true;
 		}
 	}
@@ -452,8 +492,8 @@ function formatValue( value ){
 
 function viewChart( eid, ccd, unit_cid ){
 	
-	if( eid == "2" || eid == "4" ){
-		alert("빗썸과 코빗 거래소 차트는 준비중입니다.");
+	if( eid == "2" || eid == "4" || eid == "5"  ){
+		alert("비트렉스, 빗썸, 코빗 거래소 차트는 준비중입니다.");
 		return;
 	}
 	

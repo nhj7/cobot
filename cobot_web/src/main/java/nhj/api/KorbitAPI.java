@@ -43,7 +43,7 @@ private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
 	// "client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET&username=$EMAIL&password=$PASSWORD&grant_type=password" 
 	public static void init(){
 		log("[KorbitAPI].start!");
-		//new Thread( getInstance() ).start();
+		new Thread( getInstance() ).start();
 	}
 	
 	@Override
@@ -74,14 +74,8 @@ private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
 		List list = new ArrayList();
 		
 		for(Iterator it = COIN_INFO.keySet().iterator();it.hasNext();){
-			
 			String ccd = it.next().toString();
-			
-			
-			
-			
 			list.add(COIN_INFO.get(ccd));
-			
 		}
 		return list;
 		
@@ -149,7 +143,7 @@ private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
 			coin_map.put("ch", ch);
 			coin_map.put("per_ch",  new BigDecimal( per_ch.replaceAll("%", "") ).divide(new BigDecimal(100), 4, BigDecimal.ROUND_DOWN ) );
 			
-			//log("coin_info : " + coin_map);
+			log("coin_info : " + coin_map);
 			
 		}
 		

@@ -277,7 +277,7 @@ function addItem(idx, jObj ){
 		<section>
 		  <div style="font-size:0.7em;margin-top:-1.5em;text-align:right;color:gray;" title="이 데이터는 Cobot 시세조회 서비스를 사용합니다.">
 		  	
-		  	<span>(폴로닉스 기준 1SBD : 약 <span id="sbd_txt"></span>원)</span>
+		  	<span>(비트렉스 기준 1SBD : 약 <span id="sbd_txt"></span>원)</span>
 		  	<span onclick="popupAlarm();" style="font-size:2em;cursor:pointer;">&#x23F0;</span>
 		  </div>
 			<div class="searchDiv" id="searchDiv">

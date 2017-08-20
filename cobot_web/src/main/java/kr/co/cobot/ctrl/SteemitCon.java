@@ -259,16 +259,16 @@ public class SteemitCon {
 			main.add("pg", gson.fromJson(gson.toJson(pg), JsonObject.class));			
 			
 			if( !"".equals(DATA.USD_KRW) 
-					&& !"".equals(DATA.PLNX_USD_BITCOIN) 
-					&& !"".equals(DATA.PLNX_BTC_SBD) 
+					&& !"".equals(DATA.BTRX_USD_BITCOIN) 
+					&& !"".equals(DATA.BTRX_BTC_SBD) 
 			)
 			{
 				//System.out.println("DATA.PLNX_USD_BITCOIN : "+DATA.PLNX_USD_BITCOIN);
 				//System.out.println("DATA.PLNX_BTC_SBD : "+DATA.PLNX_BTC_SBD);
 				//System.out.println("DATA.USD_KRW : "+DATA.USD_KRW);
 				
-				BigDecimal USD_BITCOIN = new BigDecimal(DATA.PLNX_USD_BITCOIN);
-				BigDecimal BTC_SBD = new BigDecimal(DATA.PLNX_BTC_SBD);
+				BigDecimal USD_BITCOIN = new BigDecimal(DATA.BTRX_USD_BITCOIN);
+				BigDecimal BTC_SBD = new BigDecimal(DATA.BTRX_BTC_SBD);
 				BigDecimal USD_KRW = new BigDecimal(DATA.USD_KRW);
 				
 				//System.out.println("divide : "+USD_BITCOIN.multiply(BTC_SBD).setScale(2, BigDecimal.ROUND_DOWN));

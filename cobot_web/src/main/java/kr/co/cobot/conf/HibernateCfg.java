@@ -1,7 +1,11 @@
 package kr.co.cobot.conf;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Entity;
 
@@ -40,7 +44,7 @@ public class HibernateCfg {
 			String id = "cobot";
 			String passwd = "cobot1234";
 			if ( NetUtil.isMyLocal() ) {
-				url = "jdbc:mariadb://220.230.118.187:33067/cobot_test" + jdbcParam;
+				url = "jdbc:mariadb://localhost:3306/cobot" + jdbcParam;
 				id = "cobot_test";
 				passwd = "test1234";
 			}
@@ -82,13 +86,26 @@ public class HibernateCfg {
 			for (BeanDefinition bd : scanner.findCandidateComponents(entityPath)) {
 				String name = bd.getBeanClassName();
 				try {
-					Class c = Class.forName(name);
 					
-					System.out.println("Load Persistans Class : " + c);
 					
-					classes.add(c);
-					config.addAnnotatedClass(c);
+
+				    Class entity = Class.forName(name);
+				    
+					
+					Annotation[] tables =  entity.getAnnotationsByType( javax.persistence.Table.class );
+					
+					
+					
+					
+					
+					
+					
+					System.out.println("Load Persistans Class : " + entity + ", tables : " + tables[0]);
+					
+					classes.add(entity);
+					config.addAnnotatedClass(entity);
 				} catch (Exception E) {
+					E.printStackTrace();
 					// TODO: handle exception - couldn't load class in question
 				}
 			} // for

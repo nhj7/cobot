@@ -11,6 +11,10 @@ public class DATA {
 	
 	public static String PLNX_USD_BITCOIN = "";
 	public static String PLNX_BTC_SBD = "";
+	
+	public static String BTRX_USD_BITCOIN = "";
+	public static String BTRX_BTC_SBD = "";
+	
 	public static String USD_KRW = "";
 	
 	private static Map<String, JsonObject> EXCH_INFO = new HashMap();	// 거래소 리스트
@@ -19,6 +23,7 @@ public class DATA {
 	public static String COIN_INFO_STR = "";
 	
 	private static List Bitthumb_LIST = new ArrayList();
+	//public static String COIN_CH_INFO_STR;
 	
 	public synchronized static void setBitthumb_LIST( List list ){
 		Bitthumb_LIST = list;

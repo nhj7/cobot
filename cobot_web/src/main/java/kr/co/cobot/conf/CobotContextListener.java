@@ -66,15 +66,20 @@ public class CobotContextListener extends ContextLoaderListener{
 		System.out.println("mode : " + System.getProperty("mode") );
 		
 		try {
+			new Thread( new TickManager()).start();			
 			if( !NetUtil.isMyLocal() ){
+				
 			}
-			
 			AlarmManager.init();
 			
-			new Thread( new TickManager()).start();
-			//new Thread( new ExchManager()).start();
 			CacheImgManager.init();
 			SteemitManager.init();
+			
+			
+			
+			//new Thread( new ExchManager()).start();
+			
+			
 			
 			
 		} catch (Throwable e) {

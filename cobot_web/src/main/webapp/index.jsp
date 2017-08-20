@@ -168,12 +168,7 @@
 								<a href="javascript:;" onclick="openSteemMart();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
 									<data style="color:white;">(New) &nbsp;&nbsp;</data>Steem Mart &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/market.png" />
 								</a>
-							</li>
-							<li>
-								<a href="javascript:;" onclick="openSteemMart('this');"  id="about-link" class="skel-layers-ignoreHref nav_detail">
-									<data style="color:white;">(This) &nbsp;&nbsp;</data>Steem Mart &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/market.png" />
-								</a>
-							</li>
+							</li>							
 							<li>
 								<a href="javascript:;" onclick="alarmOnOff();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
 									Alarm &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/alarm.png" />
@@ -189,11 +184,11 @@
 									Steem Chat &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/chat.png" />
 								</a>
 							</li>
-							<li>
+							<!-- li>
 								<a href="javascript:;" onclick="utilPageImport('etherScan');" id="contact-link" class="skel-layers-ignoreHref nav_detail">
 									ICO Scanner(EOS) &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/search.png" />
 								</a>
-							</li>
+							</li-->
 							
 							<!-- li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
 							<li><a href="javascript:;" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">준비중</span></a></li>
@@ -363,12 +358,14 @@
 							cfg_order = {"colId":colId , "orderBy" : orderBy};
 							$.cookie("kr.co.cobot.cfg_order", JSON.stringify(cfg_order), { expires: 365 } );
 							
-							exeOrder(colId, orderBy, $("#coinRank div[data-cd=data]"));
+							exeOrder(colId, orderBy, "coinRank" , "div[data-cd=data]");
 						}
 						
-						function exeOrder( colId, orderBy, dataArray ){
+						function exeOrder( colId, orderBy, wrapper, selector  ){
+							var $wrapper = $('#' + wrapper ),
+					        $articles = $wrapper.find(selector);
 							
-							dataArray.sort(
+							[].sort.call($articles,
 								function(a, b){
 									//alert(22);
 									var aVal = a.getAttribute("data-" + colId).replace(/,/gi,""); 
@@ -392,8 +389,9 @@
 									return 0;
 								}		
 							);
-							$("#coinRank div[data-cd=data]").remove();
-							$("#coinRank").append( dataArray );
+							$articles.each(function(){
+						        $wrapper.append(this);
+						    });
 						}
 					</script>
 
