@@ -23,6 +23,7 @@ import com.google.gson.JsonObject;
 import kr.co.cobot.bot.ChartManager;
 import kr.co.cobot.bot.DATA;
 import kr.co.cobot.conf.GetHttpSessionConfigurator;
+import nhj.util.JsonUtil;
 
 @Controller("WebSocketController")
 @ServerEndpoint(value = "/echo"
@@ -133,7 +134,7 @@ public class WebSocketCon {
 				
 				
 				
-				if( cmd.equals("tick") && "true".equals(get(jo, "initFlag")) ){
+				if( cmd.equals("tick") && "true".equals( JsonUtil.get(jo, "initFlag")) ){
 					if( idx > 0 ){
 						rtnJsonStr.append(",");
 					}
