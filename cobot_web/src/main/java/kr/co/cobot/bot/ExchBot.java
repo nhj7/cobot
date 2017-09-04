@@ -11,10 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.cobot.conf.HibernateCfg;
 import kr.co.cobot.entity.TbExchange;
 
-public class ExchManager implements Runnable {
+public class ExchBot implements Runnable {
 	
 	public static void main(String[] args) {
-		new Thread( new ExchManager() ).start();
+		new Thread( new ExchBot() ).start();
 		
 	}
 

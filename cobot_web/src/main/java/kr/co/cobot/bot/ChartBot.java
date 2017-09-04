@@ -13,10 +13,10 @@ import com.google.gson.JsonPrimitive;
 import nhj.api.CoinoneAPI;
 import nhj.api.PoloniexAPI;
 
-public class ChartManager implements Runnable {
+public class ChartBot implements Runnable {
 	
 	public static void log(Object log){
-		//System.out.println(log);
+		//System.out.println(log);  
 	}
 	
 	public static void main(String[] args) throws Throwable {
@@ -27,7 +27,7 @@ public class ChartManager implements Runnable {
 		//getChartDataStr();
 		
 		
-		String out = ChartManager.getChartData("3", "1", "XRP");
+		String out = ChartBot.getChartData("3", "1", "XRP");
 		System.out.println("out : " + out);
 		
 		
@@ -46,7 +46,7 @@ public class ChartManager implements Runnable {
 		
 	}
 	
-	public static Map<String, ChartManager> CHART_DATA = new Hashtable();
+	public static Map<String, ChartBot> CHART_DATA = new Hashtable();
 	
 	
 	private String eid;
@@ -68,8 +68,8 @@ public class ChartManager implements Runnable {
 			CHART_DATA.get(key).LAST_CALL_TM = System.currentTimeMillis();
 			return CHART_DATA.get(key).CHART_STR;
 		}else{
-			// 최초 1회 수행
-			ChartManager cm = new ChartManager( eid, unit_ccd, ccd);
+			// 理쒖큹 1�쉶 �닔�뻾
+			ChartBot cm = new ChartBot( eid, unit_ccd, ccd);
 			cm.LAST_CALL_TM = System.currentTimeMillis();
 			
 			CHART_DATA.put(key, cm);
@@ -87,7 +87,7 @@ public class ChartManager implements Runnable {
 	private static String end = "9999999999";
 	
 	
-	private ChartManager( String eid, String unit_ccd, String ccd) throws Throwable{
+	private ChartBot( String eid, String unit_ccd, String ccd) throws Throwable{
 		this.eid = eid;
 		this.unit_cid = unit_ccd;
 		this.ccd = ccd.toUpperCase();
@@ -105,7 +105,7 @@ public class ChartManager implements Runnable {
 	
 	
 	
-	private static String getChartDataStr( ChartManager cm ) throws Throwable{
+	private static String getChartDataStr( ChartBot cm ) throws Throwable{
 		String unit_ccd = "BTC";
 		String ccd = cm.ccd;
 		
@@ -118,11 +118,11 @@ public class ChartManager implements Runnable {
 		
 		JsonArray chartList = null;
 		
-		// 폴로닉스
+		// �뤃濡쒕땳�뒪
 		if( "1".equals(cm.eid) ){
 			chartList = PoloniexAPI.returnChartData(currencyPair, start, end, period);
 		}
-		// 코인원
+		// 肄붿씤�썝
 		
 		else if( "3".equals(cm.eid) ){
 			chartList = CoinoneAPI.returnChartData(ccd, start, end, period);
@@ -153,7 +153,7 @@ public class ChartManager implements Runnable {
 		BigDecimal maxHigh = BigDecimal.ZERO;
 		BigDecimal minLow = BigDecimal.ZERO;
 		
-		int groupSize = 4;	// 한그룹당 사이즈 1시간 / 15분 = 4
+		int groupSize = 4;	// �븳洹몃９�떦 �궗�씠利� 1�떆媛� / 15遺� = 4
 		
 		JsonArray chartArray = new JsonArray();
 		JsonObject groupJo = new JsonObject();
@@ -311,12 +311,12 @@ public class ChartManager implements Runnable {
 		int CHART_DATA_UPDATE_INTERVAL = 1000 * 60 * 1;
 		int CAL_INTERVAL = 0;
 		
-		int CHART_BOT_DOWN_TERM = 1000 * 120;	// 2분간 요청이 없는 쓰레드는 종료한다.
+		int CHART_BOT_DOWN_TERM = 1000 * 120;	// 2遺꾧컙 �슂泥��씠 �뾾�뒗 �벐�젅�뱶�뒗 醫낅즺�븳�떎.
 		int ERROR_SLEEP_TM = 1000 * 60;
 		while(true){
 			
 			try {
-				Thread.sleep( LAST_DATA_UPDATE_INTERVAL );// 2초 쉬어간다.
+				Thread.sleep( LAST_DATA_UPDATE_INTERVAL );// 2珥� �돩�뼱媛꾨떎.
 				
 				CAL_INTERVAL += LAST_DATA_UPDATE_INTERVAL;
 				

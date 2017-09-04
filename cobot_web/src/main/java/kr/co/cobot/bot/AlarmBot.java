@@ -19,19 +19,19 @@ import nhj.api.WebPushAPI;
 import nhj.util.JsonUtil;
 import nhj.util.StringUtil;
 
-public class AlarmManager implements Runnable {
+public class AlarmBot implements Runnable {
 
 	public static void main(String[] args) {		
 		init();	
 		
 	}
 	
-	private static Session session = HibernateCfg.getCurrentSession();
+	private Session session = HibernateCfg.getCurrentSession();
 	private static List<JsonObject> WEB_PUSH_LIST = new ArrayList();
 	
 	
 	public static void init(){
-		new Thread( new AlarmManager() ).start();
+		new Thread( new AlarmBot() ).start();
 	}
 	
 	public static void newCheckAndSendAlarm( TbPostInfo post ) throws Throwable{

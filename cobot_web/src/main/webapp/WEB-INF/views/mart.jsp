@@ -170,7 +170,7 @@ function addItem(idx, jObj ){
 		var realKrwAmt = newItem.find("#realKrwAmt");	
 		realKrwAmt.text( comma( exactRound(jObj.realAmt * sbdKrw, 0) ) + "원"  );
 	}catch(e){
-		
+		console.log(e);
 	}
 	
 	
@@ -518,7 +518,7 @@ function addItem(idx, jObj ){
 		</div>
 		<div class="itemCell itemInfoDiv">
 			<div id="prodName" class="itemInfoTitle">상품명</div>
-			<div class="itemInfoTitle" ><span id="realAmt" style="color:red;">0.0</span>SBD (한화 약 : <data id="realKrwAmt">0원</data> )</div>
+			<div class="itemInfoTitle" ><span id="realAmt" style="color:red;">0.0</span>SBD (한화 : <data id="realKrwAmt">0원</data> )</div>
 			<div class="itemInfoTitle">남은 시간 : <span id="strAuctionEndDttm" data-countdown="2017-08-04 21:00:00"></span></div>
 			<div class="itemInfoRow">
 			  <div class="itemInfoCell">할인율</div>
@@ -538,7 +538,7 @@ function addItem(idx, jObj ){
 			  </div>
 			  <div id="voteAmt" class="itemInfoCell">$0.0</div>
 			</div>			
-			<div  onclick="viewReply('itemInfoReply'); return false;" class="itemInfoReplyPre">
+			<div  class="itemInfoReplyPre">
 			 	
 				<span id="itemInfoReplyPre">총 0건의 입찰이 있습니다.</span> 
 			</div>
@@ -601,7 +601,7 @@ function addItem(idx, jObj ){
 	display:none;
 	text-align:center;
 	width:360px;
-	height:210px;
+	height:250px;
 	color:white;
 	border-radius: 24px;
 }
@@ -638,9 +638,18 @@ select{
 		<span style="text-decoration:line-through;">입찰건만<input name="auctionChk" id="actChoose" type="checkbox" readonly="readonly" /></span>
 		<span onclick="setAlarmChk('actNo')">중지<input name="auctionChk" id="actNo" type="checkbox" readonly="readonly" /></span>
 	</div>
-	<div style="margin-top:10px;">
+	<div style="margin-top:10px;text-align:right;padding-right:20%;">
 		<span>@ </span>
 		<span><input type="text" id="steemitId" style="padding-left:5px;"></span>	
+	</div>
+	<div style="margin-top:10px;text-align:right;padding-right:20%;">
+		<span>E-Mail </span>
+		<span>
+			<input type="text" id="eMail" style="padding-left:5px;">
+		</span>
+		<span style="position:absolute;">
+			&nbsp;<button onclick="alert('인증 메일 전송!');" style="padding:0px 6px 0 6px ;" class="btn btn-default">인증</button>
+		</span>	
 	</div>
 	<div style="margin-top:10px;">
 		<select id="alarmTimer" >

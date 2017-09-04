@@ -24,7 +24,7 @@ import nhj.util.NetUtil;
 import nhj.util.StringUtil;
 import nhj.util.URLUtil;
 
-public class PostManager implements Runnable {
+public class PostBot implements Runnable {
 	
 	private static String STEEM_URL = "https://steemit.com";
 	
@@ -36,10 +36,10 @@ public class PostManager implements Runnable {
 	
 	
 	public static void main(String[] args) throws Throwable {
-		PostManager.init();
+		PostBot.init();
 	}
 	
-	public PostManager(){		
+	public PostBot(){		
 		
 	}
 	
@@ -47,7 +47,7 @@ public class PostManager implements Runnable {
 	
 	public static void init(){
 		
-		PostManager am = new PostManager();
+		PostBot am = new PostBot();
 		new Thread(am).start();		
 	}
 	

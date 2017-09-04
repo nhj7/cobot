@@ -15,7 +15,7 @@ import nhj.api.KorbitAPI;
 import nhj.api.PoloniexAPI;
 import nhj.util.JsonUtil;
 
-public class TickManager implements Runnable {
+public class TickerBot implements Runnable {
 
 	//
 	static{
@@ -130,7 +130,7 @@ public class TickManager implements Runnable {
 	
 	public static void main(String[] args) throws Throwable {
 		
-		new Thread(new TickManager()).start();
+		new Thread(new TickerBot()).start();
 		
 		Thread.sleep(1000000);
 		

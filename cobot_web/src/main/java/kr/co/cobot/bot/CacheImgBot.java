@@ -18,30 +18,22 @@ import kr.co.cobot.entity.TbCacheImg;
 import net.coobird.thumbnailator.Thumbnails;
 import nhj.util.SecurityUtil;
 
-public class CacheImgManager implements Runnable {
-	private CacheImgManager(){
+public class CacheImgBot implements Runnable {
+	private CacheImgBot(){
 		
 	}
-	@Override
-	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
-		super.finalize();
-
-		HibernateCfg.closeSession();
-		HibernateCfg.closeSessionFactory();
-	}
-
-	public static void init() {
-		
+	
+	private static Map<String, String> CACHE_IMG_REPO = new HashMap();
+	private static Stack WORK_REPO = new Stack();
+	private static String CACHE_DIR_PATH = "/data/cobot/img/";
+	
+	public static void init() {		
 		File pathChk = new File(CACHE_DIR_PATH);
 		if( !pathChk.exists()){
 			pathChk.mkdirs();
 		}
-		new Thread(new CacheImgManager()).start();
-	}
-
-	private static Map<String, String> cacheImgMap = new HashMap();
-	private static Stack waitForWork = new Stack();
+		new Thread(new CacheImgBot()).start();
+	}	
 
 	public static void addCacheImg(String imgUrl) {
 		/*
@@ -50,7 +42,7 @@ public class CacheImgManager implements Runnable {
 		if( "".equals(imgUrl)){
 			return;
 		}
-		else if (waitForWork.contains(imgUrl)) {
+		else if (WORK_REPO.contains(imgUrl)) {
 			System.out.println("CacheImgManager wait For Work... [" + imgUrl + "]");
 			return;
 		} else {
@@ -60,7 +52,7 @@ public class CacheImgManager implements Runnable {
 				List list = session.createQuery("from TbCacheImg where imgUrl = :imgUrl ").setParameter("imgUrl", imgUrl)
 						.getResultList();
 				if (list.size() == 0) {
-					waitForWork.push(imgUrl);
+					WORK_REPO.push(imgUrl);
 				} else {
 					TbCacheImg cacheImg = (TbCacheImg) list.get(0);				
 					// File이 존재하면 캐시에 넣음. 없으면 디비에서 삭제
@@ -77,14 +69,13 @@ public class CacheImgManager implements Runnable {
 	
 	private static boolean chkFileAndCache( TbCacheImg cacheImg,  Session session ){
 		if (new File(CACHE_DIR_PATH + cacheImg.getImgPath()).exists()) {
-			cacheImgMap.put(cacheImg.getImgUrl(), cacheImg.getImgPath());
+			CACHE_IMG_REPO.put(cacheImg.getImgUrl(), cacheImg.getImgPath());
 			return true;
 		}
 		// 파일이 없으면 DB에서 삭제하고 다시 addCacheImg(); 호출!!!
 		else {
-			
-			org.hibernate.Transaction tx = session.beginTransaction();
-			
+			System.out.println("bbbffffffffffffbbbbbbbbb");
+			org.hibernate.Transaction tx = session.getTransaction();
 			Query q = session.createQuery("delete from TbCacheImg where imgUrl = :imgUrl ").setParameter("imgUrl",
 					cacheImg.getImgUrl());
 			int i = q.executeUpdate();
@@ -94,37 +85,11 @@ public class CacheImgManager implements Runnable {
 		}
 	}
 
-	private static String CACHE_DIR_PATH = "/data/cobot/img/";
-
-	public static void main(String[] args) throws Throwable {
-
-		CacheImgManager.init();
-		
-		System.out.println("add img");
-		String imgUrl1 = "https://steemitimages.com/0x0/https://steemitimages.com/0x0/https://steemitimages.com/DQmQZ2eXkxh2zr8YsrEXEUo8rPhmsxqQcG9V1cVFxAyiXKm/bag7301.JPG";
-		//CacheImgManager.addCacheImg(imgUrl1);
-		System.out.println("add img end");
-		
-		String cacheImgUrl1 = getImgUrl(imgUrl1);
-		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
-		
-		System.out.println("wait 6sec.");
-		Thread.sleep(6000);
-		
-		cacheImgUrl1 = getImgUrl(imgUrl1);
-		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
-		
-		System.out.println("wait 3sec.");
-		Thread.sleep(3000);
-		cacheImgUrl1 = getImgUrl(imgUrl1);
-		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
-	}
-	
 	public static String getImgUrl(String url){
 		if( url == null || "".equals(url)){
 			return "";
 		}
-		Object obj = cacheImgMap.get(url);
+		Object obj = CACHE_IMG_REPO.get(url);
 		if( obj == null || "".equals(obj.toString()) ) addCacheImg(url);
 		return obj == null ? "": obj.toString();
 	}
@@ -144,11 +109,11 @@ public class CacheImgManager implements Runnable {
 			while (true) {
 				try {
 
-					while (!waitForWork.empty()) {
+					while (!WORK_REPO.empty()) {
 						
-						String imgUrl = waitForWork.pop().toString();
+						String imgUrl = WORK_REPO.pop().toString();
 						
-						System.out.println("CacheImgManager cache image work start! + " + imgUrl);
+						//System.out.println("CacheImgManager cache image work start! + " + imgUrl);
 						
 						String imgName = SecurityUtil.getRandomID128() + ".png";
 						
@@ -165,14 +130,12 @@ public class CacheImgManager implements Runnable {
 							session.save(cacheImg);
 							tx.commit();
 							
-							cacheImgMap.put(imgUrl, imgName);
+							CACHE_IMG_REPO.put(imgUrl, imgName);
 							
 						} catch (Exception e) {
 							if( tx != null && tx.getStatus() != TransactionStatus.COMMITTED ){
 								tx.rollback();
-							}
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							}							
 						}
 					}
 					Thread.sleep(REFRESH_CACHE_IMG_WORK_TERM);
@@ -193,4 +156,37 @@ public class CacheImgManager implements Runnable {
 			HibernateCfg.closeSessionFactory();
 		}
 	}
+	
+	public static void main(String[] args) throws Throwable {
+
+		CacheImgBot.init();
+		
+		System.out.println("add img");
+		String imgUrl1 = "https://steemitimages.com/0x0/https://steemitimages.com/0x0/https://steemitimages.com/DQmQZ2eXkxh2zr8YsrEXEUo8rPhmsxqQcG9V1cVFxAyiXKm/bag7301.JPG";
+		//CacheImgManager.addCacheImg(imgUrl1);
+		System.out.println("add img end");
+		
+		String cacheImgUrl1 = getImgUrl(imgUrl1);
+		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
+		
+		System.out.println("wait 6sec.");
+		Thread.sleep(6000);
+		
+		cacheImgUrl1 = getImgUrl(imgUrl1);
+		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
+		
+		System.out.println("wait 3sec.");
+		Thread.sleep(3000);
+		cacheImgUrl1 = getImgUrl(imgUrl1);
+		System.out.println("cacheImgUrl1 : " + cacheImgUrl1 );
+	}
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+
+		HibernateCfg.closeSession();
+		HibernateCfg.closeSessionFactory();
+	}
+	
 }

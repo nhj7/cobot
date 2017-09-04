@@ -103,7 +103,7 @@
 							}	
 						}
 						
-						var steemMartUrl = "/steemit/steem-mart/";
+						var steemMartUrl = "/mart";
 						function steemMartOnOff( target ){
 							var steem_iframe = "#mart_iframe";
 							var steem_import = "#mart_import";
@@ -144,7 +144,7 @@
 							if( dvcd == "this"){
 								steemMartOnOff();
 							}else{
-								window.open("/steemit/steem-mart/","_blank");	
+								window.open("/mart","_blank");	
 							}
 							
 						}

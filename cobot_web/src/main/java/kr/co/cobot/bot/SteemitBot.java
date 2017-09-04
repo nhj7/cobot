@@ -24,22 +24,22 @@ import nhj.api.steemit.SteemApi;
 import nhj.util.DateUtil;
 import nhj.util.JsonUtil;
 
-public class SteemitManager implements Runnable {
+public class SteemitBot implements Runnable {
 	private static Gson gson = new Gson();
 	private static String STEEM_URL = "https://steemit.com";	
 	private static Session session = HibernateCfg.getCurrentSession();
 	
 	public static void main(String[] args) throws Throwable {
-		CacheImgManager.init();
-		AlarmManager.init();
-		SteemitManager.init();
+		CacheImgBot.init();
+		AlarmBot.init();
+		SteemitBot.init();
 	}
-	public SteemitManager(){
+	public SteemitBot(){
 	}
 	
 	public static void init(){
 		SteemApi.init();
-		SteemitManager sm = new SteemitManager();
+		SteemitBot sm = new SteemitBot();
 		new Thread(sm).start();		
 	}
 
@@ -599,7 +599,7 @@ public class SteemitManager implements Runnable {
 			postMarket.setProdImgUrl(prodImgUrl);
 			String cachePostImgUrl = "";
 			if( postImgUrl != null && !"".equals(postImgUrl)){
-				cachePostImgUrl = CacheImgManager.getImgUrl(postImgUrl);
+				cachePostImgUrl = CacheImgBot.getImgUrl(postImgUrl);
 				postMarket.setCachePostImgUrl(cachePostImgUrl);
 			}
 		}
@@ -607,7 +607,7 @@ public class SteemitManager implements Runnable {
 			postMarket.setPostImgUrl(postImgUrl);
 			String cacheProdImgUrl = "";
 			if( prodImgUrl != null && !"".equals(prodImgUrl)){
-				cacheProdImgUrl = CacheImgManager.getImgUrl(prodImgUrl);
+				cacheProdImgUrl = CacheImgBot.getImgUrl(prodImgUrl);
 				postMarket.setCacheProdImgUrl(cacheProdImgUrl);
 			}
 		}
@@ -623,7 +623,9 @@ public class SteemitManager implements Runnable {
 		postMarket.setModDttm(curDate);
 		
 		org.hibernate.Transaction tx = session.getTransaction();
-		tx.begin();
+		if( !tx.isActive() ){
+			tx.begin();
+		}
 		try {
 			
 			List<Discussion> replies = SteemApi.getContentReplies( postMarket.getAuthor() , permLink);
@@ -767,7 +769,7 @@ public class SteemitManager implements Runnable {
 			TbPostInfo post = new TbPostInfo();
 			post.setPostId(market.getPostId());
 			
-			AlarmManager.auctionCheckAndSendAlarm(market);
+			AlarmBot.auctionCheckAndSendAlarm(market);
 			
 			chkMarketDataAndMerge(post, discussion, market);
 			
@@ -840,7 +842,7 @@ public class SteemitManager implements Runnable {
 					
 					System.out.println("[New Post "+post.getPostId()+"] [created] [" + post.getPostTitle() + "]" );
 					
-					AlarmManager.newCheckAndSendAlarm(post);
+					AlarmBot.newCheckAndSendAlarm(post);
 					
 					// kr-market의 포스팅인 경우 마켓 인식 로직 수행!!
 					if( post.getArrTagStr().indexOf("kr-market") > -1 ){

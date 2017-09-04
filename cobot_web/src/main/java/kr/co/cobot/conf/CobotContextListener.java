@@ -14,11 +14,11 @@ import org.apache.log4j.Logger;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
-import kr.co.cobot.bot.AlarmManager;
-import kr.co.cobot.bot.CacheImgManager;
-import kr.co.cobot.bot.ExchManager;
-import kr.co.cobot.bot.SteemitManager;
-import kr.co.cobot.bot.TickManager;
+import kr.co.cobot.bot.AlarmBot;
+import kr.co.cobot.bot.CacheImgBot;
+import kr.co.cobot.bot.ExchBot;
+import kr.co.cobot.bot.SteemitBot;
+import kr.co.cobot.bot.TickerBot;
 import nhj.util.NetUtil;
 
 public class CobotContextListener extends ContextLoaderListener{
@@ -38,7 +38,7 @@ public class CobotContextListener extends ContextLoaderListener{
 		
 		
 		try {
-			if( NetUtil.isMyLocal() ){
+			if( false && NetUtil.isMyLocal() ){
 				Object source = event.getSource();
 				Field field = source.getClass().getDeclaredField("context");
 				field.setAccessible(true);
@@ -63,18 +63,17 @@ public class CobotContextListener extends ContextLoaderListener{
 			e.printStackTrace();
 		}		
 		System.out.println("CobotContextListener Start......");
-		System.out.println("mode : " + System.getProperty("mode") );
+		System.out.println("mode: " + System.getProperty("mode") );
 		
 		try {
-			new Thread( new TickManager()).start();			
+			new Thread( new TickerBot()).start();			
 			if( !NetUtil.isMyLocal() ){
 				
 			}
-			AlarmManager.init();
 			
-			CacheImgManager.init();
-			SteemitManager.init();
-			
+			AlarmBot.init();
+			CacheImgBot.init();
+			SteemitBot.init();
 			
 			
 			//new Thread( new ExchManager()).start();
