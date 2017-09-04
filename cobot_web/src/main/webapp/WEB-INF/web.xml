@@ -45,7 +45,7 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
-	<security-constraint>
+	<!-- security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Secured</web-resource-name>
 			<url-pattern>/*</url-pattern>
@@ -53,7 +53,7 @@
 		<user-data-constraint>
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
-	</security-constraint>
+	</security-constraint-->
 
 	<!-- error 페이지 -->
 
