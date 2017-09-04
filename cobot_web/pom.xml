@@ -10,9 +10,7 @@
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.3.10.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.6.1</org.slf4j-version>
-		<!-- 해당 문제 발생시. [WARN] Using platform encoding (MS949 actually) to copy 
-			filtered resources, i.e. build is platform dependent! -->
-
+		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -276,7 +274,7 @@
 		<dependency>
 			<groupId>eu.bittrade.libs</groupId>
 			<artifactId>steem-api-wrapper</artifactId>
-			<version>0.3.3</version>
+			<version>0.3.4</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
 		<dependency>
@@ -290,6 +288,13 @@
 			<artifactId>hamcrest-date</artifactId>
 			<version>2.0.4</version>
 			<scope>test</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.corundumstudio.socketio/netty-socketio -->
