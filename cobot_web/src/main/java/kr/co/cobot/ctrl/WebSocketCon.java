@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import kr.co.cobot.bot.ChartManager;
+import kr.co.cobot.bot.ChartBot;
 import kr.co.cobot.bot.DATA;
 import kr.co.cobot.conf.GetHttpSessionConfigurator;
 import nhj.util.JsonUtil;
@@ -146,13 +146,13 @@ public class WebSocketCon {
 					String eid = get(jo, "eid");
 					String unit_ccd = get(jo, "unit_cid");
 					String ccd = get(jo, "ccd");
-					String chartData = ChartManager.getChartData(eid, unit_ccd, ccd);
+					String chartData = ChartBot.getChartData(eid, unit_ccd, ccd);
 					
 					try {
 						if( idx > 0 ){
 							rtnJsonStr.append(",");
 						}
-						rtnJsonStr.append( "  { \"cmd\" : \"chart\", \"title\":\""+ccd+"/BTC\", \"tick\":"+ChartManager.getTickData(eid, unit_ccd, ccd)+" , \"value\" : "+ chartData +" }" );
+						rtnJsonStr.append( "  { \"cmd\" : \"chart\", \"title\":\""+ccd+"/BTC\", \"tick\":"+ChartBot.getTickData(eid, unit_ccd, ccd)+" , \"value\" : "+ chartData +" }" );
 						
 						
 					} catch (Throwable e) {
