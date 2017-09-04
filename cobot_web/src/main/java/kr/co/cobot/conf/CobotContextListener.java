@@ -35,7 +35,11 @@ public class CobotContextListener extends ContextLoaderListener{
 		// TODO Auto-generated method stub
 		super.contextInitialized(event);
 		
-		
+		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+		loggers.add(LogManager.getRootLogger());
+		for ( Logger logger : loggers ) {
+		    logger.setLevel(Level.OFF);
+		}
 		
 		try {
 			if( false && NetUtil.isMyLocal() ){
@@ -86,11 +90,7 @@ public class CobotContextListener extends ContextLoaderListener{
 			e.printStackTrace();
 		}
 		
-		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
-		loggers.add(LogManager.getRootLogger());
-		for ( Logger logger : loggers ) {
-		    logger.setLevel(Level.OFF);
-		}
+		
 		
 	}
 	
