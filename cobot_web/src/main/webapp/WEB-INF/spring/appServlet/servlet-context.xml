@@ -32,6 +32,7 @@
 	<resources mapping="/lib/**" location="/lib/" />
 	<resources mapping="/chartist/**" location="/chartist/" />
 	<resources mapping="/extanal/**" location="/extanal/" />
+	<resources mapping="/.well-known/acme-challenge/**" location="/.well-known/acme-challenge/" />
 	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
