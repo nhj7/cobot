@@ -400,12 +400,22 @@ public class CoinoneAPI implements Runnable {
 
 	private static String getUSDCurrency() throws Throwable {
 
-		String url = "https://api.coinone.co.kr/currency/?format=json";
+		String url = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%3D%22USDKRW%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 		String rtnJsonStr = URLUtil.htmlToString(url);
 
+		//System.out.println("[rtnJsonStr] : "+rtnJsonStr);
+		
 		JsonObject jo = new Gson().fromJson(rtnJsonStr, JsonObject.class);
-
-		return get(jo, "currency").toString();
+		String rate = "1128.5";
+		
+		try{
+			rate = get(jo.get("query").getAsJsonObject().get("results").getAsJsonObject().get("rate").getAsJsonObject(), "Rate");
+		}catch(Exception e){
+			
+		}
+		
+		
+		return rate;
 
 	}
 
@@ -466,6 +476,12 @@ public class CoinoneAPI implements Runnable {
 	
 	public static void main(String[] args) throws Throwable {
 		CoinoneAPI api = new CoinoneAPI();
+		
+		String usd = api.getUSDCurrency();
+		
+		
+		if(true)return;
+		
 		api.init();
 		new Thread(api).start();
 		
