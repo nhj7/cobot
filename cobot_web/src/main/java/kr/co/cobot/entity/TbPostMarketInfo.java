@@ -48,11 +48,10 @@ public class TbPostMarketInfo implements java.io.Serializable {
 	public TbPostMarketInfo() {
 	}
 
-	public TbPostMarketInfo(long siteId, int postId, String permLink, String prodName) {
-		this.siteId = siteId;
+	public TbPostMarketInfo(int postId) {
+
 		this.postId = postId;
-		this.permLink = permLink;
-		this.prodName = prodName;
+
 	}
 
 	public TbPostMarketInfo(long siteId, int postId, String author, String permLink, String prodName, Short method,
@@ -92,7 +91,7 @@ public class TbPostMarketInfo implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "SITE_ID",  nullable = false)
+	@Column(name = "SITE_ID", nullable = false)
 	public long getSiteId() {
 		return this.siteId;
 	}
@@ -101,7 +100,7 @@ public class TbPostMarketInfo implements java.io.Serializable {
 		this.siteId = siteId;
 	}
 
-	@Column(name = "POST_ID",unique = true, nullable = false)
+	@Column(name = "POST_ID", unique = true, nullable = false)
 	public int getPostId() {
 		return this.postId;
 	}
