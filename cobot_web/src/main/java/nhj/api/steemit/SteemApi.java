@@ -58,16 +58,20 @@ public class SteemApi {
     }
     
     public static List<Discussion> getDiscussionBy(String tag, int limit) throws Exception {
-
+    	System.out.println("steemApi.getDiscussionBy 1");
         final DiscussionSortType[] sortTypes = new DiscussionSortType[] { DiscussionSortType.SORT_BY_TRENDING,
                 DiscussionSortType.SORT_BY_CREATED, DiscussionSortType.SORT_BY_ACTIVE,
                 DiscussionSortType.SORT_BY_CASHOUT, DiscussionSortType.SORT_BY_VOTES,
                 DiscussionSortType.SORT_BY_CHILDREN, DiscussionSortType.SORT_BY_HOT, DiscussionSortType.SORT_BY_BLOG,
                 DiscussionSortType.SORT_BY_PROMOTED, DiscussionSortType.SORT_BY_PAYOUT,
                 DiscussionSortType.SORT_BY_FEED };
-
+        
+        System.out.println("steemApi.getDiscussionBy 2");
+        
         //for (final DiscussionSortType type : sortTypes) {
         final List<Discussion> discussions = steemApiWrapper.getDiscussionsBy(tag, limit, DiscussionSortType.SORT_BY_CREATED);
+        
+        System.out.println("steemApi.getDiscussionBy 3");
         
         return discussions;
         
@@ -94,8 +98,8 @@ public class SteemApi {
 		
     	init();
     	
-    	//List<Discussion> discussions = getDiscussionBy("kr-market", 100);
-    	Discussion discussions = getContent("jumma", "kr-market-4-0808-1");
+    	List<Discussion> discussions = getDiscussionBy("kr-market", 100);
+    	//Discussion discussions = getContent("jumma", "kr-market-4-0808-1");
     	
     	//List<Discussion> discussions = getContentReplies("leesunmoo", "2017-8-11");
     	
