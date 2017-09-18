@@ -30,6 +30,7 @@ public class SteemitBot implements Runnable {
 	private static Session session = HibernateCfg.getCurrentSession();
 	
 	public static void main(String[] args) throws Throwable {
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.INFO);
 		CacheImgBot.init();
 		AlarmBot.init();
 		SteemitBot.init();
@@ -55,15 +56,22 @@ public class SteemitBot implements Runnable {
 	
 	static boolean INIT_FLAG = true;
 	
-	public void run(){		
+	public void run(){
+		
+		System.out.println("SteemitBot.run 1");
+		
 		while(true){
 			try {
 				
+				System.out.println("SteemitBot.run 2");
+				
 				long cur = System.currentTimeMillis();
 				if( INIT_FLAG ){
+					System.out.println("SteemitBot.run 3");
 					INIT_FLAG = false;
 					executeSave("kr", 100);
 				}else{
+					System.out.println("SteemitBot.run 4");
 					executeSave("kr", 20);
 				}
 				
@@ -77,6 +85,8 @@ public class SteemitBot implements Runnable {
 				System.out.println("[SteemitManager.marketRefresh()] : " + (System.currentTimeMillis()-cur) + "ms" );
 				
 				Thread.sleep(TERM_STEEM_POST_CHECK);
+				
+				System.out.println("SteemitBot.run 5");
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
