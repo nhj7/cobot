@@ -69,7 +69,7 @@ public class SteemitBot implements Runnable {
 				if( INIT_FLAG ){
 					System.out.println("SteemitBot.run 3");
 					INIT_FLAG = false;
-					executeSave("kr", 100);
+					executeSave("kr", 50);
 				}else{
 					System.out.println("SteemitBot.run 4");
 					executeSave("kr", 20);
