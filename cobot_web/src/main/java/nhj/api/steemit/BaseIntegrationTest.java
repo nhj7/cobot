@@ -27,7 +27,8 @@ public abstract class BaseIntegrationTest extends BaseTest {
 
             steemApiWrapper = new SteemApiWrapper();
         } catch (SteemCommunicationException | URISyntaxException e) {
-            LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
+            //LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
+        	System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
         }
     }
 }

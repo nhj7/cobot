@@ -4,8 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -22,9 +21,6 @@ import eu.bittrade.libs.steemj.exceptions.SteemCommunicationException;
 public class SteemApi {
 	protected static final SteemJConfig CONFIG = SteemJConfig.getInstance();
     protected static SteemApiWrapper steemApiWrapper;
-    
-    protected static final Logger LOGGER = LogManager.getLogger(BaseTest.class);
-
     protected static final short REF_BLOCK_NUM = (short) 34294;
     protected static final long REF_BLOCK_PREFIX = 3707022213L;
     protected static final String EXPIRATION_DATE = "2016-04-06T08:29:27UTC";
@@ -47,7 +43,8 @@ public class SteemApi {
 
             steemApiWrapper = new SteemApiWrapper();
         } catch (SteemCommunicationException | URISyntaxException e) {
-            LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
+            //LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
+            System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
         }
     }
     
