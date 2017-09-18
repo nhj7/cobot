@@ -8,9 +8,7 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.core.StandardContext;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
@@ -35,11 +33,15 @@ public class CobotContextListener extends ContextLoaderListener{
 		// TODO Auto-generated method stub
 		super.contextInitialized(event);
 		
+		/*
 		List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
 		loggers.add(LogManager.getRootLogger());
 		for ( Logger logger : loggers ) {
 		    logger.setLevel(Level.OFF);
 		}
+		*/
+		
+		LogConfiguration.init();
 		
 		try {
 			if( false && NetUtil.isMyLocal() ){
@@ -77,6 +79,8 @@ public class CobotContextListener extends ContextLoaderListener{
 			
 			AlarmBot.init();
 			CacheImgBot.init();
+			
+			System.out.println("SteemitBot.init().");
 			SteemitBot.init();
 			
 			
