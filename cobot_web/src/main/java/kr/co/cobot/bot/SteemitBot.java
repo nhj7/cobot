@@ -790,15 +790,19 @@ public class SteemitBot implements Runnable {
 	
 	public static void executeSave( String tag , int limit ) throws Throwable{
 		org.hibernate.Transaction tx = null;
-		
+		System.out.println("executeSave 1");
 		try{
 			tx = session.getTransaction();
+			
+			System.out.println("executeSave 2");
+			
 			if( tag == null ){
 				tag = "kr";
 			}
 			
 			List<Discussion> arrayPost = SteemApi.getDiscussionBy(tag, limit);
 			//List<Discussion> arrayPost = SteemApi.getDiscussionBy("kr-seller", 20);
+			System.out.println("executeSave 3");
 			
 			/*
 			List webPushList = session.createQuery("from TbWebPushM ").list();
