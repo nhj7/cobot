@@ -41,7 +41,7 @@ public class CobotContextListener extends ContextLoaderListener{
 		}
 		*/
 		
-		LogConfiguration.init();
+		//LogConfiguration.init();
 		
 		try {
 			if( false && NetUtil.isMyLocal() ){
