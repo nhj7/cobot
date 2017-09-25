@@ -69,7 +69,7 @@ public class SteemitBot implements Runnable {
 				if( INIT_FLAG ){
 					
 					INIT_FLAG = false;
-					executeSave("kr", 100);
+					executeSave("kr", 50);
 				}else{
 					
 					executeSave("kr", 20);
