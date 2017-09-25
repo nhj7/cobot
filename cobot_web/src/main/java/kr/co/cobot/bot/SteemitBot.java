@@ -27,7 +27,7 @@ import nhj.util.JsonUtil;
 public class SteemitBot implements Runnable {
 	private static Gson gson = new Gson();
 	private static String STEEM_URL = "https://steemit.com";	
-	private static Session session = HibernateCfg.getCurrentSession();
+	
 	
 	public static void main(String[] args) throws Throwable {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.INFO);
@@ -58,20 +58,20 @@ public class SteemitBot implements Runnable {
 	
 	public void run(){
 		
-		System.out.println("SteemitBot.run 1");
+		System.out.println("SteemitBot.run");
 		
 		while(true){
 			try {
 				
-				System.out.println("SteemitBot.run 2");
+				
 				
 				long cur = System.currentTimeMillis();
 				if( INIT_FLAG ){
-					System.out.println("SteemitBot.run 3");
+					
 					INIT_FLAG = false;
-					executeSave("kr", 50);
+					executeSave("kr", 100);
 				}else{
-					System.out.println("SteemitBot.run 4");
+					
 					executeSave("kr", 20);
 				}
 				
@@ -632,6 +632,8 @@ public class SteemitBot implements Runnable {
 		}
 		postMarket.setModDttm(curDate);
 		
+		Session session = HibernateCfg.getCurrentSession();
+		
 		org.hibernate.Transaction tx = session.getTransaction();
 		if( !tx.isActive() ){
 			tx.begin();
@@ -676,7 +678,7 @@ public class SteemitBot implements Runnable {
 					
 				
 				double auctionAmt = getAmt(body);
-				if( auctionAmt == 0.0 ){
+				if( auctionAmt == 0.0 || lastAuctionAmt * 2 < auctionAmt ){
 					continue;
 				}
 				
@@ -767,6 +769,7 @@ public class SteemitBot implements Runnable {
 			executeSave( "kr-market" , 20 );
 		}
 		
+		Session session = HibernateCfg.getCurrentSession();
 		
 		List<TbPostMarketInfo> marketList =  session.createQuery( "from TbPostMarketInfo where status <> 8 ").list();
 		
@@ -789,12 +792,14 @@ public class SteemitBot implements Runnable {
 	
 	
 	public static void executeSave( String tag , int limit ) throws Throwable{
+		Session session = HibernateCfg.getCurrentSession();
+		
 		org.hibernate.Transaction tx = null;
-		System.out.println("executeSave 1");
+		//System.out.println("executeSave 1");
 		try{
 			tx = session.getTransaction();
 			
-			System.out.println("executeSave 2");
+			//System.out.println("executeSave 2");
 			
 			if( tag == null ){
 				tag = "kr";
@@ -802,7 +807,7 @@ public class SteemitBot implements Runnable {
 			
 			List<Discussion> arrayPost = SteemApi.getDiscussionBy(tag, limit);
 			//List<Discussion> arrayPost = SteemApi.getDiscussionBy("kr-seller", 20);
-			System.out.println("executeSave 3");
+			//System.out.println("executeSave 3");
 			
 			/*
 			List webPushList = session.createQuery("from TbWebPushM ").list();
