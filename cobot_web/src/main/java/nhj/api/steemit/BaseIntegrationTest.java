@@ -24,7 +24,7 @@ public abstract class BaseIntegrationTest extends BaseTest {
             // Create a new apiWrapper with your config object.
             CONFIG.setTimeout(0);
             CONFIG.setSslVerificationDisabled(true);
-
+            
             steemApiWrapper = new SteemApiWrapper();
         } catch (SteemCommunicationException | URISyntaxException e) {
             //LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
