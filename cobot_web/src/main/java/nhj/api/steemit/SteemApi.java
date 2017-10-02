@@ -4,11 +4,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.bittrade.libs.steemj.SteemApiWrapper;
 import eu.bittrade.libs.steemj.base.models.Discussion;
@@ -36,7 +34,9 @@ public class SteemApi {
 
         try {
             // Change the default settings if needed.
-            CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
+            //CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
+        	CONFIG.setWebsocketEndpointURI(new URI("wss://steemd-int.steemit.com"));
+            
             // Create a new apiWrapper with your config object.
             CONFIG.setTimeout(0);
             CONFIG.setSslVerificationDisabled(true);
@@ -58,7 +58,7 @@ public class SteemApi {
     }
     
     public static List<Discussion> getDiscussionBy(String tag, int limit) throws Exception {
-    	System.out.println("steemApi.getDiscussionBy 1");
+    	//System.out.println("steemApi.getDiscussionBy 1");
         final DiscussionSortType[] sortTypes = new DiscussionSortType[] { DiscussionSortType.SORT_BY_TRENDING,
                 DiscussionSortType.SORT_BY_CREATED, DiscussionSortType.SORT_BY_ACTIVE,
                 DiscussionSortType.SORT_BY_CASHOUT, DiscussionSortType.SORT_BY_VOTES,
@@ -66,12 +66,12 @@ public class SteemApi {
                 DiscussionSortType.SORT_BY_PROMOTED, DiscussionSortType.SORT_BY_PAYOUT,
                 DiscussionSortType.SORT_BY_FEED };
         
-        System.out.println("steemApi.getDiscussionBy 2");
+        //System.out.println("steemApi.getDiscussionBy 2");
         
         //for (final DiscussionSortType type : sortTypes) {
         final List<Discussion> discussions = steemApiWrapper.getDiscussionsBy(tag, limit, DiscussionSortType.SORT_BY_CREATED);
         
-        System.out.println("steemApi.getDiscussionBy 3");
+        //System.out.println("steemApi.getDiscussionBy 3");
         
         return discussions;
         
@@ -95,15 +95,103 @@ public class SteemApi {
     }
     
     public static void main(String[] args) throws Throwable {
-		
-    	init();
     	
-    	List<Discussion> discussions = getDiscussionBy("kr-market", 100);
-    	//Discussion discussions = getContent("jumma", "kr-market-4-0808-1");
+    	ILoggerFactory factory = LoggerFactory.getILoggerFactory();		
+		System.out.println("factory : " + factory);
+		Logger logger = factory.getLogger("SteemApi");
+		
+    	SteemApi.init();
+    	/*
+    	 
+    	 
+    	Properties properties = new Properties();
+		
+		properties.put("log4j.rootLogger", "debug, stdout, logfile");
+		properties.put("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
+		properties.put("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
+		properties.put("log4j.appender.stdout.layout.ConversionPattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n");
+		
+		PropertyConfigurator.configure(properties);
+		*/
+		
+		
+    	System.out.println("321");
+    	
+    	/*
+    	ConfigurationBuilder< BuiltConfiguration > builder = ConfigurationBuilderFactory.newConfigurationBuilder();
+
+    	builder.setStatusLevel( Level.ERROR);
+    	builder.setConfigurationName("RollingBuilder");
+    	// create a console appender
+    	AppenderComponentBuilder appenderBuilder = builder.newAppender("Console", "CONSOLE").addAttribute("target",
+    	    ConsoleAppender.Target.SYSTEM_OUT);
+    	appenderBuilder.add(builder.newLayout("PatternLayout")
+    	    .addAttribute("pattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n"));
+    	builder.add( appenderBuilder );
+    	// create a rolling file appender
+    	LayoutComponentBuilder layoutBuilder = builder.newLayout("PatternLayout")
+    	    .addAttribute("pattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n");
+    	ComponentBuilder triggeringPolicy = builder.newComponent("Policies")
+    	    .addComponent(builder.newComponent("CronTriggeringPolicy").addAttribute("schedule", "0 0 0 * * ?"))
+    	    .addComponent(builder.newComponent("SizeBasedTriggeringPolicy").addAttribute("size", "100M"));
+    	appenderBuilder = builder.newAppender("rolling", "RollingFile")
+    	    .addAttribute("fileName", "target/rolling.log")
+    	    .addAttribute("filePattern", "target/archive/rolling-%d{MM-dd-yy}.log.gz")
+    	    .add(layoutBuilder)
+    	    .addComponent(triggeringPolicy);
+    	builder.add(appenderBuilder);
+
+    	// create the new logger
+    	builder.add( builder.newLogger( "TestLogger", Level.DEBUG )
+    	    .add( builder.newAppenderRef( "rolling" ) )
+    	    .addAttribute( "additivity", false ) );
+
+    	builder.add( builder.newRootLogger( Level.DEBUG )
+    	    .add( builder.newAppenderRef( "rolling" ) ) );
+    	LoggerContext ctx = Configurator.initialize(builder.build());
+		*/
+    	
+
+
+		
+		
+		
+		//LoggerContext ctx = Configurator.initialize(builder.build());
+		
+		
+
+		
+
+		
+		
+		//Logger logger = LoggerFactory.getLogger(LogConfiguration.class);
+		
+		
+		
+		logger.trace("trace");
+        logger.debug("debug");
+        logger.info("info");
+        logger.warn("warn");
+        logger.error("error");
+        
+        
+    	
+    	//List<Discussion> discussions = getDiscussionBy("kr-market", 100);
+    	Discussion discussions;
+		try {
+			discussions = getContent("jumma", "kr-market-4-0808-1");
+			System.out.println("Hello : " + discussions);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			logger.error("error", e);
+			
+		}
     	
     	//List<Discussion> discussions = getContentReplies("leesunmoo", "2017-8-11");
     	
-    	System.out.println("Hello : " + discussions);
+    	
     	
 	}
 }
