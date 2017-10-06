@@ -42,7 +42,7 @@ public class SteemitBot implements Runnable {
 	}
 	
 	public static void init(){
-		SteemApi.init();
+		
 		SteemitBot sm = new SteemitBot();
 		new Thread(sm).start();		
 	}
@@ -66,7 +66,7 @@ public class SteemitBot implements Runnable {
 		while(true){
 			try {
 				
-				
+				SteemApi.init();
 				
 				long cur = System.currentTimeMillis();
 				if( INIT_FLAG ){
