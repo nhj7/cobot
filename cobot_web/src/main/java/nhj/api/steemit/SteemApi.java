@@ -50,7 +50,7 @@ public class SteemApi {
         } catch (SteemCommunicationException | URISyntaxException e) {
         	
         	try {
-				CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
+				CONFIG.setWebsocketEndpointURI(new URI("wss://steemd.steemit.com"));
 				steemApiWrapper = new SteemApiWrapper();
 				return true;
 			} catch (Exception e1) {
