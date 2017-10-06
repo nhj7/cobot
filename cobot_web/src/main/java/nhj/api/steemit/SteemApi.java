@@ -1,34 +1,27 @@
 package nhj.api.steemit;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.appender.ConsoleAppender;
-import org.apache.logging.log4j.core.appender.RollingFileAppender;
-import org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy;
-import org.apache.logging.log4j.core.appender.rolling.RollingFileManager;
-import org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy;
-import org.apache.logging.log4j.core.config.AppenderRef;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.apache.logging.log4j.core.layout.PatternLayout;
+import javax.websocket.Session;
+
 import org.slf4j.LoggerFactory;
 
 import eu.bittrade.libs.steemj.SteemApiWrapper;
 import eu.bittrade.libs.steemj.base.models.Discussion;
 import eu.bittrade.libs.steemj.base.models.TimePointSec;
 import eu.bittrade.libs.steemj.base.models.Transaction;
+import eu.bittrade.libs.steemj.communication.CommunicationHandler;
 import eu.bittrade.libs.steemj.configuration.SteemJConfig;
 import eu.bittrade.libs.steemj.enums.DiscussionSortType;
 import eu.bittrade.libs.steemj.exceptions.SteemCommunicationException;
+import kr.co.cobot.bot.SteemitBot;
 
 public class SteemApi {
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(SteemApi.class);
+	
 	protected static final SteemJConfig CONFIG = SteemJConfig.getInstance();
     protected static SteemApiWrapper steemApiWrapper;
     protected static final short REF_BLOCK_NUM = (short) 34294;
@@ -54,10 +47,43 @@ public class SteemApi {
             CONFIG.setSslVerificationDisabled(true);
 
             steemApiWrapper = new SteemApiWrapper();
+            
+            
+            
         } catch (SteemCommunicationException | URISyntaxException e) {
             //LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
             System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
         }
+    }
+    
+    
+    
+    public static boolean checkConnection() {
+    	// communicationHandler
+    	CommunicationHandler communicationHandler = null;
+    	try {
+			Field field = steemApiWrapper.getClass().getDeclaredField("communicationHandler");
+			field.setAccessible(true);
+			communicationHandler = (CommunicationHandler) field.get(steemApiWrapper);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    	
+    	try {
+    		Field field = communicationHandler.getClass().getDeclaredField("session");
+			field.setAccessible(true);
+			Session session = (Session) field.get(communicationHandler);
+			
+			logger.info("[session] : "+ session.isOpen());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    	
+    	return true;
+    	
     }
     
     protected static void setupBasicTestEnvironment() {
@@ -70,6 +96,7 @@ public class SteemApi {
     }
     
     public static List<Discussion> getDiscussionBy(String tag, int limit) throws Exception {
+    	checkConnection();
     	//System.out.println("steemApi.getDiscussionBy 1");
         final DiscussionSortType[] sortTypes = new DiscussionSortType[] { DiscussionSortType.SORT_BY_TRENDING,
                 DiscussionSortType.SORT_BY_CREATED, DiscussionSortType.SORT_BY_ACTIVE,
@@ -91,12 +118,14 @@ public class SteemApi {
     }
     
     public static Discussion getContent(String ACCOUNT, String PERMLINK) throws Exception {
+    	checkConnection();
     	final Discussion discussion = steemApiWrapper.getContent(ACCOUNT, PERMLINK);        
         return discussion;
     }
     
     
     public static List<Discussion> getContentReplies(String account, String permLink) throws Exception {
+    	checkConnection();
         final List<Discussion> replies = steemApiWrapper.getContentReplies(account, permLink);
         /*
         for( Discussion post : replies ){
