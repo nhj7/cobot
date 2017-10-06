@@ -112,7 +112,7 @@ public class SteemApi {
     
     public static List<Discussion> getDiscussionBy(String tag, int limit) throws Exception {
     	checkConnection();
-    	//System.out.println("steemApi.getDiscussionBy 1");
+    	logger.info("steemApi.getDiscussionBy 1");
         final DiscussionSortType[] sortTypes = new DiscussionSortType[] { DiscussionSortType.SORT_BY_TRENDING,
                 DiscussionSortType.SORT_BY_CREATED, DiscussionSortType.SORT_BY_ACTIVE,
                 DiscussionSortType.SORT_BY_CASHOUT, DiscussionSortType.SORT_BY_VOTES,
@@ -125,7 +125,7 @@ public class SteemApi {
         //for (final DiscussionSortType type : sortTypes) {
         final List<Discussion> discussions = steemApiWrapper.getDiscussionsBy(tag, limit, DiscussionSortType.SORT_BY_CREATED);
         
-        //System.out.println("steemApi.getDiscussionBy 3");
+        logger.info("steemApi.getDiscussionBy 2");
         
         return discussions;
         
@@ -134,14 +134,18 @@ public class SteemApi {
     
     public static Discussion getContent(String ACCOUNT, String PERMLINK) throws Exception {
     	checkConnection();
-    	final Discussion discussion = steemApiWrapper.getContent(ACCOUNT, PERMLINK);        
+    	logger.info("steemApi.getContent 1");
+    	final Discussion discussion = steemApiWrapper.getContent(ACCOUNT, PERMLINK);   
+    	logger.info("steemApi.getContent 2");
         return discussion;
     }
     
     
     public static List<Discussion> getContentReplies(String account, String permLink) throws Exception {
     	checkConnection();
+    	logger.info("steemApi.getContentReplies 1");
         final List<Discussion> replies = steemApiWrapper.getContentReplies(account, permLink);
+        logger.info("steemApi.getContentReplies 2");
         /*
         for( Discussion post : replies ){
         	System.out.println( post.getBody() );
