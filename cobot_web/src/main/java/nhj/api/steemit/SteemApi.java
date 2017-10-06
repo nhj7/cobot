@@ -17,7 +17,6 @@ import eu.bittrade.libs.steemj.communication.CommunicationHandler;
 import eu.bittrade.libs.steemj.configuration.SteemJConfig;
 import eu.bittrade.libs.steemj.enums.DiscussionSortType;
 import eu.bittrade.libs.steemj.exceptions.SteemCommunicationException;
-import kr.co.cobot.bot.SteemitBot;
 
 public class SteemApi {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(SteemApi.class);
@@ -41,8 +40,6 @@ public class SteemApi {
             // Change the default settings if needed.
             //CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
         	CONFIG.setWebsocketEndpointURI(new URI("wss://steemd-int.steemit.com"));
-            
-            // Create a new apiWrapper with your config object.
             CONFIG.setTimeout(0);
             CONFIG.setSslVerificationDisabled(true);
 
@@ -51,8 +48,18 @@ public class SteemApi {
             
             
         } catch (SteemCommunicationException | URISyntaxException e) {
-            //LOGGER.error("Could not create a SteemJ instance. - Test execution stopped.", e);
-            System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
+        	
+        	try {
+				CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
+				steemApiWrapper = new SteemApiWrapper();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				logger.error("Could not create a SteemJ instance. - Execution stopped.", e1);
+			}
+        	
+        	
+            //System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
         }
     }
     
