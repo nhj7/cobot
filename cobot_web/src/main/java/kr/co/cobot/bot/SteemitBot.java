@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -25,6 +26,8 @@ import nhj.util.DateUtil;
 import nhj.util.JsonUtil;
 
 public class SteemitBot implements Runnable {
+	
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(SteemitBot.class);
 	private static Gson gson = new Gson();
 	private static String STEEM_URL = "https://steemit.com";	
 	
@@ -58,7 +61,7 @@ public class SteemitBot implements Runnable {
 	
 	public void run(){
 		
-		System.out.println("SteemitBot.run");
+		logger.info("SteemitBot.run");
 		
 		while(true){
 			try {
@@ -76,26 +79,28 @@ public class SteemitBot implements Runnable {
 				}
 				
 				
-				System.out.println("[SteemitManager.executeSave()] : " + (System.currentTimeMillis()-cur) + "ms" );
+				logger.info("[SteemitManager.executeSave()] : " + (System.currentTimeMillis()-cur) + "ms" );
 				Thread.sleep(TERM_STEEM_POST_CHECK);
 				
 				cur = System.currentTimeMillis();
 				marketRefresh();
 				
-				System.out.println("[SteemitManager.marketRefresh()] : " + (System.currentTimeMillis()-cur) + "ms" );
+				logger.info("[SteemitManager.marketRefresh()] : " + (System.currentTimeMillis()-cur) + "ms" );
 				
 				Thread.sleep(TERM_STEEM_POST_CHECK);
 				
-				System.out.println("SteemitBot.run 5");
+				
 				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				logger.error("error! ", e);
 				try {
 					Thread.sleep(TERM_STEEM_POST_CHECK);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					logger.error("error! ", e1);
 				}
 			}
 		}
@@ -237,7 +242,7 @@ public class SteemitBot implements Runnable {
 				method = 5;
 			}
 		} catch (Exception e) {
-			System.out.println("상품방식 읽어들이기 : "+e.toString());
+			logger.error("상품방식 읽어들이기 ", e);
 		}
 		
 		/*
@@ -298,7 +303,7 @@ public class SteemitBot implements Runnable {
 				category = 8;
 			}
 		} catch (Exception e) {
-			System.out.println("상품방식 읽어들이기 : "+e.toString());
+			logger.error("상품방식 읽어들이기 : "+e.toString());
 		}
 		
 		
@@ -327,7 +332,7 @@ public class SteemitBot implements Runnable {
 				prodName = prodName.substring(0, prodName.indexOf("</"));
 			}
 		} catch (Exception e) {
-			System.out.println("상품명 읽어들이기 : "+e.toString());
+			logger.error("상품명 읽어들이기 ", e);
 		}
 		
 		// 3. 판매가 혹은 시작 가격 읽어들이기 sellAmt
@@ -365,7 +370,7 @@ public class SteemitBot implements Runnable {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("시작 가격 읽어들이기 : "+e.toString() + ", @"+ discussion.getAuthor()+"/" + discussion.getPermlink());
+			logger.error("시작 가격 읽어들이기 : "+e.toString() + ", @"+ discussion.getAuthor()+"/" + discussion.getPermlink(), e);
 		}
 		
 		// 4. 소비자 가격 읽어들이기 oriAmt		
@@ -389,7 +394,7 @@ public class SteemitBot implements Runnable {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("소비자 가격 읽어들이기 : "+e.toString());
+			logger.error("소비자 가격 읽어들이기 : "+e.toString(), e);
 		}
 		
 		// 5. 적용률 읽어들이기 voteRatio
@@ -435,7 +440,7 @@ public class SteemitBot implements Runnable {
 			}
 			*/
 		} catch (Exception e) {
-			System.out.println("호가단위 읽어들이기 : "+e.toString());
+			logger.error("호가단위 읽어들이기 : "+e.toString(), e);
 		}		
 		
 		// 7. 경매종료일시 읽어들이기 actionUnitAmt 
@@ -486,7 +491,7 @@ public class SteemitBot implements Runnable {
 			}
 			
 		} catch (Throwable e) {
-			System.out.println("경매 종료 날짜 읽어들이기 : "+e.toString());
+			logger.error("경매 종료 날짜 읽어들이기 : "+e.toString(), e);
 			auctionEndDttm = discussion.getCashoutTime().getDateTimeAsDate();
 		}
 		
@@ -797,7 +802,7 @@ public class SteemitBot implements Runnable {
 		org.hibernate.Transaction tx = null;
 		//System.out.println("executeSave 1");
 		try{
-			tx = session.getTransaction();
+			
 			
 			//System.out.println("executeSave 2");
 			
@@ -839,13 +844,13 @@ public class SteemitBot implements Runnable {
 					if( "kr-market".equals(tag)
 							|| post.getArrTagStr().indexOf("kr-market") > -1
 					){
-						System.out.println("Database Post exists!! continue ["+tag+"] [" + oldPost.getPostTitle()+ "] : continue!" );
+						logger.info("Database Post exists!! continue ["+tag+"] [" + oldPost.getPostTitle()+ "] : continue!" );
 						post.setPostId(oldPost.getPostId());
 						if( post.getArrTagStr().indexOf("kr-market") > -1 ){								
 							chkMarketDataAndMerge(post, discussion, market);							
 						}						
 					}else{
-						System.out.println("Database Post exists!! continue.. [" + oldPost.getPostTitle()+ "] : break!" );
+						logger.info("Database Post exists!! continue.. [" + oldPost.getPostTitle()+ "] : break!" );
 						break;	// 일반 kr글은 겹치는 포스팅이 있다면 그 상태로 브레이끼.
 					}
 				}
@@ -854,12 +859,12 @@ public class SteemitBot implements Runnable {
 					
 					String targetPostUrl = STEEM_URL + post.getPostUrl();	// 포스팅 본문 주소!
 					//System.out.println("targetPostUrl : " + targetPostUrl);
-					
+					tx = session.getTransaction();
 					tx.begin();
 					session.save(post);
 					tx.commit();
 					
-					System.out.println("[New Post "+post.getPostId()+"] [created] [" + post.getPostTitle() + "]" );
+					logger.info("[New Post "+post.getPostId()+"] [created] [" + post.getPostTitle() + "]" );
 					
 					AlarmBot.newCheckAndSendAlarm(post);
 					

@@ -1,11 +1,8 @@
 package kr.co.cobot.conf;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Entity;
 
@@ -32,8 +29,8 @@ public class HibernateCfg {
 
 	
 	static {
-		org.apache.log4j.Logger.getLogger("org.hibernate").setLevel(org.apache.log4j.Level.INFO);
-		java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.INFO);
+		
+		
 		init();
 	}
 	
@@ -179,7 +176,7 @@ public class HibernateCfg {
 		
 		Session session = getCurrentSession();
 		
-		System.out.println(session);
+		logger.info("[session] : "+session);
 		
 		session.close();
 		
@@ -187,7 +184,7 @@ public class HibernateCfg {
 		closeSessionFactory();		
 		close();
 		
-		System.out.println("exit");
+		logger.info("exit");
 	}
 
 }

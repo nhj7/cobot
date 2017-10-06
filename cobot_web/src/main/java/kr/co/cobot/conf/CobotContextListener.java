@@ -8,13 +8,14 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.core.StandardContext;
-
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
 import kr.co.cobot.bot.AlarmBot;
 import kr.co.cobot.bot.CacheImgBot;
-import kr.co.cobot.bot.ExchBot;
 import kr.co.cobot.bot.SteemitBot;
 import kr.co.cobot.bot.TickerBot;
 import nhj.util.NetUtil;
@@ -40,6 +41,7 @@ public class CobotContextListener extends ContextLoaderListener{
 		    logger.setLevel(Level.OFF);
 		}
 		*/
+		
 		
 		//LogConfiguration.init();
 		

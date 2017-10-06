@@ -1,5 +1,6 @@
 package kr.co.cobot.ctrl;
 
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Arrays;
@@ -36,7 +37,7 @@ import nhj.util.Paging;
 import nhj.util.PrintUtil;
 
 /**
- * Handles requests for the application home page.
+ * 
  */
 
 @Controller

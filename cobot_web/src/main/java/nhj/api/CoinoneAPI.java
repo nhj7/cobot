@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +13,8 @@ import java.util.Set;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.CookieManager;
@@ -31,7 +32,6 @@ import io.socket.client.IO;
 import io.socket.client.IO.Options;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable {
@@ -220,8 +220,9 @@ public class CoinoneAPI implements Runnable {
 			            return response;
 			        }
 			    };
+			    final Logger logger = LoggerFactory.getLogger("com.gargoylesoftware.htmlunit");
 			    
-				org.apache.log4j.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(org.apache.log4j.Level.FATAL);
+			    System.out.println("logger : "+logger);
 				
 				
 				System.out.println("[CoinoneAPI]Please wait 20 seconds to pass CloudFlare DDOS Check...");		

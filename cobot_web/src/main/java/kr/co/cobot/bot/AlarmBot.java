@@ -26,7 +26,7 @@ public class AlarmBot implements Runnable {
 		
 	}
 	
-	private Session session = HibernateCfg.getCurrentSession();
+	
 	private static List<JsonObject> WEB_PUSH_LIST = new ArrayList();
 	
 	
@@ -248,6 +248,7 @@ public class AlarmBot implements Runnable {
 	@Override
 	public void run() {	
 		Gson gson = new Gson();
+		Session session = HibernateCfg.getCurrentSession();
 		while(true){			
 			try {
 				List webPushList = session.createQuery("from TbWebPushM ").list();

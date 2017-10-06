@@ -3,9 +3,21 @@ package nhj.api.steemit;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy;
+import org.apache.logging.log4j.core.appender.rolling.RollingFileManager;
+import org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy;
+import org.apache.logging.log4j.core.config.AppenderRef;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.slf4j.LoggerFactory;
 
 import eu.bittrade.libs.steemj.SteemApiWrapper;
@@ -96,77 +108,19 @@ public class SteemApi {
     
     public static void main(String[] args) throws Throwable {
     	
-    	ILoggerFactory factory = LoggerFactory.getILoggerFactory();		
-		System.out.println("factory : " + factory);
-		Logger logger = factory.getLogger("SteemApi");
-		
-    	SteemApi.init();
-    	/*
-    	 
-    	 
-    	Properties properties = new Properties();
-		
-		properties.put("log4j.rootLogger", "debug, stdout, logfile");
-		properties.put("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
-		properties.put("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
-		properties.put("log4j.appender.stdout.layout.ConversionPattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n");
-		
-		PropertyConfigurator.configure(properties);
-		*/
-		
-		
-    	System.out.println("321");
+    	//ConfigurationFactory.setConfigurationFactory(new Log4j2ConfigurationFactory()); 
     	
-    	/*
-    	ConfigurationBuilder< BuiltConfiguration > builder = ConfigurationBuilderFactory.newConfigurationBuilder();
-
-    	builder.setStatusLevel( Level.ERROR);
-    	builder.setConfigurationName("RollingBuilder");
-    	// create a console appender
-    	AppenderComponentBuilder appenderBuilder = builder.newAppender("Console", "CONSOLE").addAttribute("target",
-    	    ConsoleAppender.Target.SYSTEM_OUT);
-    	appenderBuilder.add(builder.newLayout("PatternLayout")
-    	    .addAttribute("pattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n"));
-    	builder.add( appenderBuilder );
-    	// create a rolling file appender
-    	LayoutComponentBuilder layoutBuilder = builder.newLayout("PatternLayout")
-    	    .addAttribute("pattern", "[%d{yyyy-MM-dd HH:mm:ss}] [%5p] [%C{2}.%M:%L] : %m%n");
-    	ComponentBuilder triggeringPolicy = builder.newComponent("Policies")
-    	    .addComponent(builder.newComponent("CronTriggeringPolicy").addAttribute("schedule", "0 0 0 * * ?"))
-    	    .addComponent(builder.newComponent("SizeBasedTriggeringPolicy").addAttribute("size", "100M"));
-    	appenderBuilder = builder.newAppender("rolling", "RollingFile")
-    	    .addAttribute("fileName", "target/rolling.log")
-    	    .addAttribute("filePattern", "target/archive/rolling-%d{MM-dd-yy}.log.gz")
-    	    .add(layoutBuilder)
-    	    .addComponent(triggeringPolicy);
-    	builder.add(appenderBuilder);
-
-    	// create the new logger
-    	builder.add( builder.newLogger( "TestLogger", Level.DEBUG )
-    	    .add( builder.newAppenderRef( "rolling" ) )
-    	    .addAttribute( "additivity", false ) );
-
-    	builder.add( builder.newRootLogger( Level.DEBUG )
-    	    .add( builder.newAppenderRef( "rolling" ) ) );
-    	LoggerContext ctx = Configurator.initialize(builder.build());
-		*/
+    	
+        
+    	init();
     	
 
+    	org.slf4j.Logger logger = LoggerFactory.getLogger(SteemApi.class);
+    	
+    	//final Logger logger = LogManager.getLogger("SteemApi");
+    	
+    	//org.apache.logging.log4j.core.Logger logger = ctx.getLogger("Steemapi");
 
-		
-		
-		
-		//LoggerContext ctx = Configurator.initialize(builder.build());
-		
-		
-
-		
-
-		
-		
-		//Logger logger = LoggerFactory.getLogger(LogConfiguration.class);
-		
-		
 		
 		logger.trace("trace");
         logger.debug("debug");
@@ -174,13 +128,19 @@ public class SteemApi {
         logger.warn("warn");
         logger.error("error");
         
+        System.out.println("123123");
         
+        
+        logger.error("error2");
     	
     	//List<Discussion> discussions = getDiscussionBy("kr-market", 100);
+        
+        
     	Discussion discussions;
-		try {
-			discussions = getContent("jumma", "kr-market-4-0808-1");
-			System.out.println("Hello : " + discussions);
+		try {						
+			
+			discussions = getContent("nhj12311", "steemit-steemit-more-info");
+			logger.info("Hello : " + discussions);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,9 +148,10 @@ public class SteemApi {
 			logger.error("error", e);
 			
 		}
-    	
-    	//List<Discussion> discussions = getContentReplies("leesunmoo", "2017-8-11");
-    	
+		
+        
+		
+		
     	
     	
 	}

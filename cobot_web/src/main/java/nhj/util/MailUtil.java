@@ -1,10 +1,8 @@
 package nhj.util;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -16,7 +14,7 @@ public class MailUtil {
 	private static String MAIL_SMTP_HOST = "smtp.daum.net";
 	private static String MAIL_SMTP_PORT = "465";
 	private static String MAIL_SMTP_USER = "admin@cobot.co.kr";
-	private static String MAIL_SMTP_USER_NM = "스팀마트관리자";
+	private static String MAIL_SMTP_USER_NM = "스팀몰관리자";
 	private static String MAIL_SMTP_ID = "nhj12311";
 	private static String MAIL_SMTP_PSWD = "skgud77&&";
 	
