@@ -33,7 +33,7 @@ public class SteemApi {
     	setupIntegrationTestEnvironment();
     }
     
-    protected static void setupIntegrationTestEnvironment() {
+    protected static boolean setupIntegrationTestEnvironment() {
         setupBasicTestEnvironment();
 
         try {
@@ -45,22 +45,28 @@ public class SteemApi {
 
             steemApiWrapper = new SteemApiWrapper();
             
-            
+            return true;
             
         } catch (SteemCommunicationException | URISyntaxException e) {
         	
         	try {
 				CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
 				steemApiWrapper = new SteemApiWrapper();
+				return true;
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				logger.error("Could not create a SteemJ instance. - Execution stopped.", e1);
+				
+				return false;
 			}
         	
         	
             //System.out.println("Could not create a SteemJ instance. - Test execution stopped.");
-        }
+        }finally {
+        	logger.info("CONFIG.uri : " + CONFIG.getWebsocketEndpointURI());
+		}
+        
     }
     
     
@@ -82,7 +88,9 @@ public class SteemApi {
 			field.setAccessible(true);
 			Session session = (Session) field.get(communicationHandler);
 			
-			logger.info("[session] : "+ session.isOpen());
+			
+			
+			logger.info("[session] : "+ session.isOpen() + ", uri : " + CONFIG.getWebsocketEndpointURI());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
