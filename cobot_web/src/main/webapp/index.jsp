@@ -12,10 +12,10 @@
 		<link rel="canonical" href="https://cobot.co.kr">
 		<meta property="og:type" content="website">
 		<meta property="og:title" content="Cobot-모든 거래소 코인정보를 한눈에">
-		<meta property="og:description" content="암호화폐의 거래소별 시세를 한눈에 볼 수 있는 코봇입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 차트, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다. ">
+		<meta property="og:description" content="암호화폐의 거래소 별 시세를 한눈에 볼 수 있는 Cobot입니다.">
 		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
 		<meta property="og:url" content="https://cobot.co.kr">
-		<meta name="description" content="암호화폐의  거래소별 시세를 한눈에 볼 수 있는 Cobot입니다. ICO 정보를 볼수 있는 스캐너, 각 코인 별 그래프, 기타 각종 기능들을 추가할 예정이오니 많은 관심 부탁드립니다.">
+		<meta name="description" content="암호화폐의  거래소 별 시세를 한눈에 볼 수 있는 Cobot입니다.">
 		
 		
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
@@ -229,8 +229,8 @@
 				<!-- Intro -->
 					<section id="top" class="one dark cover" style="padding:0 0 0 0 ;margin: 0 0 0 0;">
 						<div id="btn_wrapp_search" style="text-align:center;width:100%;color:black;font-size:0.9em;font-weight:bold;">
-							<span id="brandTxt" style="position:relative;float: right;left:-0%;width:100%;background-color:black;color:white;margin: 0 0 0 0;padding:9px 0 9px 0;font-size:1.2em;">
-								Cobot
+							<span id="brandTxt" style="position:relative;float: right;left:-0%;width:100%;background-color:black;color:white;margin: 0 0 0 0;padding:0.7em 0 0.7em 0;font-size:1.2em;">
+								Cobot <!-- img style="bottom:-1em;" width="32px" height="32px" src="/img/ci/bitcoin_small.png" /-->
 							</span> 
 							<!-- span style="position:relative;float:right;font-size:0.7em;">cobot v1.0.1</span-->
 						</div>
@@ -437,7 +437,12 @@
 								<div class="4u 12u$(mobile)" style="width:100%;;margin:0 0 0 0 !important;;padding:0 0 0 0 !important;">
 									<a href="javascript:;" onclick="changeDisplay('coinRank_bak');">
 									<div id="btn_wrapp_coinRank" style="text-align:left;width:100%;" >
-										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="color:black;font-size:0.8em;font-weight:bold;;width:100%;" >&nbsp;&nbsp;&nbsp;All Coins</span>
+										<span title="클릭하시면 필요한 코인을 더 추가하실 수 있습니다." style="color:black;font-size:0.8em;font-weight:bold;;width:100%;" >
+											&nbsp;&nbsp;&nbsp;All Coins
+										</span>
+										<span style="float:right;" onclick="if( $('#coinRank_bak').css('display') != 'none' ) { event.stopPropagation(); }" >
+											<input id="filterCoinTxt" placeholder="enter coin name" style="height:1.5em;width:8.5em;" type="text" onkeyup="filterCoins(this);" onfocus="$('body').scrollTop($(document).height());"/>
+										</span>
 										
 									</div>
 									</a>

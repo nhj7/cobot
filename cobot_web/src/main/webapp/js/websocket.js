@@ -272,7 +272,7 @@ function regCoins( coins ){
 			
 			
 			
-			var str_html = '<span class="rCell col_ex '+ even_class +' " onclick="$(this.parentNode).dblclick();" >'
+			var str_html = '<span class="rCell col_ex '+ even_class +' " onclick="swapCoin(this.parentNode);" >'
 			 + '<a href="javascript:;" ><img class="rIcon" src="/img/exchange/' + coins[i].eid + '.png" title="" /></span></a>';
 			
 			var viewChartClick = 'onclick="viewChart(\''+coins[i].eid+'\',\''+ coins[i].ccd +'\', \''+1+'\');"';
@@ -312,6 +312,7 @@ function regCoins( coins ){
 			activeCoins["eid_" + coins[i].eid] = new Array();
 		}
 		
+		/*
 		rankRow.on('dblclick', function() {			
 			var jObj = $(this);
 			if( this.parentNode.id == "coinRank" ){
@@ -334,6 +335,8 @@ function regCoins( coins ){
 			}			
 			$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
 		});
+		*/
+		
 		
 		
 		var chkList = activeCoins["eid_" + coins[i].eid];		
@@ -401,6 +404,33 @@ function regCoins( coins ){
 	//var arrCoinRank = new Array();
 	//var arrCoinRank_bak = new Array(); // coinRank_bak
 	initFlag = false;
+}
+
+function swapCoin( obj ){
+	var jObj = $(obj);
+	
+	var coinRank = $("#coinRank");
+	var coinRank_bak = $("#coinRank_bak");
+	
+	if( obj.parentNode.id == "coinRank" ){
+		
+		var eid = jObj.attr("data-eid");
+		var ccd = jObj.attr("data-ccd");
+		var tmpCoins = activeCoins["eid_" + eid ];
+		//alert(tmpCoins + " : " + tmpCoins.indexOf( ccd ));
+		tmpCoins.splice( tmpCoins.indexOf(ccd), 1 );
+		coinRank_bak.append(jObj);
+		coinRank.remove("div[id='"+jObj.attr("id")+"']");
+						
+	}else{
+		if( activeCoins["eid_" + jObj.attr("data-eid") ] == null ){
+			activeCoins["eid_" + jObj.attr("data-eid") ] = new Array();
+		}
+		activeCoins["eid_" + jObj.attr("data-eid") ].push(jObj.attr("data-ccd") );
+		coinRank_bak.remove("div[id='"+jObj.attr("id")+"']");				
+		coinRank.append(jObj);
+	}			
+	$.cookie("kr.co.cobot.activeCoins", JSON.stringify(activeCoins), { expires: 365 } );
 }
 
 function calcKrPrimeum(){
@@ -474,6 +504,33 @@ function flashCoins(){
 		//setTimeout('$("#brandTxt").css("color","white");',150);
 	}
 	
+	
+}
+
+//영문과 숫자만 허용
+function SetAlphaNum(obj){
+	val=obj.value;
+	re=/[^a-zA-Z0-9]/gi;
+	obj.value=val.replace(re,"").toUpperCase();
+}
+
+function filterCoins(obj){
+	
+	SetAlphaNum(obj);
+	var coinRank_bak = $("#coinRank_bak");
+	console.log( coinRank_bak );
+	var arr_bak_coins = coinRank_bak.find("div[data-cd=data]");
+	
+	console.log( arr_bak_coins.length );
+	var value = obj.value;
+	for(var i = 0; i < arr_bak_coins.length;i++){
+		var jObj = $(arr_bak_coins[i]);
+		if( jObj.attr("data-ccd").startsWith(value)){
+			jObj.css("display", "table-row");
+		}else{
+			jObj.css("display", "none");
+		}
+	}
 	
 }
 

@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.cobot.ctrl.WebSocketCon;
+import nhj.api.BitfinexAPI;
 import nhj.api.BithumbAPI;
 import nhj.api.BittrexAPI;
 import nhj.api.CoinoneAPI;
-import nhj.api.HTMLParsingAPI;
+import nhj.api.ExchangeRateAPI;
 import nhj.api.KorbitAPI;
 import nhj.api.PoloniexAPI;
 import nhj.util.JsonUtil;
@@ -19,10 +20,15 @@ public class TickerBot implements Runnable {
 
 	//
 	static{
+		PoloniexAPI.init();
+		BitfinexAPI.init();
+		BittrexAPI.init();
+		BithumbAPI.init();
 		CoinoneAPI.init();	// WS Socket init
 		KorbitAPI.init();	// Web scrapping init
-		BithumbAPI.init();
-		HTMLParsingAPI.init();	
+		
+		ExchangeRateAPI.init();	
+		
 	}
 	
 	@Override
@@ -36,8 +42,8 @@ public class TickerBot implements Runnable {
 				
 				// PoloniexAPI
 				{
-					PoloniexAPI poloniex = new PoloniexAPI("", "");
-					List poloList = poloniex.returnTicker();
+					
+					List poloList = PoloniexAPI.returnTicker();
 					newCoinMap.put("eid_" + 1, poloList);
 				}
 				
@@ -65,15 +71,22 @@ public class TickerBot implements Runnable {
 					newCoinMap.put("eid_" + 4, korbitList);
 				}
 				
-				// KorbitAPI
+				// BittrexAPI
 				{
 					List list = BittrexAPI.returnTicker();
 					newCoinMap.put("eid_" + 5, list);
 				}
 				
+				
+				// BitfinexAPI
+				{
+					List list = BitfinexAPI.returnTicker();
+					newCoinMap.put("eid_" + 6, list);
+				}
+				
 				String per_krw = "1145";
 				{
-					per_krw = CoinoneAPI.getPerKrw();
+					per_krw = ExchangeRateAPI.per_krw;
 					newCoinMap.put("per_krw" , per_krw);
 					
 					DATA.USD_KRW = per_krw;
