@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.http.util.ByteArrayBuffer;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,6 +22,8 @@ import com.google.gson.JsonParser;
 import kr.co.cobot.bot.DATA;
 
 public class BithumbAPI implements Runnable{
+	
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(BithumbAPI.class);
 	
 	private List tickList;
 	
@@ -109,7 +112,7 @@ public class BithumbAPI implements Runnable{
 	}
 	
 	
-	private void setPrivateTick(  ) throws Throwable{
+	private void private_returnTicker(  ) throws Throwable{
 		Date d = new Date();
 		long time = d.getTime();
 
@@ -230,7 +233,7 @@ public class BithumbAPI implements Runnable{
 		
 		while(true){
 			try {
-				setPrivateTick();
+				private_returnTicker();
 				Thread.sleep(3000);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block

@@ -10,10 +10,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.LoggerFactory;
 
 import nhj.util.DateUtil;
 
-public class HTMLParsingAPI implements Runnable {
+public class ExchangeRateAPI implements Runnable {
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(ExchangeRateAPI.class);
 	
 	public static String reqToStringForBithumb( String url ) throws Throwable, Throwable {
 
@@ -56,9 +58,16 @@ public class HTMLParsingAPI implements Runnable {
 	public static long LAP_TM = 0;
 	
 	public static void main(String[] args) throws Throwable {
-		sumEtherScanTran();
+		//sumEtherScanTran();
 		
-		System.out.println("[LAST] Total Page : " + TOTAL_PAGE + ", Total Ether : " + TOTAL_ETHER+ ", tm : " + LAP_TM  + "ms, 작업일시 : " + LAST_DTTM  );
+		
+		
+		//System.out.println("[LAST] Total Page : " + TOTAL_PAGE + ", Total Ether : " + TOTAL_ETHER+ ", tm : " + LAP_TM  + "ms, 작업일시 : " + LAST_DTTM  );
+		
+		
+		String value = getUsdKrw();
+		
+		System.out.println("[value] : "+ value);
 		
 	}
 	
@@ -142,13 +151,41 @@ public class HTMLParsingAPI implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	
+	
+	public static String getUsdKrw() throws Throwable {
+		
+		
+		String html = reqToStringForBithumb("https://m.search.naver.com/search.naver?query=%ED%99%98%EC%9C%A8&where=m&sm=mtp_hty");
+		
+		//System.out.println(html);
+		
+		String first_str = "<strong class=\"price\">";
+		
+		int first = html.indexOf(first_str);
+		
+		String value = html.substring( first + first_str.length() , html.indexOf("</strong>", first) );
+		
+		
+		return value.replace(",", "");
+		
+		
+	}
+	
+	
+	public static String per_krw = "1146";
 	@Override
 	public void run() {
+		
+		int min = 10;	// 10분
 		while(true){
 			try {
-				//sumEtherScanTran();
-				Thread.sleep(120000);
+				
+				per_krw = getUsdKrw();				
+				Thread.sleep(  min * 60 * 1000);
+				
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -168,6 +205,6 @@ public class HTMLParsingAPI implements Runnable {
 	}
 
 	public static void init() {
-		new Thread(new HTMLParsingAPI()).start();
+		new Thread(new ExchangeRateAPI()).start();
 	}
 }

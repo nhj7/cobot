@@ -64,8 +64,8 @@
 				<!-- Logo -->
 					<div id="logo">
 						<span class="image avatar48"><img src="" alt="" /></span>
-						<h1 id="title">Guest</h1>
-						<p>SNS 로그인 구현 예정</p>
+						<h1 id="title">Coin Bot</h1>
+						<p>welcome!</p>
 					</div>
 					
 					<script>
@@ -210,13 +210,13 @@
 			<div class="bottom">
 
 				<!-- Social Icons -->
-					<ul class="icons">
+					<!-- ul class="icons">
 						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
 						<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
 						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
 						<li><a href="#" class="icon fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
+					</ul-->
 			</div>
 		</div>
 		<!-- End Header -->
@@ -285,7 +285,7 @@
 					.coinRank .col_usd {width: 20%;}
 					.coinRank .col_krw {width: 20%;}
 					.coinRank .col_ch {width: 15%;}
-					.crheader{ text-align:center; background-color:#008299 !important; color:white;}
+					.crheader{ text-align:center; background-color:#006199 !important; color:white;}
 					.rIcon {width: 20px;height:16px; }
 					.up{ color:red }
 					.down{ color:blue }
@@ -403,7 +403,7 @@
 									<article class="item" style="width:100%;">
 										
 										<div id="btn_wrapp_coinRank" style="text-align:right;">
-											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">&nbsp;&nbsp;&nbsp;USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; USDT $<data id="per_usd">1</data></span>
+											<span style="float:left;font-weight:bold;color:black;font-size:0.8em;">&nbsp;&nbsp;&nbsp;USD/KRW <data id="per_krw">1,120</data>&nbsp;&nbsp; <data style="display:none;">USDT $<data id="per_usd">1</data></data></span>
 											<!-- img src="/img/btn/setting.png" width="16px" height="16px"/-->
 											&nbsp;&nbsp;&nbsp;
 											<!-- img src="/img/btn/close.png" width="16px" height="16px"/-->&nbsp;&nbsp;&nbsp;
@@ -416,7 +416,7 @@
 												<span class="rCell col_ex crheader" onclick="setOrder(this,'eid')" id="header_eid" title="Ex">Ex</span>
 												<span class="rCell col_coin crheader" onclick="setOrder(this,'ccd')" id="header_ccd" title="Coin">Coin</span>
 												<span class="rCell col_btc crheader" onclick="setOrder(this,'btc')" id="header_btc" title="BTC" style="text-align:center;" >BTC</span>
-												<span class="rCell col_usd crheader" onclick="setOrder(this,'usdt')" id="header_usdt" title="USDT" style="text-align:center;">USDT</span>
+												<span class="rCell col_usd crheader" onclick="setOrder(this,'usdt')" id="header_usdt" title="USDT" style="text-align:center;">USD</span>
 												<span class="rCell col_krw crheader" onclick="setOrder(this,'krw')" id="header_krw" title="KRW" style="text-align:center;">KRW</span>
 												<span class="rCell col_ch crheader" onclick="setOrder(this,'ch')" id="header_ch" title="CH" style="text-align:center;">CH</span>
 											</div>
@@ -599,13 +599,9 @@
 			
 			}
 		</style-->
-		<div id="footer" style="">
+		<div id="footer" style="position: fixed;bottom: 0;width:100%;">				
 				<ul class="copyright">
-					<li>필요한 기능/이슈는 메일로 보내주세요</li>
-					<li> <a href="mailto:admin@cobot.co.kr">admin@cobot.co.kr</a><br /></li>
-				</ul>
-				<ul class="copyright">
-					<li>&copy; Cobot. All rights reserved.</li>
+					<li>Blog : <a target="_blank" href="https://steemit.com/@nhj12311">https://steemit.com/@nhj12311</a></li>
 				</ul>
 		</div>
 

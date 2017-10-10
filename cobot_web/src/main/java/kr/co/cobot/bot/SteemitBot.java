@@ -844,7 +844,7 @@ public class SteemitBot implements Runnable {
 					if( "kr-market".equals(tag)
 							|| post.getArrTagStr().indexOf("kr-market") > -1
 					){
-						logger.info("Database Post exists!! continue ["+tag+"] [" + oldPost.getPostTitle()+ "] : continue!" );
+						logger.debug("Database Post exists!! continue ["+tag+"] [" + oldPost.getPostTitle()+ "] : continue!" );
 						post.setPostId(oldPost.getPostId());
 						if( post.getArrTagStr().indexOf("kr-market") > -1 ){								
 							chkMarketDataAndMerge(post, discussion, market);							

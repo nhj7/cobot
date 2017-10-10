@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -25,8 +26,9 @@ import nhj.util.JsonUtil;
 import nhj.util.URLUtil;
 
 public class KorbitAPI implements Runnable{
-private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
-	
+	private static Map<String, Map<String, String> > COIN_INFO = new HashMap();	
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(KorbitAPI.class);
+
 	private KorbitAPI(){
 		
 	}
@@ -60,7 +62,7 @@ private static Map<String, Map<String, String> > COIN_INFO = new HashMap();
 			}
 			
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

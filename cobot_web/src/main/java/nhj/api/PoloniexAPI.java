@@ -21,6 +21,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -32,8 +33,8 @@ import kr.co.cobot.bot.DATA;
 import nhj.util.DateUtil;
 import nhj.util.URLUtil;
 
-public class PoloniexAPI {
-	
+public class PoloniexAPI implements Runnable{
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(PoloniexAPI.class);
 	private static void log(String log){
 		// log(log);
 	}
@@ -41,9 +42,22 @@ public class PoloniexAPI {
 	private String apiKey;
 	private String apiSecret;
 	private String tradeUrl = "https://poloniex.com/tradingApi";
+	private static List TICKER_DATA = new ArrayList();
 	
-	public PoloniexAPI(){
+	
+	
+	private PoloniexAPI(){
 		
+	}
+	
+	public static void init() {
+		try {
+			
+			new Thread(new PoloniexAPI()).start();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public PoloniexAPI(String key, String secret){
@@ -259,7 +273,17 @@ public class PoloniexAPI {
 	}
 
 	
-	public List returnTicker() throws Throwable {
+	public static List returnTicker() throws Throwable {
+		
+		return TICKER_DATA;
+	}
+	
+	
+	
+	
+	
+	
+	public void private_returnTicker() throws Throwable {
 		
 		String json_str = URLUtil.htmlToString("https://poloniex.com/public?command=returnTicker");
 		
@@ -335,7 +359,8 @@ public class PoloniexAPI {
 			
 			li.add( tickMap );
 		}
-		return li;
+		TICKER_DATA = null;
+		TICKER_DATA = li;
 	}
 	
 	private static long LAST_CALL_RETURN_CHART_DATA_TM = 0;
@@ -380,6 +405,26 @@ public class PoloniexAPI {
 	public void buy() throws Throwable {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void run() {
+		while(true){
+			try {
+				private_returnTicker();
+				Thread.sleep(2000);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				try {
+					Thread.sleep(15000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
 	}
 
 	

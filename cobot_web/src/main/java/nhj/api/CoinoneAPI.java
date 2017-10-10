@@ -35,6 +35,7 @@ import io.socket.emitter.Emitter;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable {
+	private static org.slf4j.Logger logger = LoggerFactory.getLogger(CoinoneAPI.class);
 	
 	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
 	

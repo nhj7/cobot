@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Ticker;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,7 +15,7 @@ import kr.co.cobot.bot.DATA;
 import nhj.util.JsonUtil;
 import nhj.util.URLUtil;
 
-public class BittrexAPI {
+public class BittrexAPI implements Runnable{
 	
 	private static void log(String log){
 		System.out.println(log);
@@ -23,8 +24,10 @@ public class BittrexAPI {
 	private String apiKey;
 	private String apiSecret;
 	private String tradeUrl = "https://poloniex.com/tradingApi";
+	private static List TICKER_DATA = new ArrayList();
 	
-	public BittrexAPI(){
+	
+	private BittrexAPI(){
 		
 	}
 	
@@ -39,7 +42,9 @@ public class BittrexAPI {
 	}
 	
 	
-	
+	public static void init() {
+		new Thread(new BittrexAPI()).start();
+	}
 	
 	
 	public static void main(String[] args) throws Throwable {
@@ -55,7 +60,7 @@ public class BittrexAPI {
 		
 		List list = api.returnTicker();
 		
-		
+		log(list.toString());
 		
 		
 		
@@ -68,6 +73,11 @@ public class BittrexAPI {
 
 	
 	public static List returnTicker() throws Throwable {
+		
+		return TICKER_DATA;
+	}
+	
+	public static void private_returnTicker() throws Throwable {
 		
 		String json_str = URLUtil.getUrlJsonData("https://bittrex.com/api/v1.1/public/getmarketsummaries");
 		
@@ -84,7 +94,7 @@ public class BittrexAPI {
 		
 		List li = new ArrayList();
 		if( !"true".equals( JsonUtil.get(result, "success")) ){
-			return li;
+			return;
 		}
 
 		JsonArray ja = result.get("result").getAsJsonArray();
@@ -157,10 +167,9 @@ public class BittrexAPI {
 			
 			li.add( tickMap );
 		}
-		return li;
+		TICKER_DATA = null;
+		TICKER_DATA = li;
 	}
-	
-	
 	
 	
 	private static String get( JsonObject jo, String key ){
@@ -171,6 +180,26 @@ public class BittrexAPI {
 	public void buy() throws Throwable {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void run() {
+		while(true){
+			try {
+				private_returnTicker();
+				Thread.sleep(1900);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+				try {
+					Thread.sleep(30000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
 	}
 
 	

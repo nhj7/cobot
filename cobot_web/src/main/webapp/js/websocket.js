@@ -76,7 +76,9 @@ function setTick(jo){
 	//alert(per_krw);
 	$("#per_krw").text( comma(per_krw) );
 	
-	var ALL_COINS = jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_5).concat(jo.value.eid_1)
+	//alert(jo.value.eid_6);
+	
+	var ALL_COINS = jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_6).concat(jo.value.eid_5).concat(jo.value.eid_1)
 	
 	regCoins( ALL_COINS  );
 }
@@ -175,8 +177,10 @@ function regCoins( coins ){
 	if( cData == undefined ){
 		activeCoins = 
 		{		
-				"eid_1":[ "BTC" , "ETH"]
-				, "eid_3":[ "BTC" , "ETH", "XRP"]
+				"eid_1":[ "BTC" , "BTS"]
+				, "eid_3":[ "XRP" ]
+				, "eid_5":[ "NEO" , "STEEM", "SBD"]
+				, "eid_6":[ "EOS" ]
 		};
 	}else{
 		activeCoins = JSON.parse(cData);
