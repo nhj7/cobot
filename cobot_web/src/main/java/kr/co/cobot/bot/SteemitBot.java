@@ -63,11 +63,11 @@ public class SteemitBot implements Runnable {
 		
 		logger.info("SteemitBot.run");
 		
-		SteemApi.init();
+		
 		while(true){
 			try {
 				
-				
+				SteemApi.init();
 				
 				long cur = System.currentTimeMillis();
 				if( INIT_FLAG ){
