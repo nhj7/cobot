@@ -22,7 +22,7 @@ public abstract class BaseIntegrationTest extends BaseTest {
             // Change the default settings if needed.
             CONFIG.setWebsocketEndpointURI(new URI("wss://this.piston.rocks"));
             // Create a new apiWrapper with your config object.
-            CONFIG.setTimeout(0);
+            CONFIG.setTimeout(7000);
             CONFIG.setSslVerificationDisabled(true);
             
             steemApiWrapper = new SteemApiWrapper();
