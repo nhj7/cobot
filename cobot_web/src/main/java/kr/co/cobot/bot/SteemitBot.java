@@ -62,8 +62,7 @@ public class SteemitBot implements Runnable {
 	public void run(){
 		
 		logger.info("SteemitBot.run");
-		
-		
+				
 		while(true){
 			try {
 				
