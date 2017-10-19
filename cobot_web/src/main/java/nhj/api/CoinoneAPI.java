@@ -36,82 +36,82 @@ import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(CoinoneAPI.class);
-	
+
 	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
-	
+
 	private static WebClient webClient;
 	private static WebConnectionWrapper wc;
-    
+
     private static boolean COINONE_CHART_IS_READY = false;
     static{
-		
-	}
-    
+						  
+		}
+
     private static long LAST_CALL_RETURN_CHART_DATA_TM = 0;
     private static long TERM_CALL_RETURN_CHART_DATA_TM = 3000;
-    
+
     public synchronized static JsonArray returnChartData(String currencyPair, String start, String end, String period) throws Throwable {
-    	
-    	
+
+
     	if( COINONE_CHART_IS_READY ){
-    		
+
     		long term = System.currentTimeMillis() - LAST_CALL_RETURN_CHART_DATA_TM;
     		if(  term < TERM_CALL_RETURN_CHART_DATA_TM ){
     			long waitTm = TERM_CALL_RETURN_CHART_DATA_TM - term;
     			System.out.println("[CoinoneAPI.returnChartData] "+currencyPair+" 연속된 호출 대기 : " + waitTm);
     			Thread.sleep(waitTm);
     		}
-    		
+
     		currencyPair = currencyPair.toLowerCase();
     		if( currencyPair.equals("btc")){
     			currencyPair = "";
     		}
-    		
+
     		String apiUrl = "https://coinone.co.kr/chart/olhc/?site=coinone" + currencyPair + "&type=15m";
 
     		WebRequest rq = new WebRequest( new URL(apiUrl) );
     		rq.setAdditionalHeader("accept", "application/json, text/javascript, */*; q=0.01");
     		rq.setAdditionalHeader("X-Requested-With", "XMLHttpRequest");
     		WebResponse rs = wc.getResponse(rq);
-    		
+
     		if( rs.getStatusCode() != 200){
-    			
+
     			System.out.println("CoinoneAPI.returnChartData rtnStatusCode : " + rs.getStatusCode());
     			COINONE_CHART_IS_READY = false;
     			initChart();
     			return new JsonArray();
     		}
-    		
+
     		String jsonString = rs.getContentAsString();
     		Gson json = new Gson();
     		JsonObject jo = json.fromJson(jsonString, JsonObject.class);
     		JsonArray ja = jo.get("data").getAsJsonArray();
-    		
+
     		JsonArray newJa = new JsonArray();
-    		
+
     		int newSize = 24;
     		for(int i = 0; i < newSize;i++){
     			JsonObject subJo = ja.get( ja.size() - newSize + i ).getAsJsonObject();
-    			
+
     			JsonObject newJo = new JsonObject();
     			newJo.addProperty("date", new BigDecimal(get(subJo, "DT")));
     			newJo.addProperty("high", new BigDecimal(get(subJo, "High").toString()));
     			newJo.addProperty("low", new BigDecimal(get(subJo, "Low").toString()));
     			newJo.addProperty("open", new BigDecimal(get(subJo, "Open").toString()));
     			newJo.addProperty("close", new BigDecimal(get(subJo, "Close").toString()));
-    			
+
     			newJa.add(newJo);
     		}
-    		
+
     		LAST_CALL_RETURN_CHART_DATA_TM = System.currentTimeMillis();
-    		
+
     		return newJa;
-    		
+
     	}else{
     		return new JsonArray();
     	}
     }
-    
+
 	private CoinoneAPI() {
 
 	}
@@ -129,9 +129,9 @@ public class CoinoneAPI implements Runnable {
 		System.out.println("[CoinoneAPI.log]"+log);
 	}
 
-	
 
-	
+
+
 
 	public static void init() {
 		System.out.println("[CoinoneAPI].start!");
@@ -195,9 +195,9 @@ public class CoinoneAPI implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private static void initChart(){
 		// Chart Init
 		{
@@ -217,26 +217,26 @@ public class CoinoneAPI implements Runnable {
 			                response = new WebResponse(data, request, response.getLoadTime());
 			            }
 			            */
-			            
+
 			            return response;
 			        }
 			    };
 			    final Logger logger = LoggerFactory.getLogger("com.gargoylesoftware.htmlunit");
-			    
+
 			    System.out.println("logger : "+logger);
-				
-				
-				System.out.println("[CoinoneAPI]Please wait 20 seconds to pass CloudFlare DDOS Check...");		
+
+
+				System.out.println("[CoinoneAPI]Please wait 20 seconds to pass CloudFlare DDOS Check...");
 				webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 				String url = "https://doc.coinone.co.kr/";
 				HtmlPage htmlPage = webClient.getPage(url);
 				webClient.waitForBackgroundJavaScript(10_000);
 				CookieManager cm = webClient.getCookieManager();
-				
+
 				//System.out.println("cookies1 : " + cm.getCookies());
 				//System.out.println(htmlPage.asText());
 				// Thread.sleep(10000);
-				
+
 				htmlPage = webClient.getPage(url);
 				webClient.waitForBackgroundJavaScript(10_000);
 				//System.out.println(htmlPage.asText());
@@ -265,38 +265,38 @@ public class CoinoneAPI implements Runnable {
 					cs.addCookie(aCookie);
 
 				}
-				
+
 				System.out.println("[CoinoneAPI] CloudFlare DDOS ByPass Complete!!!");
-				
+
 				COINONE_CHART_IS_READY = true;
-				
+
 				//returnChartData( currencyPair, start, end, period );
 				/*
 				JsonArray ja = returnChartData( "", "", "", "" );
-				
+
 				for(int i = 0; i < ja.size();i++){
 					JsonObject jo = ja.get(i).getAsJsonObject();
 					Date d = new Date( Long.parseLong(jo.get("date").toString()) );
 					System.out.println(DateUtil.getDateString(d, "yyyy-MM-dd kk:mm:ss"));
 				}
 				*/
-				
+
 				/*
-				
+
 				log("wait 5 sec");
 				Thread.sleep(5000);
-				
+
 				rs = wc.getResponse(rq);
 				//webClient.waitForBackgroundJavaScript(10_000);
 				System.out.println(rs.getContentAsString());
-				
+
 				*/
-				
+
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
-			
+			}
+
 		}
 	}
 
@@ -384,7 +384,7 @@ public class CoinoneAPI implements Runnable {
 			} else{
 				first = new BigDecimal(COIN_INFO.get(ccd).get("yesterday_price"));
 			}
-			
+
 
 			BigDecimal ch = last.subtract(first);
 
@@ -406,17 +406,17 @@ public class CoinoneAPI implements Runnable {
 		String rtnJsonStr = URLUtil.htmlToString(url);
 
 		//System.out.println("[rtnJsonStr] : "+rtnJsonStr);
-		
+
 		JsonObject jo = new Gson().fromJson(rtnJsonStr, JsonObject.class);
 		String rate = "1128.5";
-		
+
 		try{
 			rate = get(jo.get("query").getAsJsonObject().get("results").getAsJsonObject().get("rate").getAsJsonObject(), "Rate");
 		}catch(Exception e){
-			
+
 		}
-		
-		
+
+
 		return rate;
 
 	}
@@ -475,31 +475,30 @@ public class CoinoneAPI implements Runnable {
 	private static String get(JsonObject jo, String key) {
 		return jo.get(key).toString().replaceAll("\"", "");
 	}
-	
+
 	public static void main(String[] args) throws Throwable {
 		CoinoneAPI api = new CoinoneAPI();
-		
+
 		String usd = api.getUSDCurrency();
-		
-		
+
+
 		if(true)return;
-		
+
 		api.init();
 		new Thread(api).start();
-		
+
 		while(true){
 			JsonArray ja = api.returnChartData("", "", "", "");
-			
+
 			System.out.println("ja : " + ja);
-			
+
 			Thread.sleep(3000);
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
-	
-}
 
+}
