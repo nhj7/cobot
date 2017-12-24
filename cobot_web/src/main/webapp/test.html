@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Steem Apps</title>
+<title>Cobot</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,8 +17,8 @@
 	crossorigin="anonymous">
 
 <style>
-	.steemit-logo{
-		color:#06d6a9 !important;font-weight:bold;
+	.site-logo{
+		color:black !important;font-weight:bold;
 	}
 </style>
 <script
@@ -27,9 +27,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
-
-<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>
-<script src="https://unpkg.com/dsteem@latest/dist/dsteem.js"></script>
 <script src="https://unpkg.com/vue"></script>
 <script src="https://unpkg.com/http-vue-loader"></script>
 <script src="https://unpkg.com/vue-router"></script>
@@ -47,13 +44,12 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand steemit-logo" href="#">Steem Apps</a>
+				<a class="navbar-brand site-logo" href="#">Cobot</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#Home" @click="setCurrentView('Home')">Home</a></li>
-					<li><a href="#RemindYou " @click="setCurrentView('RemindYou')">Remind You </a></li>
-					<li><a href="#AccountCreator" @click="setCurrentView('AccountCreator')">Account Creator</a></li>
+					<li><a href="#RemindYou " @click="setCurrentView('CoinInfo')">Coin Info</a></li>
 					<li class="dropdown"><a href="javascript:;" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Family Site <span class="caret"></span></a>
@@ -185,7 +181,7 @@
 			}
 			, components : {
 				'AccountCreator' : loadVue('./AccountCreator')
-				, 'Home' : loadVue('./Home')
+				, 'Home' : loadVue('../vue/Home')
 				, 'RemindYou' : loadVue('./RemindYou')
 			}
 			, methods : {
