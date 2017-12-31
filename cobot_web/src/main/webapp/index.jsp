@@ -16,8 +16,6 @@
 		<meta property="og:image" content="https://cobot.co.kr/img/main_640.png">
 		<meta property="og:url" content="https://cobot.co.kr">
 		<meta name="description" content="암호화폐의  거래소 별 시세를 한눈에 볼 수 있는 Cobot입니다.">
-		
-		
 		<meta name="google-site-verification" content="oh_2BqNhU-HCxyw9pyAYq-R8quUISyrJiuuTvu3L2Y0" />
 		<meta name="naver-site-verification" content="86d2526132fddcd53c61ca15bbac868cf54fc7ab"/>
 		<meta charset="utf-8" />
