@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import kr.co.cobot.bot.DATA;
 import kr.co.cobot.bot.SteemitBot;
 import nhj.util.JsonUtil;
+import nhj.util.StringUtil;
 import nhj.util.URLUtil;
 
 public class BitfinexAPI implements Runnable{
@@ -112,7 +113,7 @@ public class BitfinexAPI implements Runnable{
 		
 		String json_str = URLUtil.getUrlJsonData("https://api.bitfinex.com/v2/tickers?symbols=" + SYMBOLS_STR);
 		
-		//System.out.println(""+json_str);
+		System.out.println(""+json_str);
 		
 		//JsonObject result = JsonUtil.getJsonObject(json_str);
 		
@@ -145,8 +146,9 @@ public class BitfinexAPI implements Runnable{
 			String tmpMarketName = marketName.substring(1, marketName.length());
 			
 			String[] arrTitle = new String[] {
-					tmpMarketName.substring(tmpMarketName.length()-3, tmpMarketName.length())
-					,tmpMarketName.substring(0, tmpMarketName.length()-3)
+					StringUtil.right(tmpMarketName, 3)
+					, StringUtil.rightCut(tmpMarketName, 3)
+					
 					 
 			};
 			
@@ -162,8 +164,14 @@ public class BitfinexAPI implements Runnable{
 			}else if( "XMR".equals(arrTitle[divTitle])  ){
 				unit_cid = "4";
 				continue;
-			}else if( "USD".equals(arrTitle[divTitle])  ){
+			}else if( arrTitle[divTitle].indexOf("USD") > -1  ){
 				unit_cid = "9999";
+			}else {
+				continue;
+			}
+			
+			if( "IOT".equals(arrTitle[1])) {
+				System.out.println("IOT");
 			}
 			
 			if( "1".equals(unit_cid) && "BTC".equals(arrTitle[1]) ) {
@@ -252,7 +260,7 @@ public class BitfinexAPI implements Runnable{
 		while(true){
 			try {
 				private_returnTicker();
-				//System.out.println("DATA : "+DATA);
+				System.out.println("DATA : "+DATA);
 				Thread.sleep(6100);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
