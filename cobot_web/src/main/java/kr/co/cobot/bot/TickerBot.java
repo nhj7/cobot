@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.cobot.ctrl.WebSocketCon;
+import nhj.api.BinanceAPI;
 import nhj.api.BitfinexAPI;
 import nhj.api.BithumbAPI;
 import nhj.api.BittrexAPI;
@@ -26,7 +27,7 @@ public class TickerBot implements Runnable {
 		BithumbAPI.init();
 		CoinoneAPI.init();	// WS Socket init
 		KorbitAPI.init();	// Web scrapping init
-		
+		BinanceAPI.init();
 		ExchangeRateAPI.init();	
 		
 	}
@@ -68,6 +69,9 @@ public class TickerBot implements Runnable {
 				// KorbitAPI
 				{
 					List korbitList = KorbitAPI.returnTicker();
+					//List korbitList = new ArrayList();
+					
+					
 					newCoinMap.put("eid_" + 4, korbitList);
 				}
 				
@@ -82,6 +86,11 @@ public class TickerBot implements Runnable {
 				{
 					List list = BitfinexAPI.returnTicker();
 					newCoinMap.put("eid_" + 6, list);
+				}
+				
+				{
+					List list = BinanceAPI.returnTicker();
+					newCoinMap.put("eid_" + 7, list);
 				}
 				
 				String per_krw = "1145";
@@ -110,10 +119,12 @@ public class TickerBot implements Runnable {
 					List<Map> chCoinList = new ArrayList();					
 					chCoinMap.put(key, chCoinList);
 					for(int i = 0; i < oldCoinList.size();i++){
-						Map oldCoin = oldCoinList.get(i);
-						Map newCoin = newCoinList.get(i);
-						if( !oldCoin.get("per_ch").equals(newCoin.get("per_ch")) ){
-							chCoinList.add(newCoin);
+						Map oldCoin = oldCoinList.get(i);						
+						if( newCoinList.size() > i ) {
+							Map newCoin = newCoinList.get(i);
+							if( !oldCoin.get("per_ch").equals(newCoin.get("per_ch")) ){
+								chCoinList.add(newCoin);
+							}
 						}
 					}
 				}

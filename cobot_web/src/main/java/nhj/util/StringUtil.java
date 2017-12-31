@@ -26,9 +26,10 @@ public class StringUtil {
 		//Map<String, String> objectAsMap = BeanUtils.describe(o);
 		//return objectAsMap.toString();
 		//return ToStringBuilder.reflectionToString(o);
-		return new Gson().toJson(o);
-		
+		return new Gson().toJson(o);		
 	}
+	
+	
 	
 	public static boolean hasStrings(String source, String[] arrString ){
 		return hasStrings(source, arrString, true);
@@ -50,6 +51,20 @@ public class StringUtil {
 	        	return true;
 	    }
 		return false;
+	}
+
+	public static String right(String source, int cutOff) {
+		if( source == null ) return "";
+		if( source.length() <= cutOff ) return source;
+		if( source.indexOf("USDT") > -1 ) { cutOff++; }
+		return source.substring(source.length() - cutOff , source.length());
+	}
+	
+	public static String rightCut(String source, int i) {
+		if( source == null ) return "";
+		if( source.length() <= i ) return source;
+		if( source.indexOf("USDT") > -1 ) { i++; }
+		return source.substring(0, source.length() - i );
 	}
 	
 }

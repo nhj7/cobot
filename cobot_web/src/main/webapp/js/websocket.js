@@ -78,7 +78,7 @@ function setTick(jo){
 	
 	//alert(jo.value.eid_6);
 	
-	var ALL_COINS = jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_6).concat(jo.value.eid_5).concat(jo.value.eid_1)
+	var ALL_COINS = jo.value.eid_2.concat(jo.value.eid_3).concat(jo.value.eid_4).concat(jo.value.eid_7).concat(jo.value.eid_6).concat(jo.value.eid_5).concat(jo.value.eid_1)
 	
 	regCoins( ALL_COINS  );
 }
@@ -434,25 +434,23 @@ function swapCoin( obj ){
 }
 
 function calcKrPrimeum(){
-	var arr_coinDiv = $("div[data-cd=data]");
-	
-	var arr_plnxDiv = arr_coinDiv.filter("div[data-eid=1]");
-	
+	var arr_coinDiv = $("div[data-cd=data]");	
+	var arr_plnxDiv = arr_coinDiv.filter("div[data-eid=5]");
+	var arr_bitfinexDiv = arr_coinDiv.filter("div[data-eid=6]");	
 	var arr_kr_eid = [2,3,4];
-	
-	
-	
 	for( var i = 0; i < arr_kr_eid.length;i++){
-		
 		var arr_krDiv = arr_coinDiv.filter("div[data-eid="+arr_kr_eid[i]+"]");
-		
 		for(var j = 0; j < arr_krDiv.length;j++){
-			
 			var krDiv = $(arr_krDiv[j]);
-			var plnxDiv = $(arr_plnxDiv.filter("div[data-ccd="+krDiv.attr("data-ccd")+"]")[0]);
-			
-			//alert("eid : " + arr_kr_eid[i] + ", ccd : " + krDiv.attr("data-ccd") + ", usdt : " + krDiv.attr("data-usdt") + ", plnx-usdt : " + plnxDiv.attr("data-usdt"));
-			
+			var dataCcd = krDiv.attr("data-ccd");
+			if( dataCcd == "BCH" ){
+				dataCcd = "BCC";
+			}			
+			var plnxDiv = $(arr_plnxDiv.filter("div[data-ccd="+dataCcd+"]")[0]);			
+			if( dataCcd == "EOS" || dataCcd == "IOTA" ){
+				if( dataCcd == "IOTA" ){dataCcd = "IOT";}				
+				plnxDiv = $(arr_bitfinexDiv.filter("div[data-ccd="+dataCcd+"]")[0]);
+			}
 			var kr_col_btc = $(krDiv.children().filter(".col_btc")[0])
 			kr_col_btc.css("color","green");
 			try{
@@ -460,17 +458,9 @@ function calcKrPrimeum(){
 				var kr_pr_per = exactRound(kr_pr, 2);
 				krDiv.attr("data-btc", kr_pr_per);
 				kr_col_btc.text(  kr_pr_per + "%"  );
-			}catch(e){
-				
-			}
-			
+			}catch(e){}
 		}
-		
-		
-		
 	}
-	
-	
 }
 
 function flashCoins(){
@@ -552,7 +542,7 @@ function formatValue( value ){
 }
 
 function viewChart( eid, ccd, unit_cid ){
-	
+	return;
 	if( eid == "2" || eid == "4" || eid == "5"  ){
 		alert("비트렉스, 빗썸, 코빗 거래소 차트는 준비중입니다.");
 		return;

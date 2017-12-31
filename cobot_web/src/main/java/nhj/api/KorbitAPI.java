@@ -62,7 +62,7 @@ public class KorbitAPI implements Runnable{
 			}
 			
 			try {
-				Thread.sleep(4000);
+				Thread.sleep(8000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -136,6 +136,7 @@ public class KorbitAPI implements Runnable{
 				COIN_INFO.put(coin, coin_map );
 			}else{
 				coin_map = COIN_INFO.get(coin);
+				
 			}
 			
 			coin_map.put("eid", "4");	// 4 : korbit. 

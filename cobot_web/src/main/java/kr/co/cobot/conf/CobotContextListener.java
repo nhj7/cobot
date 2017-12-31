@@ -74,7 +74,7 @@ public class CobotContextListener extends ContextLoaderListener{
 				
 			}
 			
-			AlarmBot.init();
+			//AlarmBot.init();
 			//CacheImgBot.init();
 			
 			//System.out.println("SteemitBot.init().");

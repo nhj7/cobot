@@ -69,7 +69,10 @@ public class BitfinexAPI implements Runnable{
 		
 		//Map m = api.returnBalances();
 		
-				
+		
+		init();
+		
+		if(true)return;
 		setSymvols();
 		
 		private_returnTicker();
@@ -126,6 +129,9 @@ public class BitfinexAPI implements Runnable{
 		String priceName = "Last";
 		for(int i = 0; i < ja.size();i++){
 			
+			if(!ja.get(i).isJsonArray())
+				continue;
+			
 			JsonArray market = ja.get(i).getAsJsonArray();
 						
 			String marketName = replaceToUpperCase(market.get(0));
@@ -152,21 +158,25 @@ public class BitfinexAPI implements Runnable{
 				unit_cid = "1";
 			}else if( "ETH".equals(arrTitle[divTitle])  ){
 				unit_cid = "2";
+				continue;
 			}else if( "XMR".equals(arrTitle[divTitle])  ){
 				unit_cid = "4";
+				continue;
 			}else if( "USD".equals(arrTitle[divTitle])  ){
 				unit_cid = "9999";
 			}
 			
-			
-			Map tickMap = new HashMap();
-			
+			if( "1".equals(unit_cid) && "BTC".equals(arrTitle[1]) ) {
+				continue;
+			}			
+			if( !"BTC".equals(arrTitle[1]) && !"1".equals(unit_cid) ) {
+				continue;
+			}			
+			Map tickMap = new HashMap();			
 			tickMap.put("cid", 1); 	// todo need mapping . 
 			tickMap.put("eid", 6);	// bitfinex id
-			tickMap.put("ccd", arrTitle[1]);
-			
-			tickMap.put("unit_cid", unit_cid);
-			
+			tickMap.put("ccd", arrTitle[1]);			
+			tickMap.put("unit_cid", unit_cid);			
 			/*
 			 [
 		    SYMBOL,0
@@ -242,7 +252,8 @@ public class BitfinexAPI implements Runnable{
 		while(true){
 			try {
 				private_returnTicker();
-				Thread.sleep(1800);
+				//System.out.println("DATA : "+DATA);
+				Thread.sleep(6100);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				

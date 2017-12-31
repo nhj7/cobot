@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import org.apache.http.util.ByteArrayBuffer;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -32,15 +33,17 @@ public class BithumbAPI implements Runnable{
 	}
 
 	public static void log( String log ){
-		//System.out.println(log);
+		System.out.println(log);
 	}
 	
 	public static String replaceDQuote( Object jo ){
 		if( jo == null ){
 			return "";
+		}else if(jo.toString().length() == 0 ) {
+			return "";
 		}
 		
-		return jo.toString().substring(0,jo.toString().indexOf(".") ).replaceAll("\"", "");
+		return jo.toString().replaceAll("\"", "");
 	}
 	
 	public static JsonObject transJsonObject( JsonObject jo ){
@@ -82,7 +85,12 @@ public class BithumbAPI implements Runnable{
 		newJo.put("ccd", ccd);
 		newJo.put("unit_cid", "9998");
 		
-		String str_price = replaceDQuote( switchPrice ? jo.get("sell_price") : jo.get("buy_price") );
+		BigDecimal sellPrice = new BigDecimal(replaceDQuote(jo.get("sell_price")));
+		BigDecimal buyPrice = new BigDecimal( replaceDQuote(jo.get("buy_price")) );
+		
+		String str_price = sellPrice.add(buyPrice).divide(new BigDecimal(2), BigDecimal.ROUND_FLOOR).toString();
+		
+		//String str_price = replaceDQuote( switchPrice ? jo.get("sell_price") : jo.get("buy_price") );
 		
 		
 		
@@ -185,6 +193,35 @@ public class BithumbAPI implements Runnable{
 		DATA.setBitthumb_LIST(list);
 	}
 	
+	
+	public static void private_returnTicker_new() throws Throwable{
+		Date d = new Date();
+		long time = d.getTime();
+
+		// BTC
+		String url = "https://api.bithumb.com/public/ticker/ALL";
+		String jsonStr = reqToStringForBithumb(url);
+		
+		JsonParser jp = new JsonParser();
+		
+		JsonObject jsonObj = jp.parse(( jsonStr )).getAsJsonObject();
+		JsonObject coinObj = jsonObj.get("data").getAsJsonObject();
+		
+		List list = new ArrayList();
+		for(Iterator it = coinObj.entrySet().iterator();it.hasNext();) {
+			Entry coinDetail = (Entry) it.next();
+			Object valueObj = coinDetail.getValue();
+			if( valueObj instanceof com.google.gson.JsonObject) {
+				Map coinMap = transMap( coinDetail.getKey().toString() , (JsonObject) coinDetail.getValue() );
+				list.add( coinMap );
+			}
+		}
+		switchPrice = switchPrice ? false : true;
+		
+		DATA.setBitthumb_LIST(list);
+	}
+	
+	
 
 	
 
@@ -225,24 +262,24 @@ public class BithumbAPI implements Runnable{
 
 	public static void main(String[] args) throws Throwable {
 		//System.out.println(returnTicker());
+		
+		private_returnTicker_new();
+		
+		System.out.println(DATA.getBitthumb_LIST());
+		
 	}
 
 	@Override
 	public synchronized void run() {
-		// TODO Auto-generated method stub
-		
 		while(true){
 			try {
-				private_returnTicker();
-				Thread.sleep(3000);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
+				private_returnTicker_new();
+				Thread.sleep(1000);
+			} catch (Throwable e) {				
+				e.printStackTrace();				
 				try {
 					Thread.sleep(30000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
