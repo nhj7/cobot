@@ -111,51 +111,29 @@ public class BitfinexAPI implements Runnable{
 	
 	public static void private_returnTicker() throws Throwable {
 		
-		String json_str = URLUtil.getUrlJsonData("https://api.bitfinex.com/v2/tickers?symbols=" + SYMBOLS_STR);
-		
-		System.out.println(""+json_str);
-		
-		//JsonObject result = JsonUtil.getJsonObject(json_str);
-		
-		Gson gson = new Gson();
-		
+		String json_str = URLUtil.getUrlJsonData("https://api.bitfinex.com/v2/tickers?symbols=" + SYMBOLS_STR);		
+		//System.out.println(""+json_str);		
+		//JsonObject result = JsonUtil.getJsonObject(json_str);		
+		Gson gson = new Gson();		
 		JsonElement je = gson.fromJson(json_str, JsonElement.class);
-		
-		
 		JsonArray ja = je.getAsJsonArray();
-		
 		List li = new ArrayList();
-		
-		
 		String priceName = "Last";
 		for(int i = 0; i < ja.size();i++){
-			
 			if(!ja.get(i).isJsonArray())
 				continue;
-			
 			JsonArray market = ja.get(i).getAsJsonArray();
-						
 			String marketName = replaceToUpperCase(market.get(0));
-			
-			//log("marketName : " + marketName);
-			
 			if( "BITCNY-BTC".equals(marketName)){
 				continue;
 			}
-			
 			String tmpMarketName = marketName.substring(1, marketName.length());
-			
 			String[] arrTitle = new String[] {
 					StringUtil.right(tmpMarketName, 3)
-					, StringUtil.rightCut(tmpMarketName, 3)
-					
-					 
+					, StringUtil.rightCut(tmpMarketName, 3) 
 			};
-			
 			String unit_cid = "1";
-			
 			int divTitle = 0;
-			
 			if( "BTC".equals(arrTitle[divTitle]) ){
 				unit_cid = "1";
 			}else if( "ETH".equals(arrTitle[divTitle])  ){
@@ -168,12 +146,7 @@ public class BitfinexAPI implements Runnable{
 				unit_cid = "9999";
 			}else {
 				continue;
-			}
-			
-			if( "IOT".equals(arrTitle[1])) {
-				System.out.println("IOT");
-			}
-			
+			}			
 			if( "1".equals(unit_cid) && "BTC".equals(arrTitle[1]) ) {
 				continue;
 			}			
