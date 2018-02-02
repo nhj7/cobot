@@ -25,7 +25,7 @@ public class TickerBot implements Runnable {
 		BitfinexAPI.init();
 		BittrexAPI.init();
 		BithumbAPI.init();
-		CoinoneAPI.init();	// WS Socket init
+		//CoinoneAPI.init();	// WS Socket init
 		KorbitAPI.init();	// Web scrapping init
 		BinanceAPI.init();
 		ExchangeRateAPI.init();	
@@ -62,7 +62,8 @@ public class TickerBot implements Runnable {
 				
 				// CoinoneAPI
 				{
-					List coinList = CoinoneAPI.returnTicker();
+					//List coinList = CoinoneAPI.returnTicker();
+					List coinList = new ArrayList();
 					newCoinMap.put("eid_" + 3, coinList);
 				}
 				
