@@ -3,14 +3,14 @@
 <%@ page import="nhj.util.*" %>
 
 <%
-	System.out.println("variable.jsp...");
+	System.out.println("variable.jsp..." + request.getServerName() );
 	String domain = "cobot.co.kr";
 	String websocket_adr = null;
 	
 	if( request.isSecure() ){
-		websocket_adr = "wss://cobot.co.kr/echo";
+		websocket_adr = "wss://"+request.getServerName()+"/echo";
 	}else{
-		websocket_adr = "ws://cobot.co.kr/echo";
+		websocket_adr = "ws://"+request.getServerName()+"/echo";
 	}
 	
 	String ip = ""; 
