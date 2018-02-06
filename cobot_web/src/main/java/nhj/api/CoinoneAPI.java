@@ -32,12 +32,14 @@ import io.socket.client.IO;
 import io.socket.client.IO.Options;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import nhj.util.JsonUtil;
+import nhj.util.StringUtil;
 import nhj.util.URLUtil;
 
 public class CoinoneAPI implements Runnable {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(CoinoneAPI.class);
 
-	private static Map<String, Map<String, String>> COIN_INFO = new HashMap();
+	private static List TICKER_DATA = new ArrayList();
 
 	private static WebClient webClient;
 	private static WebConnectionWrapper wc;
@@ -130,10 +132,12 @@ public class CoinoneAPI implements Runnable {
 	}
 
 
-
-
-
 	public static void init() {
+		new Thread(new CoinoneAPI()).start();
+	}
+
+
+	public static void init_bak() {
 		System.out.println("[CoinoneAPI].start!");
 		// new Thread( getInstance() ).start();
 		try {
@@ -166,7 +170,7 @@ public class CoinoneAPI implements Runnable {
 						// System.out.println(DateUtil.getCurDate("[yyyy-MM-dd
 						// kk:mm:ss]") + " update : "+args[0]);
 
-						setPrice(args[0].toString());
+						//setPrice(args[0].toString());
 					}
 
 				}).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
@@ -300,52 +304,116 @@ public class CoinoneAPI implements Runnable {
 		}
 	}
 
-	public synchronized static void setPrice(String json_str) {
-		Gson gson = new Gson();
-		JsonObject jo = gson.fromJson(json_str, JsonObject.class);
-
-		for (Iterator it = jo.entrySet().iterator(); it.hasNext();) {
-
-			Entry en = (Entry) it.next();
-			String title = en.getKey().toString();
-			String value = en.getValue().toString().replaceAll("\"", "");
-			String[] arrTitle = title.split("_");
-
-			String currency = arrTitle[0].toUpperCase();
-
-			Map coin_info;
-			if (COIN_INFO.get(currency) == null) {
-				coin_info = new HashMap<String, String>();
-				COIN_INFO.put(currency, coin_info);
-			} else {
-				coin_info = COIN_INFO.get(currency);
-			}
-
-			coin_info.put(title.replaceAll(arrTitle[0] + "_", ""), value);
-
-		}
-
-		// System.out.println("[WS_COIN_INFO] : "+WS_COIN_INFO);
-
-	}
+//	public synchronized static void setPrice(String json_str) {
+//		Gson gson = new Gson();
+//		JsonObject jo = gson.fromJson(json_str, JsonObject.class);
+//
+//		for (Iterator it = jo.entrySet().iterator(); it.hasNext();) {
+//
+//			Entry en = (Entry) it.next();
+//			String title = en.getKey().toString();
+//			String value = en.getValue().toString().replaceAll("\"", "");
+//			String[] arrTitle = title.split("_");
+//
+//			String currency = arrTitle[0].toUpperCase();
+//
+//			Map coin_info;
+//			if (COIN_INFO.get(currency) == null) {
+//				coin_info = new HashMap<String, String>();
+//				COIN_INFO.put(currency, coin_info);
+//			} else {
+//				coin_info = COIN_INFO.get(currency);
+//			}
+//
+//			coin_info.put(title.replaceAll(arrTitle[0] + "_", ""), value);
+//
+//		}
+//
+//		// System.out.println("[WS_COIN_INFO] : "+WS_COIN_INFO);
+//
+//	}
 
 	public static String getPerKrw() {
 		return per_krw;
 	}
 
 	private static String per_krw = "";
+	
+	public static void private_returnTicker() throws Throwable {
+		
+		String json_str = URLUtil.getUrlJsonData("https://api.coinone.co.kr/ticker/");
+		
+		System.out.println(json_str);
+		
+		//JsonObject result = JsonUtil.getJsonObject(json_str);
+		
+		Gson gson = new Gson();
+		
+		JsonArray ja = gson.fromJson(json_str, JsonElement.class).getAsJsonArray();
+		
+		List li = new ArrayList();
+		
+		for(int i = 0; i < ja.size();i++){
+			
+			JsonObject market = ja.get(i).getAsJsonObject();
+			String symbol = JsonUtil.get(market, "symbol");			
+			String symbol1 = StringUtil.rightCut(symbol, 3);
+			String symbol2 = StringUtil.right(symbol, 3);
+			
+			if( !"BTC".equals(symbol1) ) {
+				if( !"BTC".equals(symbol2) ) {
+					continue;
+				}
+			}
+			
+			
+			
+			String unit_cid = "1";
+			
+			int divTitle = 0;
+			
+			if( "BTC".equals(symbol2) ){
+				unit_cid = "1";
+			}else if( "ETH".equals(symbol2)  ){
+				unit_cid = "2";
+			}else if( "XMR".equals(symbol2)  ){
+				unit_cid = "4";
+			}else if( "USDT".equals(symbol2)  ){
+				unit_cid = "9999";
+			}
+			//log("symbol1 : " + symbol1 + ", " + symbol2 + " : unit_cid : " + unit_cid);
+			
+			Map tickMap = new HashMap();
+			
+			tickMap.put("cid", 1); 	// todo need mapping . 
+			tickMap.put("eid", 7);	// poloniex id
+			tickMap.put("ccd", symbol1);
+			tickMap.put("unit_cid", unit_cid);
+			String Last = get(market, "lastPrice" );
+			tickMap.put("price", Last);
+			
+			double per_ch = Double.parseDouble(get(market, "priceChangePercent" )) / 100 ;
+			//System.out.println("marketName : "+marketName + " , per_ch : " + per_ch + ", unit_cid : " + unit_cid);
+			
+			tickMap.put("per_ch", per_ch);
+			li.add( tickMap );
+		}
+		TICKER_DATA = null;
+		TICKER_DATA = li;
+	}
 
 	@Override
 	public void run() {
-		if( !COINONE_CHART_IS_READY ){
-			initChart();
-		}
-
+		
 		while (true) {
 
 			try {
-				per_krw = getUSDCurrency();
-				Thread.sleep(3000);
+				//per_krw = getUSDCurrency();
+				
+				
+				private_returnTicker_new();
+				
+				Thread.sleep(1300);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -360,45 +428,45 @@ public class CoinoneAPI implements Runnable {
 
 	}
 
-	public static List returnTicker() throws Throwable {
-
-		List list = new ArrayList();
-
-		for (Iterator it = COIN_INFO.keySet().iterator(); it.hasNext();) {
-
-			String ccd = it.next().toString();
-
-			Map tickMap = new HashMap();
-
-			tickMap.put("cid", 1); // todo need mapping .
-			tickMap.put("eid", 3); // Coinone id
-			tickMap.put("ccd", ccd);
-
-			tickMap.put("unit_cid", "9998"); // KRW
-
-			BigDecimal last = new BigDecimal(COIN_INFO.get(ccd).get("price"));
-
-			BigDecimal first = BigDecimal.ZERO;
-			if( COIN_INFO.get(ccd).get("yesterday_price") == null){
-				first = last;
-			} else{
-				first = new BigDecimal(COIN_INFO.get(ccd).get("yesterday_price"));
-			}
-
-
-			BigDecimal ch = last.subtract(first);
-
-			BigDecimal per_ch = ch.divide(first, 4, BigDecimal.ROUND_DOWN);
-			tickMap.put("first", first);
-			tickMap.put("ch", last.subtract(first));
-			tickMap.put("price", last);
-			tickMap.put("per_ch", per_ch);
-
-			list.add(tickMap);
-
-		}
-		return list;
-	}
+//	public static List returnTicker() throws Throwable {
+//
+//		List list = new ArrayList();
+//
+//		for (Iterator it = COIN_INFO.keySet().iterator(); it.hasNext();) {
+//
+//			String ccd = it.next().toString();
+//
+//			Map tickMap = new HashMap();
+//
+//			tickMap.put("cid", 1); // todo need mapping .
+//			tickMap.put("eid", 3); // Coinone id
+//			tickMap.put("ccd", ccd);
+//
+//			tickMap.put("unit_cid", "9998"); // KRW
+//
+//			BigDecimal last = new BigDecimal(COIN_INFO.get(ccd).get("price"));
+//
+//			BigDecimal first = BigDecimal.ZERO;
+//			if( COIN_INFO.get(ccd).get("yesterday_price") == null){
+//				first = last;
+//			} else{
+//				first = new BigDecimal(COIN_INFO.get(ccd).get("yesterday_price"));
+//			}
+//
+//
+//			BigDecimal ch = last.subtract(first);
+//
+//			BigDecimal per_ch = ch.divide(first, 4, BigDecimal.ROUND_DOWN);
+//			tickMap.put("first", first);
+//			tickMap.put("ch", last.subtract(first));
+//			tickMap.put("price", last);
+//			tickMap.put("per_ch", per_ch);
+//
+//			list.add(tickMap);
+//
+//		}
+//		return list;
+//	}
 
 	private static String getUSDCurrency() throws Throwable {
 
@@ -420,8 +488,12 @@ public class CoinoneAPI implements Runnable {
 		return rate;
 
 	}
+	
+	public static List returnTicker() throws Throwable {		
+		return TICKER_DATA;
+	}
 
-	public static List returnTickerBak() throws Throwable {
+	public static void private_returnTicker_new() throws Throwable {
 
 		String url = "https://api.coinone.co.kr/ticker/?format=json&currency=all";
 		String rtnJsonStr = URLUtil.htmlToString(url);
@@ -441,7 +513,7 @@ public class CoinoneAPI implements Runnable {
 
 				JsonObject tickJo = ((JsonElement) en.getValue()).getAsJsonObject();
 
-				System.out.println("tickJo : " + tickJo);
+				//System.out.println("tickJo : " + tickJo);
 
 				Map tickMap = new HashMap();
 
@@ -453,7 +525,7 @@ public class CoinoneAPI implements Runnable {
 
 				BigDecimal last = new BigDecimal(get(tickJo, "last"));
 
-				BigDecimal first = new BigDecimal(get(tickJo, "first"));
+				BigDecimal first = new BigDecimal(get(tickJo, "yesterday_last"));
 
 				BigDecimal ch = last.subtract(first);
 
@@ -466,9 +538,13 @@ public class CoinoneAPI implements Runnable {
 				list.add(tickMap);
 			}
 		}
-		System.out.println("list : " + list);
-
-		return list;
+		
+		//System.out.println("list : " + list);
+		
+		TICKER_DATA = null;
+		TICKER_DATA = list;
+		
+		//return list;
 
 	}
 
@@ -477,28 +553,6 @@ public class CoinoneAPI implements Runnable {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		CoinoneAPI api = new CoinoneAPI();
-
-		String usd = api.getUSDCurrency();
-
-
-		if(true)return;
-
-		api.init();
-		new Thread(api).start();
-
-		while(true){
-			JsonArray ja = api.returnChartData("", "", "", "");
-
-			System.out.println("ja : " + ja);
-
-			Thread.sleep(3000);
-		}
-
-
-
-
+		private_returnTicker_new();
 	}
-
-
 }

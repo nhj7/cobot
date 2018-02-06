@@ -162,11 +162,11 @@
 								</a>
 							</li>
 							
-							<li>
+							<!-- li>
 								<a href="javascript:;" onclick="openSteemMart();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
 									<data style="color:white;">(New) &nbsp;&nbsp;</data>Steem Mart &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/market.png" />
 								</a>
-							</li>							
+							</li-->							
 							<li>
 								<a href="javascript:;" onclick="alarmOnOff();"  id="about-link" class="skel-layers-ignoreHref nav_detail">
 									Alarm &nbsp;&nbsp;<img width="16px" height="16px" src="/img/nav/alarm.png" />

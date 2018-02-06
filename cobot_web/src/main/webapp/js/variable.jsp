@@ -5,13 +5,20 @@
 <%
 	System.out.println("variable.jsp...");
 	String domain = "cobot.co.kr";
-	String websocket_adr = "wss://cobot.co.kr/echo";
+	String websocket_adr = null;
+	
+	if( request.isSecure() ){
+		websocket_adr = "wss://cobot.co.kr/echo";
+	}else{
+		websocket_adr = "ws://cobot.co.kr/echo";
+	}
+	
 	String ip = ""; 
 	try{
 		ip = NetUtil.getLocalIp();
 		if( ip.startsWith("172.30")){
-			domain = "172.30.1.7";
-			websocket_adr = "ws://172.30.1.7/echo";
+			domain = ip;
+			websocket_adr = "ws://"+ip+"/echo";
 		}
 	}catch(Throwable e){
 		
