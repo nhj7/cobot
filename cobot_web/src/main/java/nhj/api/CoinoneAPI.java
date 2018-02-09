@@ -554,5 +554,6 @@ public class CoinoneAPI implements Runnable {
 
 	public static void main(String[] args) throws Throwable {
 		private_returnTicker_new();
+		System.out.println(TICKER_DATA);
 	}
 }

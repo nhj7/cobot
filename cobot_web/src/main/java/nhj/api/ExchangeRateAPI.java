@@ -175,7 +175,7 @@ public class ExchangeRateAPI implements Runnable {
 	}
 	
 	
-	public static String per_krw = "1146";
+	public static String per_krw = "1090";
 	@Override
 	public void run() {
 		
@@ -189,6 +189,12 @@ public class ExchangeRateAPI implements Runnable {
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				try {
+					Thread.sleep(  min * 60 * 1000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 		
