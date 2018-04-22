@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.jsoup.Jsoup;
@@ -12,7 +13,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import nhj.util.DateUtil;
+import nhj.util.JsonUtil;
 
 public class ExchangeRateAPI implements Runnable {
 	private static org.slf4j.Logger logger = LoggerFactory.getLogger(ExchangeRateAPI.class);
@@ -153,25 +159,11 @@ public class ExchangeRateAPI implements Runnable {
 	}
 	
 	
-	
+	static Gson gson = new Gson();
 	
 	public static String getUsdKrw() throws Throwable {
-		
-		
-		String html = reqToStringForBithumb("https://m.search.naver.com/search.naver?query=%ED%99%98%EC%9C%A8&where=m&sm=mtp_hty");
-		
-		//System.out.println(html);
-		
-		String first_str = "<strong class=\"price\">";
-		
-		int first = html.indexOf(first_str);
-		
-		String value = html.substring( first + first_str.length() , html.indexOf("</strong>", first) );
-		
-		
-		return value.replace(",", "");
-		
-		
+		String html = reqToStringForBithumb("https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRWUSD");
+		return gson.fromJson(html, JsonArray.class).get(0).getAsJsonObject().get("basePrice").toString();//basePrice
 	}
 	
 	
