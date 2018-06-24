@@ -234,7 +234,7 @@ public class BitfinexAPI implements Runnable{
 			try {
 				private_returnTicker();
 				//System.out.println("DATA : "+DATA);
-				Thread.sleep(6100);
+				Thread.sleep(7100);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				

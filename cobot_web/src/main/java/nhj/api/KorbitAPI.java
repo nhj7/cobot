@@ -62,7 +62,7 @@ public class KorbitAPI implements Runnable{
 			}
 			
 			try {
-				Thread.sleep(8000);
+				Thread.sleep(8800);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

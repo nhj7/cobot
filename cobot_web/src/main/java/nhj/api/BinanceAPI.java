@@ -153,7 +153,7 @@ public class BinanceAPI implements Runnable{
 		while(true){
 			try {
 				private_returnTicker();
-				Thread.sleep(15000);
+				Thread.sleep(16000);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

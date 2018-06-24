@@ -187,7 +187,7 @@ public class BittrexAPI implements Runnable{
 		while(true){
 			try {
 				private_returnTicker();
-				Thread.sleep(1900);
+				Thread.sleep(4900);
 			} catch (Throwable e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

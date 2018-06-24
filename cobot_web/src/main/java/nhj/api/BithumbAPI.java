@@ -274,7 +274,7 @@ public class BithumbAPI implements Runnable{
 		while(true){
 			try {
 				private_returnTicker_new();
-				Thread.sleep(1000);
+				Thread.sleep(4000);
 			} catch (Throwable e) {				
 				e.printStackTrace();				
 				try {

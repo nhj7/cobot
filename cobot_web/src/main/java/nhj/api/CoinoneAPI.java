@@ -413,9 +413,9 @@ public class CoinoneAPI implements Runnable {
 				
 				private_returnTicker_new();
 				
-				Thread.sleep(1300);
+				Thread.sleep(3300);
 			} catch (Throwable e) {
-				// TODO Auto-generated catch block
+				// TODO Auto-gerudkrgfeeee;ww'r'r';r;r;ffccccgujvdxdgdaWSd				
 				e.printStackTrace();
 				try {
 					Thread.sleep(60000);
