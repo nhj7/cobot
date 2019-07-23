@@ -81,7 +81,7 @@ body{
 </head>
 <body>
 
-
+<%-- 
 <table style="width:90%;margin-left:5%;">
 	
 	<tr>
@@ -148,7 +148,7 @@ body{
 		<td>약 <%=StringUtil.addComma(String.valueOf(total_gap.intValue())) %>억</td>
 	</tr>
 </table>
-
+--%>
 </body>
 
 </html>

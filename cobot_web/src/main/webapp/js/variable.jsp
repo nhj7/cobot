@@ -18,7 +18,7 @@
 		ip = NetUtil.getLocalIp();
 		if( ip.startsWith("172.30")){
 			domain = ip;
-			websocket_adr = "ws://"+ip+"/echo";
+			websocket_adr = "ws://"+ip+":8080/echo";
 		}
 	}catch(Throwable e){
 		

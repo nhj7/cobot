@@ -9,9 +9,6 @@ import org.apache.catalina.core.StandardContext;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.web.context.ContextLoaderListener;
 
-import kr.co.cobot.bot.AlarmBot;
-import kr.co.cobot.bot.CacheImgBot;
-import kr.co.cobot.bot.SteemitBot;
 import kr.co.cobot.bot.TickerBot;
 import nhj.util.NetUtil;
 

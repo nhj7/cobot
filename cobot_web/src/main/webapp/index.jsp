@@ -604,12 +604,12 @@
 		</style-->
 		<div id="footer" style="position: fixed;bottom: 0;width:100%;">				
 				<ul class="copyright">
-					<li>Blog : <a target="_blank" href="https://steemit.com/@nhj12311">https://steemit.com/@nhj12311</a></li>
+					<li>Blog : <a target="_blank" href="https://nhj12311.tistory.com">https://nhj12311.tistory.com</a></li>
 				</ul>
 		</div>
 
 		<!-- Scripts -->
-		<script src="/js/include.jsp"></script>
+		<script src="/js/include.jsp?v=1"></script>
 		<div id="coinRankTmp" style="display:none"></div>
 	<script async="async">(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d    =d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 	</body>

@@ -26,7 +26,7 @@ public class TickerBot implements Runnable {
 		BittrexAPI.init();
 		BithumbAPI.init();
 		CoinoneAPI.init();	// Web scrapping init
-		KorbitAPI.init();	// Web scrapping init
+		//KorbitAPI.init();	// Web scrapping init
 		BinanceAPI.init();
 		ExchangeRateAPI.init();	
 		
@@ -39,22 +39,24 @@ public class TickerBot implements Runnable {
 		while(true){
 			try {
 				
+				int cntEid = 1;
+				
 				Map newCoinMap = new HashMap();
 				
 				// PoloniexAPI
 				{
 					
 					List poloList = PoloniexAPI.returnTicker();
-					newCoinMap.put("eid_" + 1, poloList);
+					newCoinMap.put("eid_" + cntEid++ , poloList);
 				}
 				
 				// BithumbAPI
 				{
 					try{
-						newCoinMap.put("eid_" + 2, DATA.getBitthumb_LIST());
+						newCoinMap.put("eid_" + cntEid++, DATA.getBitthumb_LIST());
 					}catch(Throwable e){
 						e.printStackTrace();
-						newCoinMap.put("eid_" + 2, new ArrayList());
+						newCoinMap.put("eid_" + cntEid++, new ArrayList());
 						
 					}
 					
@@ -64,34 +66,34 @@ public class TickerBot implements Runnable {
 				{
 					List coinList = CoinoneAPI.returnTicker();
 					//List coinList = new ArrayList();
-					newCoinMap.put("eid_" + 3, coinList);
+					newCoinMap.put("eid_" + cntEid++, coinList);
 				}
 				
 				// KorbitAPI
-				{
-					List korbitList = KorbitAPI.returnTicker();
-					//List korbitList = new ArrayList();
-					
-					
-					newCoinMap.put("eid_" + 4, korbitList);
-				}
+//				{
+//					List korbitList = KorbitAPI.returnTicker();
+//					//List korbitList = new ArrayList();
+//					
+//					
+//					newCoinMap.put("eid_" + cntEid++, korbitList);
+//				}
 				
 				// BittrexAPI
 				{
 					List list = BittrexAPI.returnTicker();
-					newCoinMap.put("eid_" + 5, list);
+					newCoinMap.put("eid_" + cntEid++, list);
 				}
 				
 				
 				// BitfinexAPI
 				{
 					List list = BitfinexAPI.returnTicker();
-					newCoinMap.put("eid_" + 6, list);
+					newCoinMap.put("eid_" + cntEid++, list);
 				}
 				
 				{
 					List list = BinanceAPI.returnTicker();
-					newCoinMap.put("eid_" + 7, list);
+					newCoinMap.put("eid_" + cntEid++, list);
 				}
 				
 				String per_krw = "1145";

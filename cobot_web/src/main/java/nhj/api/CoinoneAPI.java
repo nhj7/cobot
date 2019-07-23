@@ -101,21 +101,16 @@ public class CoinoneAPI implements Runnable {
     			newJo.addProperty("low", new BigDecimal(get(subJo, "Low").toString()));
     			newJo.addProperty("open", new BigDecimal(get(subJo, "Open").toString()));
     			newJo.addProperty("close", new BigDecimal(get(subJo, "Close").toString()));
-
     			newJa.add(newJo);
     		}
-
     		LAST_CALL_RETURN_CHART_DATA_TM = System.currentTimeMillis();
-
     		return newJa;
-
     	}else{
     		return new JsonArray();
     	}
     }
 
 	private CoinoneAPI() {
-
 	}
 
 	private static CoinoneAPI api;

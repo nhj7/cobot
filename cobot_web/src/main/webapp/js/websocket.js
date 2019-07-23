@@ -192,7 +192,7 @@ function regCoins( coins ){
 	for(var i = 0; i < coins.length;i++){
 		
 		//writeResponse( coins[i].price );
-		if( coins[i].ccd == "BTC" && coins[i].unit_cid == "9999" ){
+		if( coins[i] && coins[i].ccd == "BTC" && coins[i].unit_cid == "9999" ){
 			BitCoin = coins[i]; 
 		} 
 	}

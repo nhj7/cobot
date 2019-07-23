@@ -105,7 +105,7 @@ public class WebSocketCon {
 	 * @throws Throwable 
 	 */
 	@OnMessage
-	public void onMessage(String message, Session session, EndpointConfig config) throws Throwable {
+	public void onMessage(String message, Session session) throws Throwable {
 		//System.out.println("session.getUserProperties() : " + session.getUserProperties());
 		
 		

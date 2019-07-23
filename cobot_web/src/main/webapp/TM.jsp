@@ -13,11 +13,11 @@
 <title>Cobot Thread Mornitor</title>
 </head>
 <body>
-	<%
+	<%--
 		Map chart_data = ChartManager.CHART_DATA;
 		for(Iterator it = chart_data.keySet().iterator();it.hasNext();){
 			out.println( "cm is : " + chart_data.get(it.next()) + "<br />");
 		}
-	%>
+	--%>
 </body>
 </html>
