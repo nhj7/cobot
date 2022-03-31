@@ -8,7 +8,7 @@
 	<version>2.0.0</version>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.3.10.RELEASE</org.springframework-version>
+		<org.springframework-version>5.3.18</org.springframework-version>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
